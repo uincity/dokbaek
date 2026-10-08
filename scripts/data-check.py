@@ -1,5 +1,5 @@
 """Regression checks for evidence integrity and public-information boundaries."""
-import copy, json, struct, unittest, zlib
+import copy, json, re, struct, unittest, zlib
 from unittest.mock import patch
 import validate
 from build import strip_metadata
@@ -41,5 +41,15 @@ class PublicDataChecks(unittest.TestCase):
         clean=header+chunk(b'IDAT',pixels)+chunk(b'IEND',b'')
         original=header+chunk(b'tEXt',b'Author\x00Private person')+chunk(b'eXIf',b'private EXIF')+chunk(b'IDAT',pixels)+chunk(b'IEND',b'')
         self.assertEqual(strip_metadata(original,'.png'),clean)
+    def test_small_text_colour_contrast(self):
+        css=(validate.ROOT/'assets/css/site.css').read_text(encoding='utf-8')
+        def colour(name):return re.search(r'--'+name+r':(#[A-Fa-f0-9]{6})',css)[1]
+        def luminance(hex_value):
+            rgb=[int(hex_value[i:i+2],16)/255 for i in (1,3,5)]
+            channels=[c/12.92 if c<=.04045 else ((c+.055)/1.055)**2.4 for c in rgb]
+            return sum(c*w for c,w in zip(channels,[.2126,.7152,.0722]))
+        for fg,bg in [('ink','paper'),('muted','paper'),('walnut','card'),('red','paper')]:
+            values=sorted([luminance(colour(fg)),luminance(colour(bg))])
+            self.assertGreaterEqual((values[1]+.05)/(values[0]+.05),4.5,(fg,bg))
 
 if __name__=='__main__':unittest.main(verbosity=2)

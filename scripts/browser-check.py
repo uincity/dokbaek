@@ -10,7 +10,7 @@ from validate import ROOT, validate_dist
 sys.stdout.reconfigure(encoding='utf-8')
 OUT=ROOT/'test-results';OUT.mkdir(exist_ok=True)
 PUBLIC=ROOT/'dist'
-PREFIX='/archive-test/'
+PREFIX='/dokbaek/'
 checks=[]
 
 class PublicHandler(SimpleHTTPRequestHandler):
@@ -59,7 +59,7 @@ def run():
                     if not href or href.startswith(('http:','https:')):continue
                     response=context.request.get(base+href.split('#')[0] if not href.startswith('#') else page.url.split('#')[0])
                     assert response.ok,f'Broken internal link {href}'
-            record('Six page routes and all generated internal links load under /archive-test/')
+            record('Six page routes and all generated internal links load under /dokbaek/')
             go('index.html')
             assert page.locator('.stat b').all_text_contents()==['3','1','3']
             assert page.locator('.year-card').count()==2
@@ -67,6 +67,9 @@ def run():
             capture('home-desktop.png')
             record('Home statistics separate recorded concerts, upcoming concerts and confirmed songs')
             go('archive.html?year=2025')
+            assert page.locator('.concert-timeline .timeline-link').count()==3
+            assert page.locator('.year-calendar').get_attribute('open') is None
+            page.locator('.year-calendar>summary').click()
             assert page.locator('.calendar .month').count()==12
             assert page.locator('.calendar .month').nth(10).locator('a').count()==2
             assert '2025년 1월 ·' not in page.locator('[id="2025-01-family"]').inner_text()
@@ -148,18 +151,20 @@ def run():
             for path in ['index.html','members.html','archive.html?year=2025','archive.html?year=2026']:
                 go(path)
                 for img in page.locator('#main img').all():
-                    img.scroll_into_view_if_needed()
+                    img.evaluate("i=>{i.loading='eager'}")
                     img.evaluate('(i)=>i.decode()')
                     assert img.evaluate('(i)=>i.complete && i.naturalWidth>0')
             record('All original member images, group artwork and reviewed posters/programs decode successfully')
             assert not errors,errors
             assert not bad_requests,bad_requests
             record('Normal page flows have no JavaScript exceptions or failed HTTP responses')
-            for width in [360,768,1280]:
+            for width in [360,390,768,1280]:
                 page.set_viewport_size({'width':width,'height':900})
                 for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
                     go(path)
                     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1'),(width,path)
+                    if path=='repertoire.html':
+                        assert all(float(field.evaluate('e=>getComputedStyle(e).fontSize').replace('px',''))>=16 for field in page.locator('input,select').all())
                     if width==360:
                         page.locator('.menu-toggle').click()
                         assert page.locator('#main-nav a').count()==5 and page.locator('#main-nav').is_visible()
@@ -168,11 +173,92 @@ def run():
                 if width==360:
                     go('index.html');capture('home-mobile-360.png')
                     go('members.html');capture('members-mobile-360.png')
-            record('360px mobile, 768px tablet and 1280px desktop: all pages fit; mobile menu stays accessible')
+            record('360/390/768/1280px: all pages fit, forms use 16px text, mobile menu stays accessible')
+            # Program-book design: mobile disclosures, alternate repertoire views and sticky anchors.
+            for width in [360,390]:
+                page.set_viewport_size({'width':width,'height':900})
+                for year in [2025,2026]:
+                    go(f'archive.html?year={year}')
+                    assert page.locator('.concert-jumps a').last.bounding_box()['y']<850
+                    assert not page.locator('.year-calendar').evaluate('(d)=>d.open')
+                    assert all(not d.evaluate('(d)=>d.open') for d in page.locator('.concert-media').all())
+                    assert page.locator('.concert-jumps a').count()==page.locator('.timeline-link').count()
+                    assert page.locator('.album-art').bounding_box()['y']>page.locator('.concert-jumps').bounding_box()['y']
+                    cards=page.locator('.repertoire-mobile')
+                    assert cards.is_visible()
+                    card_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.locator('small').text_content()) for a in cards.locator('li a').all()}
+                    table_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.text_content()) for a in page.locator('.repertoire-comparison td a').all()}
+                    assert card_records==table_records
+                    compare=page.locator('.repertoire-comparison')
+                    compare.locator('summary').click()
+                    page.wait_for_function("() => document.querySelector('.repertoire-mobile').hidden")
+                    assert not cards.is_visible()
+                    assert compare.locator('.table-wrap').is_visible()
+                    assert compare.locator('.table-wrap').evaluate('(e)=>e.scrollWidth>e.clientWidth')
+                    assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+                    compare.locator('summary').click()
+                    page.wait_for_function("() => !document.querySelector('.repertoire-mobile').hidden")
+                go('archive.html?year=2025')
+                story=page.locator('.song-story').first
+                assert not story.evaluate('(d)=>d.open') and not story.locator('.composer').is_visible()
+                story.locator('summary').focus();page.keyboard.press('Enter')
+                assert story.locator('.composer').is_visible()
+                page.keyboard.press('Space');assert not story.evaluate('(d)=>d.open')
+                materials=page.locator('.concert-media').first
+                materials.locator('summary').focus();page.keyboard.press('Enter')
+                b=materials.locator('.print-button').first;b.click()
+                page.keyboard.press('Escape');assert b.evaluate('(b)=>b===document.activeElement')
+                materials.locator('summary').click()
+                assert not b.is_visible()
+                page.locator('.timeline-link').last.click()
+                assert page.url.endswith('#2025-11-22-workshop')
+                go('archive.html?year=2025#2025-11-02-gallery-item-07')
+                target=page.locator('[id="2025-11-02-gallery-item-07"]')
+                assert target.bounding_box()['y']>=page.locator('.site-header').bounding_box()['height']
+            record('Mobile quick links above fold, timeline, closed calendar/media/story, keyboard disclosures and modal focus return')
+            record('Mobile repertoire cards and table have identical entry IDs, links and evidence; inactive view has no focus targets')
+            record('Concert/song deep links remain visible below the measured sticky header at 360px and 390px')
+            # Enlarge root/body text to 200%, keeping the viewport narrow.
+            go('archive.html?year=2025')
+            page.evaluate("() => {document.documentElement.style.fontSize='200%';document.body.style.fontSize='32px'}")
+            assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+            go('repertoire.html')
+            page.evaluate("() => {document.documentElement.style.fontSize='200%';document.body.style.fontSize='32px';document.querySelectorAll('input,select').forEach(e=>e.style.fontSize='32px')}")
+            assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+            record('200% root/body text and enlarged form fields fit the narrow viewport')
+            page.set_viewport_size({'width':1280,'height':960});go('archive.html?year=2025')
+            page.screenshot(path=str(OUT/'archive-2025-desktop.png'))
+            page.set_viewport_size({'width':390,'height':900});go('archive.html?year=2025')
+            page.screenshot(path=str(OUT/'archive-2025-mobile.png'))
+            page.set_viewport_size({'width':1280,'height':900})
             page.emulate_media(reduced_motion='reduce')
             go('archive.html?year=2025')
-            assert page.locator('.manuscript span').first.evaluate("e=>getComputedStyle(e).animationName")=='none'
-            record('Reduced-motion preference disables the introductory letter animation')
+            assert page.locator('.guitar-decoration').get_attribute('aria-hidden')=='true'
+            assert page.evaluate("getComputedStyle(document.documentElement).scrollBehavior")=='auto'
+            record('Decorative guitar is hidden from assistive technology; reduced motion disables smooth scrolling')
+            # Local fixture only: verify all reviewed avatar focal positions and lazy video loading.
+            fixture=json.loads((PUBLIC/'data/concerts-2025.json').read_text(encoding='utf-8'))
+            fixture[0]['setlist'][0]['credits']=[{'memberId':m['id'],'role':'기타'} for m in json.loads((PUBLIC/'data/members.json').read_text(encoding='utf-8'))]
+            fixture[0]['setlist'][0]['credits'].append({'memberId':'member-manager','role':'노래'})
+            fixture[0]['setlist'][0]['creditsStatus']='confirmed'
+            fixture[0]['setlist'][0]['videoUrl']='https://www.youtube.com/watch?v=TESTVIDEO01'
+            page.route('**/data/concerts-2025.json',lambda route:route.fulfill(json=fixture))
+            page.route('https://www.youtube-nocookie.com/**',lambda route:route.fulfill(body='<html><body>Test-only video frame</body></html>',content_type='text/html'))
+            go('index.html')
+            go('archive.html?year=2025#2025-01-family-item-01')
+            entry=page.locator('[id="2025-01-family-item-01"]')
+            assert entry.locator('.credit').count()==7
+            assert all(40<=a.bounding_box()['width']<=44 for a in entry.locator('.credit-avatar').all())
+            assert entry.locator('.credit').first.locator('img').get_attribute('alt')==''
+            assert page.locator('iframe').count()==0
+            for img in entry.locator('img').all():img.evaluate('(i)=>i.decode()')
+            entry.screenshot(path=str(OUT/'avatar-focus-fixture.png'))
+            entry.locator('.video-button').click()
+            assert 'autoplay' not in page.locator('iframe').get_attribute('src')
+            page.keyboard.press('Escape')
+            page.wait_for_function("() => !document.querySelector('iframe')")
+            page.unroute('**/data/concerts-2025.json');page.unroute('https://www.youtube-nocookie.com/**')
+            record('Seven reviewed 44px face crops, combined roles, decorative avatar alt and click-only video using a test fixture')
             page.route('**/image/**',lambda route:route.abort())
             go('members.html')
             page.locator('.member-card').last.scroll_into_view_if_needed()

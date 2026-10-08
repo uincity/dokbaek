@@ -63,13 +63,25 @@ function section(title, more=null) {
   const s=el('section',null,'section'); add(s,add(el('div',null,'section-head'),el('h2',title),more)); return s;
 }
 function sources(ids) { return (ids || []).map(id=>sourceMap.get(id)?.label).filter(Boolean).join(' · '); }
+function disclosure(label, className='') {
+  const d=el('details',null,className);d.append(el('summary',label));return d;
+}
+// These original portraits were visually checked; other artwork stays uncropped.
+const facePortraits=new Set(['매니저(열심남).png','로나짱.png','베리짱.png','베키짱(기타).png','유니뀨짱.png','쿠르짱.png','세뉴짱.png'].map(n=>'image/'+n));
 function credits(entry) {
   const box = el('div',null,'credits');
+  const grouped=new Map();
   for (const credit of entry.credits || []) {
     const member = memberMap.get(credit.memberId);
     if (!member) continue;
+    if(!grouped.has(member.id))grouped.set(member.id,{member,roles:new Set()});
+    grouped.get(member.id).roles.add(credit.role);
+  }
+  for(const {member,roles} of grouped.values()) {
     const a = link('',`members.html#${member.id}`,'credit');
-    add(a,image(member.avatar,`${member.nickname} 캐릭터`),el('span',`${member.nickname} · ${credit.role}`)); box.append(a);
+    const avatar=image(member.avatar,'','credit-avatar');
+    if(facePortraits.has(member.avatar)){avatar.classList.add('face-crop');avatar.dataset.memberId=member.id;}
+    add(a,avatar,add(el('span',null,'credit-text'),el('strong',member.nickname),el('span',[...roles].join(' · '))));box.append(a);
   }
   if (!box.childElementCount || entry.creditsStatus !== 'confirmed') box.append(el('small',`${entry.formats?.includes('합주') ? '합주 · 참여 멤버' : '연주자'} 확인 중`));
   return box;
@@ -134,7 +146,7 @@ function home() {
 function repertoireTable(list) {
   const songIds=[...new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song').map(e=>e.songId)))];
   const wrap=el('div',null,'table-wrap'); wrap.tabIndex=0; wrap.setAttribute('aria-label','공연별 레퍼토리 비교표, 가로 스크롤 가능');
-  const table=el('table'); const caption=el('caption','프로그램에 기록된 레퍼토리'); caption.className='skip';
+  const table=el('table'); const caption=el('caption','프로그램에 기록된 레퍼토리'); caption.className='sr-only';
   const head=el('thead'); const tr=el('tr'); add(tr,el('th','곡'));
   for (const c of list) { const th=el('th',c.no ? `No.${c.no}` : c.venue); th.scope='col'; tr.append(th); }
   head.append(tr); const body=el('tbody');
@@ -142,28 +154,69 @@ function repertoireTable(list) {
     const row=el('tr'); const title=el('th'); title.scope='row'; title.append(link(songMap.get(id).title,`repertoire.html#${id}`)); row.append(title);
     for (const c of list) {
       const td=el('td'); const entries=c.setlist.filter(e=>e.kind==='song' && e.songId===id);
-      for (const e of entries) { const a=link(e.evidenceStatus==='confirmed'?'●':e.isEncore?'앵콜 계획':'○',concertLink(c,e)); a.setAttribute('aria-label',`${songMap.get(id).title}, ${c.venue}, ${evidenceLabels[e.evidenceStatus]}`); td.append(a); }
+      for (const e of entries) { const label=`${evidenceLabels[e.evidenceStatus]}${e.isEncore?' · 앵콜':''}${c.status==='scheduled'?' · 공연 예정':''}`; const a=link(label,concertLink(c,e)); a.dataset.entryId=e.id; td.append(a); }
       if (!entries.length) td.textContent='—'; row.append(td);
     }
     body.append(row);
   }
   add(table,caption,head,body); wrap.append(table); return wrap;
 }
+function repertoireViews(list) {
+  const view=el('div',null,'repertoire-views');
+  const cards=el('div',null,'repertoire-mobile');
+  const ids=[...new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song').map(e=>e.songId)))];
+  for(const id of ids) {
+    const card=el('article',null,'repertoire-mini');card.dataset.songId=id;
+    add(card,add(el('h3'),link(songMap.get(id).title,`repertoire.html#${id}`)));
+    const records=el('ul');
+    for(const {c,e} of occurrences(id,list)) {
+      const a=link('',concertLink(c,e));a.dataset.entryId=e.id;
+      add(a,el('span',`${c.no?`No.${c.no} · `:''}${c.venue}`),el('small',`${evidenceLabels[e.evidenceStatus]}${e.isEncore?' · 앵콜':''}${c.status==='scheduled'?' · 공연 예정':''}`));
+      records.append(add(el('li'),a));
+    }
+    card.append(records);cards.append(card);
+  }
+  const compare=disclosure('공연별 비교표 보기','repertoire-comparison');
+  compare.append(repertoireTable(list));
+  // The same table is open on desktop and explicitly expandable on mobile.
+  // display:none removes the alternative card view from focus and accessibility.
+  const mq=window.matchMedia('(max-width:760px)');
+  const updateCards=()=>{cards.hidden=!mq.matches || compare.open;};
+  const sync=()=>{compare.open=!mq.matches;updateCards();};
+  sync();mq.addEventListener('change',sync);compare.addEventListener('toggle',updateCards);
+  add(view,compare,cards);return view;
+}
+function printButton(c,media,className='') {
+  const b=el('button',null,`print-button ${className}`);b.type='button';
+  b.setAttribute('aria-label',`${c.venue} ${media.label} 크게 보기`);
+  add(b,image(media.path,`${c.venue} ${media.label}`,'print-image'),add(el('span',null,'print-caption'),el('span',media.label),el('span','확대 ↗')));
+  b.addEventListener('click',()=>openDialog(`${c.venue} · ${media.label}`,image(media.path,`${c.venue} ${media.label}`,'',true),b));return b;
+}
 function concertSection(c, list, index) {
   const s=el('section',null,'concert-section'); s.id=c.id;
   const number=add(el('div',null,'concert-number'),el('small',c.no ? 'NO.' : 'LIVE'),el('span',c.no || '♪'));
-  const info=el('div');
+  const info=el('div',null,'concert-info');
   add(info,pill(c.status==='scheduled'?'공연 예정':c.visibility==='public-summary'?'사적 공연 · 요약 기록':'공연 기록',c.status==='scheduled'?'red':''),el('h2',c.title),el('p',dateText(c)),el('p',c.venue || '장소 확인 중'));
-  add(s,add(el('div',null,'concert-heading'),number,info),el('p',c.story,'concert-story'));
-  if (c.notes?.length) s.append(add(el('div',null,'notice'),...c.notes.map(n=>el('p',n))));
-  if(c.media?.length && c.mediaVisibility!=='withheld') {
-    const grid=el('div',null,'print-grid');
-    for(const media of c.media.filter(m=>m.reviewed)) {
-      const b=el('button',null,'print-button'); b.setAttribute('aria-label',`${c.venue} ${media.label} 크게 보기`);
-      add(b,image(media.path,`${c.venue} ${media.label}`),add(el('span'),el('span',media.label),el('span','확대 ↗')));
-      b.addEventListener('click',()=>openDialog(`${c.venue} · ${media.label}`,image(media.path,`${c.venue} ${media.label}`,'',true),b)); grid.append(b);
+  const cover=el('div',null,'concert-cover');
+  const copy=el('div',null,'concert-cover-copy');
+  add(copy,add(el('div',null,'concert-heading'),number,info),el('p',c.story,'concert-story'));
+  const media=c.mediaVisibility==='withheld'?[]:(c.media||[]).filter(m=>m.reviewed && m.type==='image');
+  const poster=media.find(m=>m.label.includes('포스터'));
+  if(poster)cover.append(printButton(c,poster,'cover-poster'));else cover.classList.add('without-poster');
+  if(media.length) {
+    const buttons=el('div',null,'cover-print-actions');
+    for(const m of media.filter(m=>m!==poster)) {
+      const b=el('button',`${m.label.includes('프로그램')?'프로그램 보기':m.label+' 보기'} ↗`,'button');b.type='button';
+      b.addEventListener('click',()=>openDialog(`${c.venue} · ${m.label}`,image(m.path,`${c.venue} ${m.label}`,'',true),b));buttons.append(b);
     }
-    s.append(grid);
+    copy.append(buttons);
+  }
+  cover.append(copy);s.append(cover);
+  if (c.notes?.length) s.append(add(el('div',null,'notice'),...c.notes.map(n=>el('p',n))));
+  if(media.length) {
+    const materials=disclosure('포스터·프로그램 보기','concert-media');
+    const grid=el('div',null,'print-grid');
+    media.forEach(m=>grid.append(printButton(c,m)));materials.append(grid);s.append(materials);
   }
   s.append(el('h3','무대에 담은 곡들'));
   const setlist=el('ol',null,'setlist');
@@ -171,15 +224,25 @@ function concertSection(c, list, index) {
     const li=el('li',null,`set-item ${entry.kind==='event'?'event':''}`); li.id=entry.id;
     const body=el('div'); const song=songMap.get(entry.songId);
     const h=el('h3'); h.append(song ? link(song.title,`repertoire.html#${song.id}`) : el('span',entry.title));
-    add(body,h,song?.composer ? el('p',song.composer,'composer') : null);
+    body.append(h);
     const badges=el('div');
     for(const format of entry.formats || []) badges.append(pill(format));
     if(entry.isEncore) badges.append(pill('앵콜','red'));
     badges.append(pill(evidenceLabels[entry.evidenceStatus],'navy'));
     body.append(badges);
-    if(song) body.append(el('p',song.note));
-    for(const extra of entry.additionalEvents || []) body.append(el('p',`함께 담은 이야기 · ${extra.title}`));
-    add(body,credits(entry),video(entry),el('p',`근거 · ${sources(entry.sourceIds)}`,'source-note'));
+    add(body,credits(entry),video(entry));
+    const extraSources=(entry.sourceIds||[]).filter(id=>!(c.sourceIds||[]).includes(id));
+    if(song || entry.additionalEvents?.length) {
+      const story=disclosure('곡 이야기','song-story');
+      if(song?.composer)story.append(el('p',`작곡 · ${song.composer}`,'composer'));
+      if(song?.note)story.append(el('p',song.note));
+      if(entry.originalTitle && entry.originalTitle!==song?.title)story.append(el('p',`자료의 표기 · ${entry.originalTitle}`,'source-note'));
+      for(const extra of entry.additionalEvents||[])story.append(el('p',`함께 담은 이야기 · ${extra.title} (${evidenceLabels[extra.evidenceStatus]})`));
+      if(extraSources.length)story.append(el('p',`곡별 근거 · ${sources(entry.sourceIds)}`,'source-note'));
+      body.append(story);
+    } else if(extraSources.length) {
+      const evidence=disclosure('곡별 근거','song-story');evidence.append(el('p',sources(entry.sourceIds),'source-note'));body.append(evidence);
+    }
     add(li,el('span',entry.kind==='event'?'—':entry.isEncore?'EN':String(entry.order).padStart(2,'0'),'set-number'),body); setlist.append(li);
   }
   s.append(setlist);
@@ -187,11 +250,36 @@ function concertSection(c, list, index) {
     s.append(el('h3','무대에 담은 이야기'));
     s.append(add(el('div',null,'moments'),...c.moments.map(m=>el('p',m,'moment'))));
   }
-  add(s,el('h3','현장의 순간'),el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','muted'),el('p',`공연 기록 근거 · ${sources(c.sourceIds)}`,'source-note'));
+  s.append(el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','media-note'));
+  const evidence=disclosure('기록의 근거','concert-evidence');
+  const evidenceIds=[...new Set([...(c.sourceIds||[]),...c.setlist.flatMap(e=>e.sourceIds||[])])];
+  const sourceList=el('ul');evidenceIds.forEach(id=>{const src=sourceMap.get(id);if(src)sourceList.append(el('li',src.label));});
+  add(evidence,sourceList,el('p','인쇄 프로그램과 진행 계획은 실제 곡별 연주 여부와 구분해 기록합니다.','source-note'));s.append(evidence);
   const nav=el('nav',null,'concert-pagination'); nav.setAttribute('aria-label',`${c.venue} 이전 다음 공연`);
   if(index>0) nav.append(link(`← ${list[index-1].venue}`,`#${list[index-1].id}`)); else nav.append(el('span'));
   if(index<list.length-1) nav.append(link(`${list[index+1].venue} →`,`#${list[index+1].id}`));
   s.append(nav); return s;
+}
+function guitarDecoration() {
+  const ns='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 320 250');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.classList.add('guitar-decoration');
+  function shape(tag,attrs){const node=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>node.setAttribute(k,v));svg.append(node);}
+  shape('path',{d:'M320 12 C270 6 259 45 221 52 C176 57 175 4 120 14 C70 24 45 72 56 122 C44 178 74 235 126 238 C179 241 183 194 221 201 C260 209 265 249 320 240 Z',fill:'var(--wood-light)',stroke:'var(--brass)', 'stroke-width':'1'});
+  [65,61,56].forEach(r=>shape('circle',{cx:'167',cy:'125',r,fill:r===56?'var(--walnut)':'none',stroke:'var(--brass)','stroke-width':r===61?'3':'1'}));
+  shape('circle',{cx:'167',cy:'125',r:'51',fill:'var(--ink)',opacity:'.85'});
+  shape('rect',{x:'271',y:'81',width:'12',height:'88',rx:'2',fill:'var(--walnut)'});
+  for(let i=0;i<6;i++)shape('line',{x1:'5',y1:103+i*9,x2:'282',y2:103+i*9,stroke:'var(--brass)','stroke-width':'.85'});
+  return svg;
+}
+function jumpLabel(c) {return `${c.no?`No.${c.no} · `:''}${c.venue || c.title}`;}
+function timeline(list) {
+  const items=el('ol',null,'concert-timeline');
+  for(const c of list) {
+    const a=link('',`#${c.id}`,'timeline-link');
+    add(a,el('span',dateText(c),'timeline-date'),add(el('span',null,'timeline-copy'),el('small',c.no?`No.${c.no}`:'공연'),el('strong',c.title),el('span',c.venue||'장소 확인 중')),el('span',c.status==='scheduled'?'공연 예정':'공연 기록','timeline-status'),el('span','↗','timeline-arrow'));
+    items.append(add(el('li'),a));
+  }
+  return items;
 }
 function archive() {
   const year=Number(params.get('year') || site.years[0].year);
@@ -202,19 +290,26 @@ function archive() {
   if(!y) { main.append(heading('아직 기록되지 않은 해','ARCHIVE','위에서 기록이 있는 연도를 선택해 주세요.')); return; }
   document.title=`${year}, ${y.title} · 집단적독백`;
   const list=ordered(concerts.filter(c=>c.year===year));
-  add(main,heading(`${year},\n${y.title}`,'YEAR IN MUSIC',y.description,y.phrase),stats(list));
-  if(y.historicalLineup) main.append(el('p',`당시 구성 · 기타 ${y.historicalLineup.guitars}명 + 매니저 ${y.historicalLineup.manager}명. 현재 멤버 소개와는 구분합니다.`,'muted'));
-  const cal=section('열두 칸의 시간'); const grid=el('div',null,'calendar');
+  const album=el('section',null,'album-cover');
+  const title=heading(`${year},\n${y.title}`,`${year} · CONCERT ARCHIVE`,y.description);
+  const jumps=el('nav',null,'concert-jumps');jumps.setAttribute('aria-label','공연 바로가기');
+  list.forEach(c=>jumps.append(link(jumpLabel(c),`#${c.id}`)));title.append(jumps);
+  const motif=el('div',null,'album-art');motif.setAttribute('aria-hidden','true');
+  add(motif,guitarDecoration(),el('p',y.phrase,'album-phrase'));
+  add(album,title,motif,stats(list));main.append(album);
+  if(y.historicalLineup) main.append(el('p',`${year}년에는 기타 ${y.historicalLineup.guitars}명과 매니저 ${y.historicalLineup.manager}명이 함께했습니다.`,'historical-note'));
+  const navigation=section('그해의 무대');navigation.classList.add('year-navigation');navigation.append(timeline(list));
+  const cal=disclosure('한 해 전체 보기','year-calendar');const grid=el('div',null,'calendar');
   for(let month=1;month<=12;month++) {
     const inMonth=list.filter(c=>c.date && Number(c.date.split('-')[1])===month);
     const box=el('div',null,`month ${inMonth.length?'':'empty'}`); box.append(el('span',String(month).padStart(2,'0'),'month-number'));
     for(const c of inMonth) box.append(link(`${c.no ? `No.${c.no} · ` : ''}${c.venue}${c.status==='scheduled'?' (예정)':''}`,`#${c.id}`));
     grid.append(box);
   }
-  add(cal,grid,el('p','기록이 있는 무대마다 하나의 링크를 두었습니다.','calendar-caption')); main.append(cal);
+  add(cal,grid,el('p','공연을 선택해 그날의 기록을 펼쳐 보세요.','calendar-caption'));navigation.append(cal);main.append(navigation);
   list.forEach((c,i)=>main.append(concertSection(c,list,i)));
   const rep=section(`${year} 레퍼토리`,link('전체 곡 찾아보기 ↗',`repertoire.html?year=${year}`));
-  add(rep,repertoireTable(list),el('p','● 연주 확인 · ○ 인쇄 프로그램 또는 진행 계획. 낭송 이벤트는 곡 수에 포함하지 않습니다.','table-legend')); main.append(rep);
+  add(rep,repertoireViews(list),el('p','인쇄 프로그램·진행 계획·연주 확인을 구분합니다. 낭송 이벤트는 곡 수에 포함하지 않습니다.','table-legend'));main.append(rep);
 }
 function history(c,e) {
   const h=el('div',null,'history');
@@ -277,7 +372,7 @@ function memberPage() {
   const grid=el('div',null,'member-grid');
   for(const m of members) {
     const a=link('',`#${m.id}`,'member-card');a.dataset.member=m.id;
-    add(a,image(m.avatar,`${m.nickname} 캐릭터`),el('h3',m.nickname),el('p',`${m.characterRole} 캐릭터`),el('p',m.roles.length?m.roles.join(' · '):'공연 역할 확인 중'));grid.append(a);
+    add(a,image(m.avatar,''),el('h3',m.nickname),el('p',`${m.characterRole} 캐릭터`),el('p',m.roles.length?m.roles.join(' · '):'공연 역할 확인 중'));grid.append(a);
   }
   main.append(grid);
   const detail=el('section',null,'member-detail');detail.id='member-detail';detail.setAttribute('aria-live','polite');main.append(detail);
@@ -313,6 +408,11 @@ function revealHash(scroll=true) {
 }
 window.addEventListener('hashchange',()=>revealHash());
 const menu=document.querySelector('.menu-toggle');
+// Reserve the actual sticky header height, including enlarged text or an open menu.
+const headerObserver=new ResizeObserver(([entry])=>{
+  document.documentElement.style.setProperty('--header-offset',`${entry.target.getBoundingClientRect().height+16}px`);
+});
+headerObserver.observe(document.querySelector('.site-header'));
 menu.addEventListener('click',()=>{const expanded=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(expanded));document.querySelector('#main-nav').classList.toggle('is-open',expanded);});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){menu.setAttribute('aria-expanded','false');document.querySelector('#main-nav').classList.remove('is-open');menu.focus();}});
 document.querySelectorAll('#main-nav a').forEach(a=>{if(a.getAttribute('href').split(/[.?]/)[0]===page)a.setAttribute('aria-current','page');});
