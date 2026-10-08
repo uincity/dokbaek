@@ -61,7 +61,7 @@ def run():
                     assert response.ok,f'Broken internal link {href}'
             record('Six page routes and all generated internal links load under /dokbaek/')
             go('index.html')
-            assert page.locator('.stat b').all_text_contents()==['3','1','3']
+            assert page.locator('.stat b').all_text_contents()==['3','1','13']
             assert page.locator('.year-card').count()==2
             assert page.locator('.concert-preview').first.inner_text().find('15:00')>=0
             capture('home-desktop.png')
@@ -74,7 +74,7 @@ def run():
             assert page.locator('.calendar .month').nth(10).locator('a').count()==2
             assert '2025년 1월 ·' not in page.locator('[id="2025-01-family"]').inner_text()
             assert page.locator('[id="2025-11-02-gallery"] .set-item').count()==12
-            assert page.locator('[id="2025-11-22-workshop"] .set-item').count()==10
+            assert page.locator('[id="2025-11-22-workshop"] .set-item').count()==11
             assert not page.locator('[id="2025-11-22-workshop"]').inner_text().count('시 「선물」 낭송')
             assert page.locator('.video-button').count()==0 and page.locator('iframe').count()==0
             page.locator('.month a').filter(has_text='꿈꾸는').click()
@@ -98,7 +98,7 @@ def run():
             page.locator('#filter-format').select_option('노래')
             assert page.locator('.song-card').count()==1
             page.locator('summary').click()
-            assert page.locator('.history').count()==2
+            assert page.locator('.history').count()==3
             page.locator('#filter-member').select_option('member-manager')
             assert page.locator('.empty-state').count()==1
             page.get_by_role('button',name='필터 초기화').click()
@@ -117,6 +117,15 @@ def run():
             assert '매니저의 무대' in page.locator('#member-detail').inner_text()
             assert page.locator('#member-detail .empty-state').count()==1
             record('Seven original member characters, direct member hash and unconfirmed participation state')
+            go('members.html#member-berry')
+            assert page.locator('#member-detail .history').count()>10
+            go('repertoire.html?member=member-berry#beloved')
+            assert page.locator('#beloved .history').count()==2
+            assert page.locator('#beloved .credit').filter(has_text='베리짱').count()==2
+            page.locator('#beloved .history>a').first.click()
+            page.wait_for_function("() => document.getElementById('2025-11-02-gallery-item-01') !== null")
+            assert page.locator('[id="2025-11-02-gallery-item-01"] .credit').count()==2
+            record('Imported repertoire: actual member participation, two Beloved histories and concert credits')
             # Exercise confirmed credits with an isolated, in-browser fixture. No source data is changed.
             fixture=json.loads((PUBLIC/'data/concerts-2025.json').read_text(encoding='utf-8'))
             fixture[0]['setlist'][1]['credits']=[{'memberId':'member-manager','role':'기타'}]

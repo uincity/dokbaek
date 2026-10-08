@@ -9,7 +9,8 @@
     ],
     "note": "기타로 열었던 첫 가족음악회의 시작곡.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -31,10 +32,14 @@
     "title": "Fly Me to the Moon",
     "composer": "Bart Howard",
     "composerStatus": "confirmed",
-    "aliases": [],
+    "aliases": [
+      "Fly to the moon",
+      "Fly me to the moon"
+    ],
     "note": "첫 무대부터 가을 공연의 앵콜까지 이어진 노래.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -56,10 +61,13 @@
     "title": "Put Your Head on My Shoulder",
     "composer": "Paul Anka",
     "composerStatus": "confirmed",
-    "aliases": [],
+    "aliases": [
+      "Put your heads on my shoulder."
+    ],
     "note": "가족음악회에서 기타와 목소리로 나눈 노래.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -84,7 +92,8 @@
     "aliases": [],
     "note": "사랑하는 이를 떠올리며 듣는 서정적인 선율.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -109,7 +118,8 @@
     "aliases": [],
     "note": "영화 〈디어 헌터〉로도 알려진 선율을 두 대의 기타로.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -134,7 +144,8 @@
     "aliases": [],
     "note": "기타와 목소리로 전하는 사랑의 설렘.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -157,7 +168,8 @@
     "aliases": [],
     "note": "함께 흥얼거리며 마음을 나누는 노래.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -178,11 +190,13 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [
-      "B?same mucho"
+      "B?same mucho",
+      "Besame mucho"
     ],
     "note": "기타 이중주로 만나는 라틴의 선율.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -205,7 +219,8 @@
     "aliases": [],
     "note": "한 대의 클래식 기타로 들려주는 가을의 재즈.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -231,7 +246,8 @@
     ],
     "note": "기타 선율과 짧은 소설 낭송이 만나는 시간.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -258,7 +274,8 @@
     ],
     "note": "가을의 쓸쓸함을 목소리로 이어갑니다.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -279,11 +296,13 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [
-      "Romance"
+      "Romance",
+      "Romance D'Amour"
     ],
     "note": "서로 다른 기타 소리가 하나로 모이는 합주.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -308,7 +327,8 @@
     ],
     "note": "2025년 가을 프로그램의 공식 마지막 곡.",
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -330,10 +350,13 @@
     "title": "Gently, by your side",
     "composer": null,
     "composerStatus": "needs-confirmation",
-    "aliases": [],
+    "aliases": [
+      "Gently, by your side(곁에 있어도 될까요)"
+    ],
     "note": "목소리로 문을 여는 가을의 오후.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -356,7 +379,8 @@
     "aliases": [],
     "note": "한 대의 기타로 시작하는 작은 이야기.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -381,7 +405,8 @@
     "aliases": [],
     "note": "어느 밤의 정서를 기타 독주로 들려줍니다.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -404,7 +429,8 @@
     "aliases": [],
     "note": "두 대의 기타가 선율을 주고받는 대화.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -427,7 +453,8 @@
     "aliases": [],
     "note": "기타와 하모니카가 기억의 노래를 나눕니다.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -450,7 +477,8 @@
     "aliases": [],
     "note": "기타 이중주로 그려 보는 그리움의 풍경.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -475,7 +503,8 @@
     ],
     "note": "세 대의 기타로 들려주는 카니발의 아침.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -500,7 +529,8 @@
     "aliases": [],
     "note": "음악에 『어린왕자』의 이야기를 더하는 계획 프로그램.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -525,7 +555,8 @@
     ],
     "note": "여럿의 기타로 함께하는 노래.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -550,7 +581,8 @@
     ],
     "note": "함께 흥얼거릴 수 있는 노래를 모은 합주.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {
@@ -573,7 +605,8 @@
     "aliases": [],
     "note": "관객과 함께 부르도록 진행 대본에 추가된 마지막 노래.",
     "sourceIds": [
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "title": {

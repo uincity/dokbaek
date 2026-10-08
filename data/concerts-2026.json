@@ -2,7 +2,7 @@
   {
     "id": "2026-10-18-gallery",
     "year": 2026,
-    "no": null,
+    "no": 4,
     "date": "2026-10-18",
     "datePrecision": "day",
     "time": "15:00",
@@ -12,25 +12,72 @@
     "status": "scheduled",
     "visibility": "public",
     "mediaVisibility": "reviewed-only",
-    "participants": [],
+    "participants": [
+      {
+        "memberId": "member-becky",
+        "role": "노래"
+      },
+      {
+        "memberId": "member-berry",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-uni",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "참여"
+      }
+    ],
     "setlist": [
       {
         "id": "2026-10-18-gallery-item-01",
         "order": 1,
         "songId": "gently-by-your-side",
         "kind": "song",
-        "originalTitle": "Gently, by your side",
+        "originalTitle": "Gently, by your side(곁에 있어도 될까요)",
         "formats": [
           "노래"
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "노래"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -45,12 +92,18 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -65,12 +118,18 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -85,12 +144,22 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -106,12 +175,18 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -126,12 +201,22 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -146,12 +231,22 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -167,12 +262,18 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": [
           {
@@ -180,7 +281,8 @@
             "kind": "event",
             "evidenceStatus": "planned",
             "sourceIds": [
-              "script-2026"
+              "script-2026",
+              "member-repertoire-list"
             ]
           }
         ]
@@ -192,16 +294,22 @@
         "kind": "song",
         "originalTitle": "어느 산골소년의 사랑이야기",
         "formats": [
-          "합주"
+          "독주"
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -216,12 +324,30 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "program-2026"
+          "program-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -241,7 +367,8 @@
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "script-2026"
+          "script-2026",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       }
@@ -270,7 +397,8 @@
     "sourceIds": [
       "poster-2026",
       "program-2026",
-      "script-2026"
+      "script-2026",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "date": {
@@ -306,17 +434,21 @@
         ]
       },
       "no": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-repertoire-list"
+        ]
+      },
+      "participants": {
         "status": "needs-confirmation",
         "sourceIds": [
-          "poster-2026",
-          "program-2026",
-          "script-2026"
+          "member-repertoire-list"
         ]
       }
     },
     "notes": [
       "공연 예정 · 프로그램은 바뀔 수 있습니다.",
-      "포스터와 인쇄 프로그램은 10곡, 진행 대본에는 「우리는」이 11번째 곡으로 추가되어 있습니다. 앵콜 표기는 없어 앵콜로 단정하지 않습니다."
+      "멤버 제공 목록을 반영한 11곡입니다. 일부 출연진과 마지막 곡의 전체 참여 범위는 확인 중입니다."
     ]
   }
 ]

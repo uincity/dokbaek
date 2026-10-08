@@ -14,11 +14,14 @@
     "id": "member-rona",
     "nickname": "로나짱",
     "avatar": "image/로나짱.png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "노래"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타",
     "sourceIds": [
-      "character-files"
+      "character-files",
+      "member-repertoire-list"
     ]
   },
   {
@@ -29,18 +32,22 @@
     "rolesStatus": "needs-confirmation",
     "characterRole": "기타",
     "sourceIds": [
-      "character-files"
+      "character-files",
+      "member-repertoire-list"
     ]
   },
   {
     "id": "member-becky",
     "nickname": "베키짱",
     "avatar": "image/베키짱(기타).png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "노래"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타 · 노래",
     "sourceIds": [
-      "character-files"
+      "character-files",
+      "member-repertoire-list"
     ]
   },
   {
@@ -51,7 +58,8 @@
     "rolesStatus": "needs-confirmation",
     "characterRole": "기타",
     "sourceIds": [
-      "character-files"
+      "character-files",
+      "member-repertoire-list"
     ]
   },
   {
@@ -62,7 +70,8 @@
     "rolesStatus": "needs-confirmation",
     "characterRole": "기타",
     "sourceIds": [
-      "character-files"
+      "character-files",
+      "member-repertoire-list"
     ]
   },
   {

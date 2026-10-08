@@ -74,6 +74,11 @@
       "id": "character-files",
       "label": "밴드 제공 캐릭터 · 파일명",
       "type": "member-artwork"
+    },
+    {
+      "id": "member-repertoire-list",
+      "label": "멤버 제공 공연별 곡·출연진 목록",
+      "type": "member-record"
     }
   ]
 }

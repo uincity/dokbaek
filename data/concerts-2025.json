@@ -12,24 +12,75 @@
     "status": "completed",
     "visibility": "public-summary",
     "mediaVisibility": "withheld",
-    "participants": [],
+    "participants": [
+      {
+        "memberId": "member-becky",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-berry",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-uni",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "노래"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "노래"
+      }
+    ],
     "setlist": [
       {
         "id": "2025-01-family-item-01",
         "order": 1,
         "songId": "duet-in-g",
         "kind": "song",
-        "originalTitle": "Duet in G",
+        "originalTitle": "Duo in G",
         "formats": [
           "기타"
         ],
         "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "planning-2025"
+          "planning-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -38,18 +89,40 @@
         "order": 2,
         "songId": "fly-me-to-the-moon",
         "kind": "song",
-        "originalTitle": "Fly Me to the Moon",
+        "originalTitle": "Fly to the moon",
         "formats": [
           "노래",
           "기타"
         ],
         "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "노래"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "planning-2025"
+          "planning-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -58,18 +131,40 @@
         "order": 3,
         "songId": "put-your-head",
         "kind": "song",
-        "originalTitle": "Put Your Head on My Shoulder",
+        "originalTitle": "Put your heads on my shoulder.",
         "formats": [
           "노래",
           "기타"
         ],
         "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "노래"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "노래"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "planning-2025"
+          "planning-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       }
@@ -77,7 +172,8 @@
     "media": [],
     "moments": [],
     "sourceIds": [
-      "planning-2025"
+      "planning-2025",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "date": {
@@ -107,12 +203,18 @@
       "no": {
         "status": "confirmed",
         "sourceIds": [
-          "planning-2025"
+          "member-repertoire-list"
+        ]
+      },
+      "participants": {
+        "status": "needs-confirmation",
+        "sourceIds": [
+          "member-repertoire-list"
         ]
       }
     },
     "notes": [
-      "정확한 날짜와 곡별 참여 멤버는 확인 중입니다. 원곡 이중주와 실제 무대 편성은 구분합니다."
+      "정확한 날짜와 일부 참여 멤버의 닉네임은 확인 중입니다. 원곡 이중주와 실제 무대 편성은 구분합니다."
     ]
   },
   {
@@ -128,7 +230,32 @@
     "status": "completed",
     "visibility": "public",
     "mediaVisibility": "reviewed-only",
-    "participants": [],
+    "participants": [
+      {
+        "memberId": "member-berry",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-uni",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "노래"
+      }
+    ],
     "setlist": [
       {
         "id": "2025-11-02-gallery-item-01",
@@ -139,13 +266,23 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -158,13 +295,23 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -177,13 +324,19 @@
         "formats": [
           "낭송"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -196,13 +349,23 @@
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -215,13 +378,19 @@
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -230,17 +399,27 @@
         "order": 5,
         "songId": "besame-mucho",
         "kind": "song",
-        "originalTitle": "Bésame Mucho",
+        "originalTitle": "Besame mucho",
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -253,13 +432,19 @@
         "formats": [
           "독주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -268,26 +453,33 @@
         "order": 7,
         "songId": "preludio-triston",
         "kind": "song",
-        "originalTitle": "Preludio Tristón",
+        "originalTitle": "Preludio Triston",
         "formats": [
           "기타",
           "낭송"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": [
           {
             "title": "『곰스크로 가는 기차』 낭송",
             "kind": "event",
-            "evidenceStatus": "planned",
+            "evidenceStatus": "confirmed",
             "sourceIds": [
-              "cue-2025"
+              "cue-2025",
+              "member-repertoire-list"
             ]
           }
         ]
@@ -297,17 +489,27 @@
         "order": 8,
         "songId": "sarang-loneliness",
         "kind": "song",
-        "originalTitle": "사랑 그 쓸쓸함에 대하여",
+        "originalTitle": "사랑 그 쓸쓸함에 관하여",
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -316,17 +518,39 @@
         "order": 9,
         "songId": "romance-damour",
         "kind": "song",
-        "originalTitle": "Romance d’Amour",
+        "originalTitle": "Romance D'Amour",
         "formats": [
           "합주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -335,17 +559,39 @@
         "order": 10,
         "songId": "recuerdos-alhambra",
         "kind": "song",
-        "originalTitle": "Recuerdos de la Alhambra",
+        "originalTitle": "알함브라 궁전의 추억",
         "formats": [
           "합주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -354,17 +600,39 @@
         "order": 11,
         "songId": "fly-me-to-the-moon",
         "kind": "song",
-        "originalTitle": "Fly Me to the Moon",
+        "originalTitle": "Fly me to the moon",
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": true,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "노래"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "cue-2025"
+          "cue-2025",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       }
@@ -396,7 +664,8 @@
     "sourceIds": [
       "planning-2025",
       "cue-2025",
-      "print-2025-2"
+      "print-2025-2",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "date": {
@@ -434,15 +703,19 @@
       "no": {
         "status": "confirmed",
         "sourceIds": [
-          "planning-2025",
-          "cue-2025",
-          "print-2025-2"
+          "member-repertoire-list"
+        ]
+      },
+      "participants": {
+        "status": "needs-confirmation",
+        "sourceIds": [
+          "member-repertoire-list"
         ]
       }
     },
     "notes": [
-      "인쇄 프로그램 9곡 · 큐시트 10곡 + 앵콜. 아래 순서는 큐시트 기준이며 실제 곡별 이행은 확인 중입니다.",
-      "「사랑 그 쓸쓸함에 대하여」는 인쇄본에 없고 큐시트에 포함되어 있습니다."
+      "멤버 제공 공연별 목록으로 곡 순서와 앵콜을 확인했습니다. 인쇄 프로그램·진행 계획과 다른 내용은 최신 목록을 반영했습니다.",
+      "일부 출연진의 닉네임 연결은 확인 중입니다."
     ]
   },
   {
@@ -458,7 +731,28 @@
     "status": "completed",
     "visibility": "public",
     "mediaVisibility": "reviewed-only",
-    "participants": [],
+    "participants": [
+      {
+        "memberId": "member-berry",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "참여"
+      },
+      {
+        "memberId": "member-uni",
+        "role": "참여"
+      }
+    ],
     "setlist": [
       {
         "id": "2025-11-22-workshop-item-01",
@@ -469,13 +763,23 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -488,13 +792,23 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -507,13 +821,23 @@
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -526,13 +850,19 @@
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -541,17 +871,27 @@
         "order": 5,
         "songId": "besame-mucho",
         "kind": "song",
-        "originalTitle": "Bésame Mucho",
+        "originalTitle": "Besame mucho",
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -564,13 +904,19 @@
         "formats": [
           "독주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -579,26 +925,33 @@
         "order": 7,
         "songId": "preludio-triston",
         "kind": "song",
-        "originalTitle": "Preludio Tristion + 곰스크로 가는 기차",
+        "originalTitle": "Preludio Triston",
         "formats": [
           "기타",
           "낭송"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": [
           {
             "title": "『곰스크로 가는 기차』 낭송",
             "kind": "event",
-            "evidenceStatus": "program",
+            "evidenceStatus": "confirmed",
             "sourceIds": [
-              "print-2025-3"
+              "print-2025-3",
+              "member-repertoire-list"
             ]
           }
         ]
@@ -608,17 +961,27 @@
         "order": 8,
         "songId": "sarang-loneliness",
         "kind": "song",
-        "originalTitle": "사랑 그 쓸쓸함에 대하여",
+        "originalTitle": "사랑 그 쓸쓸함에 관하여",
         "formats": [
           "노래"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -627,17 +990,39 @@
         "order": 9,
         "songId": "romance-damour",
         "kind": "song",
-        "originalTitle": "Romance d’Amour",
+        "originalTitle": "Romance D'Amour",
         "formats": [
           "합주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "print-2025-3",
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       },
@@ -646,17 +1031,63 @@
         "order": 10,
         "songId": "recuerdos-alhambra",
         "kind": "song",
-        "originalTitle": "Recuerdos de la Alhambra",
+        "originalTitle": "알함브라 궁전의 추억",
         "formats": [
           "합주"
         ],
-        "evidenceStatus": "program",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
-        "credits": [],
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "참여"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3",
+          "member-repertoire-list"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-11",
+        "order": 11,
+        "songId": "fly-me-to-the-moon",
+        "kind": "song",
+        "originalTitle": "Fly me to the moon",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "confirmed",
+        "isEncore": true,
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "참여"
+          }
+        ],
         "creditsStatus": "needs-confirmation",
         "videoUrl": null,
         "sourceIds": [
-          "print-2025-3"
+          "member-repertoire-list"
         ],
         "additionalEvents": []
       }
@@ -684,7 +1115,8 @@
     "moments": [],
     "sourceIds": [
       "planning-2025",
-      "print-2025-3"
+      "print-2025-3",
+      "member-repertoire-list"
     ],
     "fieldEvidence": {
       "date": {
@@ -718,13 +1150,19 @@
       "no": {
         "status": "confirmed",
         "sourceIds": [
-          "planning-2025",
-          "print-2025-3"
+          "member-repertoire-list"
+        ]
+      },
+      "participants": {
+        "status": "needs-confirmation",
+        "sourceIds": [
+          "member-repertoire-list"
         ]
       }
     },
     "notes": [
-      "인쇄 프로그램 10곡을 수록했습니다. 실제 순서·앵콜·이벤트·개별 출연진은 확인 중입니다."
+      "멤버 제공 공연별 목록으로 곡 순서와 앵콜을 확인했습니다. 인쇄 프로그램·진행 계획과 다른 내용은 최신 목록을 반영했습니다.",
+      "일부 출연진의 닉네임 연결은 확인 중입니다."
     ]
   }
 ]

@@ -339,7 +339,7 @@ function repertoire() {
   const reset=el('button','필터 초기화','text-button');reset.type='button';add(bar,count,reset);
   const results=el('div');results.id='song-results';
   add(main,form,bar,results);
-  main.append(el('p','멤버 필터는 닉네임 연결이 확인된 참여만 보여줍니다. 현재 실명 연결은 확인 중입니다.','source-note'));
+  main.append(el('p','멤버 필터는 제공된 공연별 목록에서 닉네임 연결이 확인된 참여를 보여줍니다. 일부 출연진은 확인 중입니다.','source-note'));
   const normalize=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase().trim();
   function matches(c,e) {
     return (!year.value || c.year===Number(year.value)) && (!member.value || e.credits.some(cr=>cr.memberId===member.value)) && (!format.value || e.formats.includes(format.value));
