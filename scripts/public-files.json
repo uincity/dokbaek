@@ -1,0 +1,31 @@
+{
+  "html": [
+    "index.html",
+    "archive.html",
+    "repertoire.html",
+    "members.html",
+    "about.html"
+  ],
+  "assets": [
+    "assets/css/site.css",
+    "assets/js/site.js"
+  ],
+  "images": [
+    "image/집단적독백밴드 전체사진.png",
+    "image/매니저(열심남).png",
+    "image/로나짱.png",
+    "image/베리짱.png",
+    "image/베키짱(기타).png",
+    "image/유니뀨짱.png",
+    "image/쿠르짱.png",
+    "image/세뉴짱.png"
+  ],
+  "media": [
+    "public-media/2025-no2-poster.jpg",
+    "public-media/2025-no2-program.jpg",
+    "public-media/2025-no3-poster.jpg",
+    "public-media/2025-no3-program.jpg",
+    "public-media/2026-gallery-poster.png",
+    "public-media/2026-gallery-program.png"
+  ]
+}

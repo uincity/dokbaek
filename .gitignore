@@ -1,0 +1,32 @@
+# Source documents and extraction are local only.
+/2025/
+/2026/
+/private-notes/
+/2025-archive.html
+/dokbaek_archive_codex_prompt.md
+/집단적독백_공연아카이브_2025_기획안.md
+/dist/
+/.release-*/
+/.research-tools/
+/test-results/
+# Only reviewed artwork and media are candidates for a new commit.
+/image/*
+!/image/집단적독백밴드 전체사진.png
+!/image/매니저(열심남).png
+!/image/로나짱.png
+!/image/베리짱.png
+!/image/베키짱(기타).png
+!/image/유니뀨짱.png
+!/image/쿠르짱.png
+!/image/세뉴짱.png
+/public-media/*
+!/public-media/2025-no2-poster.jpg
+!/public-media/2025-no2-program.jpg
+!/public-media/2025-no3-poster.jpg
+!/public-media/2025-no3-program.jpg
+!/public-media/2026-gallery-poster.png
+!/public-media/2026-gallery-program.png
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

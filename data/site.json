@@ -1,0 +1,79 @@
+{
+  "name": "집단적독백",
+  "description": "서로 다른 소리, 함께 쓰는 한 편의 음악. 클래식 기타 밴드 집단적독백의 무대를 기록합니다.",
+  "groupImage": "image/집단적독백밴드 전체사진.png",
+  "channels": [
+    {
+      "label": "YouTube",
+      "url": "https://www.youtube.com/@dokback-u4l"
+    },
+    {
+      "label": "Instagram",
+      "url": "https://www.instagram.com/stringband.dokbaek/"
+    }
+  ],
+  "years": [
+    {
+      "year": 2025,
+      "title": "첫 해의 기록",
+      "phrase": "처음 모여 세 번의 무대",
+      "description": "1월 창녕에서 세 곡으로 시작했습니다. 긴 연습의 시간을 지나, 11월에는 가을과 사랑의 노래를 두 무대에서 나누었습니다.",
+      "file": "data/concerts-2025.json",
+      "historicalLineup": {
+        "guitars": 5,
+        "manager": 1,
+        "sourceId": "planning-2025"
+      }
+    },
+    {
+      "year": 2026,
+      "title": "우리가 되는 오후",
+      "phrase": "혼자였던 노래가 우리가 되는 오후",
+      "description": "한 대의 기타에서 시작해 이중주와 합주로 이어지는 가을의 프로그램. 음악과 이야기가 만나는 다음 무대를 준비합니다.",
+      "file": "data/concerts-2026.json",
+      "historicalLineup": null
+    }
+  ],
+  "sources": [
+    {
+      "id": "planning-2025",
+      "label": "2025 아카이브 기획안 · 멤버 제공 기록",
+      "type": "confirmed-record"
+    },
+    {
+      "id": "cue-2025",
+      "label": "2025 고덕우 갤러리 큐시트",
+      "type": "plan"
+    },
+    {
+      "id": "print-2025-2",
+      "label": "2025 두 번째 공연 인쇄 프로그램",
+      "type": "printed-program"
+    },
+    {
+      "id": "print-2025-3",
+      "label": "2025 세 번째 공연 인쇄 프로그램",
+      "type": "printed-program"
+    },
+    {
+      "id": "poster-2026",
+      "label": "2026 가을 공연 포스터",
+      "type": "poster"
+    },
+    {
+      "id": "program-2026",
+      "label": "2026 가을 인쇄 프로그램",
+      "type": "printed-program"
+    },
+    {
+      "id": "script-2026",
+      "label": "2026 가을 공연 진행 계획",
+      "type": "plan"
+    },
+    {
+      "id": "character-files",
+      "label": "밴드 제공 캐릭터 · 파일명",
+      "type": "member-artwork"
+    }
+  ]
+}

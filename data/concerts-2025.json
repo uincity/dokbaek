@@ -1,0 +1,730 @@
+[
+  {
+    "id": "2025-01-family",
+    "year": 2025,
+    "no": 1,
+    "date": "2025-01",
+    "datePrecision": "month",
+    "time": null,
+    "title": "가족음악회",
+    "venue": "창녕 (MT)",
+    "story": "처음 함께한 무대는 세 곡으로 시작했습니다. 기타와 목소리를 나눈 작은 음악회가 이후의 무대로 이어졌습니다.",
+    "status": "completed",
+    "visibility": "public-summary",
+    "mediaVisibility": "withheld",
+    "participants": [],
+    "setlist": [
+      {
+        "id": "2025-01-family-item-01",
+        "order": 1,
+        "songId": "duet-in-g",
+        "kind": "song",
+        "originalTitle": "Duet in G",
+        "formats": [
+          "기타"
+        ],
+        "evidenceStatus": "confirmed",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-01-family-item-02",
+        "order": 2,
+        "songId": "fly-me-to-the-moon",
+        "kind": "song",
+        "originalTitle": "Fly Me to the Moon",
+        "formats": [
+          "노래",
+          "기타"
+        ],
+        "evidenceStatus": "confirmed",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-01-family-item-03",
+        "order": 3,
+        "songId": "put-your-head",
+        "kind": "song",
+        "originalTitle": "Put Your Head on My Shoulder",
+        "formats": [
+          "노래",
+          "기타"
+        ],
+        "evidenceStatus": "confirmed",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "additionalEvents": []
+      }
+    ],
+    "media": [],
+    "moments": [],
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "date": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025"
+        ]
+      },
+      "time": {
+        "status": "needs-confirmation",
+        "sourceIds": [
+          "planning-2025"
+        ]
+      },
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025"
+        ]
+      },
+      "venue": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025"
+        ]
+      },
+      "no": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025"
+        ]
+      }
+    },
+    "notes": [
+      "정확한 날짜와 곡별 참여 멤버는 확인 중입니다. 원곡 이중주와 실제 무대 편성은 구분합니다."
+    ]
+  },
+  {
+    "id": "2025-11-02-gallery",
+    "year": 2025,
+    "no": 2,
+    "date": "2025-11-02",
+    "datePrecision": "day",
+    "time": "16:00",
+    "title": "가을, 사랑 그리고 기타",
+    "venue": "고덕우 갤러리",
+    "story": "긴 연습 끝에 만난 첫 공개 무대. 사랑의 노래와 기타, 짧은 낭송으로 가을 오후를 채웠습니다.",
+    "status": "completed",
+    "visibility": "public",
+    "mediaVisibility": "reviewed-only",
+    "participants": [],
+    "setlist": [
+      {
+        "id": "2025-11-02-gallery-item-01",
+        "order": 1,
+        "songId": "beloved",
+        "kind": "song",
+        "originalTitle": "Beloved",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-02",
+        "order": 2,
+        "songId": "cavatina",
+        "kind": "song",
+        "originalTitle": "Cavatina",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-event-poem",
+        "order": 2.5,
+        "songId": null,
+        "kind": "event",
+        "title": "시 「선물」 낭송",
+        "formats": [
+          "낭송"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-03",
+        "order": 3,
+        "songId": "misty",
+        "kind": "song",
+        "originalTitle": "Misty",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-04",
+        "order": 4,
+        "songId": "neoreul-saranghae",
+        "kind": "song",
+        "originalTitle": "너를 사랑해",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-05",
+        "order": 5,
+        "songId": "besame-mucho",
+        "kind": "song",
+        "originalTitle": "Bésame Mucho",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-06",
+        "order": 6,
+        "songId": "autumn-leaves",
+        "kind": "song",
+        "originalTitle": "Autumn Leaves",
+        "formats": [
+          "독주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-07",
+        "order": 7,
+        "songId": "preludio-triston",
+        "kind": "song",
+        "originalTitle": "Preludio Tristón",
+        "formats": [
+          "기타",
+          "낭송"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": [
+          {
+            "title": "『곰스크로 가는 기차』 낭송",
+            "kind": "event",
+            "evidenceStatus": "planned",
+            "sourceIds": [
+              "cue-2025"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2025-11-02-gallery-item-08",
+        "order": 8,
+        "songId": "sarang-loneliness",
+        "kind": "song",
+        "originalTitle": "사랑 그 쓸쓸함에 대하여",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-09",
+        "order": 9,
+        "songId": "romance-damour",
+        "kind": "song",
+        "originalTitle": "Romance d’Amour",
+        "formats": [
+          "합주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-10",
+        "order": 10,
+        "songId": "recuerdos-alhambra",
+        "kind": "song",
+        "originalTitle": "Recuerdos de la Alhambra",
+        "formats": [
+          "합주"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-02-gallery-item-11",
+        "order": 11,
+        "songId": "fly-me-to-the-moon",
+        "kind": "song",
+        "originalTitle": "Fly Me to the Moon",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": true,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "additionalEvents": []
+      }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "포스터",
+        "path": "public-media/2025-no2-poster.jpg",
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "label": "인쇄 프로그램",
+        "path": "public-media/2025-no2-program.jpg",
+        "sourceIds": [
+          "cue-2025"
+        ],
+        "reviewed": true
+      }
+    ],
+    "moments": [
+      "관객과 함께하는 시 낭송을 계획했습니다.",
+      "기타와 소설 낭송을 함께 엮었습니다."
+    ],
+    "sourceIds": [
+      "planning-2025",
+      "cue-2025",
+      "print-2025-2"
+    ],
+    "fieldEvidence": {
+      "date": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "cue-2025",
+          "print-2025-2"
+        ]
+      },
+      "time": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "cue-2025",
+          "print-2025-2"
+        ]
+      },
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "cue-2025",
+          "print-2025-2"
+        ]
+      },
+      "venue": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "cue-2025",
+          "print-2025-2"
+        ]
+      },
+      "no": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "cue-2025",
+          "print-2025-2"
+        ]
+      }
+    },
+    "notes": [
+      "인쇄 프로그램 9곡 · 큐시트 10곡 + 앵콜. 아래 순서는 큐시트 기준이며 실제 곡별 이행은 확인 중입니다.",
+      "「사랑 그 쓸쓸함에 대하여」는 인쇄본에 없고 큐시트에 포함되어 있습니다."
+    ]
+  },
+  {
+    "id": "2025-11-22-workshop",
+    "year": 2025,
+    "no": 3,
+    "date": "2025-11-22",
+    "datePrecision": "day",
+    "time": "17:00",
+    "title": "가을, 사랑 그리고 기타",
+    "venue": "꿈꾸는 공작소",
+    "story": "같은 테마로 만난 두 번째 가을 무대. 프로그램에는 사랑과 가을의 노래 열 곡을 담았습니다.",
+    "status": "completed",
+    "visibility": "public",
+    "mediaVisibility": "reviewed-only",
+    "participants": [],
+    "setlist": [
+      {
+        "id": "2025-11-22-workshop-item-01",
+        "order": 1,
+        "songId": "beloved",
+        "kind": "song",
+        "originalTitle": "Beloved",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-02",
+        "order": 2,
+        "songId": "cavatina",
+        "kind": "song",
+        "originalTitle": "Cavatina",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-03",
+        "order": 3,
+        "songId": "misty",
+        "kind": "song",
+        "originalTitle": "Misty",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-04",
+        "order": 4,
+        "songId": "neoreul-saranghae",
+        "kind": "song",
+        "originalTitle": "너를 사랑해",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-05",
+        "order": 5,
+        "songId": "besame-mucho",
+        "kind": "song",
+        "originalTitle": "Bésame Mucho",
+        "formats": [
+          "이중주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-06",
+        "order": 6,
+        "songId": "autumn-leaves",
+        "kind": "song",
+        "originalTitle": "Autumn Leaves",
+        "formats": [
+          "독주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-07",
+        "order": 7,
+        "songId": "preludio-triston",
+        "kind": "song",
+        "originalTitle": "Preludio Tristion + 곰스크로 가는 기차",
+        "formats": [
+          "기타",
+          "낭송"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": [
+          {
+            "title": "『곰스크로 가는 기차』 낭송",
+            "kind": "event",
+            "evidenceStatus": "program",
+            "sourceIds": [
+              "print-2025-3"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "2025-11-22-workshop-item-08",
+        "order": 8,
+        "songId": "sarang-loneliness",
+        "kind": "song",
+        "originalTitle": "사랑 그 쓸쓸함에 대하여",
+        "formats": [
+          "노래"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-09",
+        "order": 9,
+        "songId": "romance-damour",
+        "kind": "song",
+        "originalTitle": "Romance d’Amour",
+        "formats": [
+          "합주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2025-11-22-workshop-item-10",
+        "order": 10,
+        "songId": "recuerdos-alhambra",
+        "kind": "song",
+        "originalTitle": "Recuerdos de la Alhambra",
+        "formats": [
+          "합주"
+        ],
+        "evidenceStatus": "program",
+        "isEncore": false,
+        "credits": [],
+        "creditsStatus": "needs-confirmation",
+        "videoUrl": null,
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "additionalEvents": []
+      }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "포스터",
+        "path": "public-media/2025-no3-poster.jpg",
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "label": "인쇄 프로그램",
+        "path": "public-media/2025-no3-program.jpg",
+        "sourceIds": [
+          "print-2025-3"
+        ],
+        "reviewed": true
+      }
+    ],
+    "moments": [],
+    "sourceIds": [
+      "planning-2025",
+      "print-2025-3"
+    ],
+    "fieldEvidence": {
+      "date": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "print-2025-3"
+        ]
+      },
+      "time": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "print-2025-3"
+        ]
+      },
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "print-2025-3"
+        ]
+      },
+      "venue": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "print-2025-3"
+        ]
+      },
+      "no": {
+        "status": "confirmed",
+        "sourceIds": [
+          "planning-2025",
+          "print-2025-3"
+        ]
+      }
+    },
+    "notes": [
+      "인쇄 프로그램 10곡을 수록했습니다. 실제 순서·앵콜·이벤트·개별 출연진은 확인 중입니다."
+    ]
+  }
+]

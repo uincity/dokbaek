@@ -1,0 +1,591 @@
+[
+  {
+    "id": "duet-in-g",
+    "title": "Duet in G",
+    "composer": "F. Carulli",
+    "composerStatus": "confirmed",
+    "aliases": [
+      "Duo in G"
+    ],
+    "note": "기타로 열었던 첫 가족음악회의 시작곡.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "fly-me-to-the-moon",
+    "title": "Fly Me to the Moon",
+    "composer": "Bart Howard",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "note": "첫 무대부터 가을 공연의 앵콜까지 이어진 노래.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "put-your-head",
+    "title": "Put Your Head on My Shoulder",
+    "composer": "Paul Anka",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "note": "가족음악회에서 기타와 목소리로 나눈 노래.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "beloved",
+    "title": "Beloved",
+    "composer": "Michael Hoppé",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "note": "사랑하는 이를 떠올리며 듣는 서정적인 선율.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "cavatina",
+    "title": "Cavatina",
+    "composer": "Stanley Myers",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "note": "영화 〈디어 헌터〉로도 알려진 선율을 두 대의 기타로.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "misty",
+    "title": "Misty",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "기타와 목소리로 전하는 사랑의 설렘.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "neoreul-saranghae",
+    "title": "너를 사랑해",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "함께 흥얼거리며 마음을 나누는 노래.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "besame-mucho",
+    "title": "Bésame Mucho",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "B?same mucho"
+    ],
+    "note": "기타 이중주로 만나는 라틴의 선율.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "autumn-leaves",
+    "title": "Autumn Leaves",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "한 대의 클래식 기타로 들려주는 가을의 재즈.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "preludio-triston",
+    "title": "Preludio Tristón",
+    "composer": "Máximo Diego Pujol",
+    "composerStatus": "confirmed",
+    "aliases": [
+      "Preludio Tristion",
+      "Preludio Triston"
+    ],
+    "note": "기타 선율과 짧은 소설 낭송이 만나는 시간.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "sarang-loneliness",
+    "title": "사랑 그 쓸쓸함에 대하여",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "사랑 그 쓸쓸함에 관하여"
+    ],
+    "note": "가을의 쓸쓸함을 목소리로 이어갑니다.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "romance-damour",
+    "title": "Romance d’Amour",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "Romance"
+    ],
+    "note": "서로 다른 기타 소리가 하나로 모이는 합주.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "recuerdos-alhambra",
+    "title": "Recuerdos de la Alhambra",
+    "composer": "F. Tárrega",
+    "composerStatus": "confirmed",
+    "aliases": [
+      "알함브라 궁전의 추억"
+    ],
+    "note": "2025년 가을 프로그램의 공식 마지막 곡.",
+    "sourceIds": [
+      "planning-2025"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "planning-2025"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "gently-by-your-side",
+    "title": "Gently, by your side",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "목소리로 문을 여는 가을의 오후.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "valse-des-loges",
+    "title": "Valse des loges",
+    "composer": "Roland Dyens",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "note": "한 대의 기타로 시작하는 작은 이야기.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "melodia-noite",
+    "title": "Melodia de uma Noite",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "어느 밤의 정서를 기타 독주로 들려줍니다.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "romance-no1",
+    "title": "Romance No.1",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "두 대의 기타가 선율을 주고받는 대화.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "ijeoya",
+    "title": "잊어야 한다는 마음으로",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "기타와 하모니카가 기억의 노래를 나눕니다.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "angae",
+    "title": "안개",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "기타 이중주로 그려 보는 그리움의 풍경.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "manha-carnaval",
+    "title": "Manhã de Carnaval",
+    "composer": "Luiz Bonfá",
+    "composerStatus": "confirmed",
+    "aliases": [
+      "Manh? de Carnaval"
+    ],
+    "note": "세 대의 기타로 들려주는 카니발의 아침.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      }
+    }
+  },
+  {
+    "id": "canzone-amore",
+    "title": "Canzone d’Amore",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "음악에 『어린왕자』의 이야기를 더하는 계획 프로그램.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "sangol-boy",
+    "title": "어느 산골소년의 사랑이야기",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "어느 산골소년의 슬픈 사랑이야기"
+    ],
+    "note": "여럿의 기타로 함께하는 노래.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "trot-medley",
+    "title": "Trot Medley",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "트롯 메들리"
+    ],
+    "note": "함께 흥얼거릴 수 있는 노래를 모은 합주.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  },
+  {
+    "id": "urineun",
+    "title": "우리는",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "note": "관객과 함께 부르도록 진행 대본에 추가된 마지막 노래.",
+    "sourceIds": [
+      "script-2026"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "sourceIds": [
+          "script-2026"
+        ],
+        "status": "confirmed"
+      },
+      "composer": {
+        "sourceIds": [],
+        "status": "needs-confirmation"
+      }
+    }
+  }
+]
