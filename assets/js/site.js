@@ -2,7 +2,10 @@ const main = document.querySelector('#main');
 const page = document.body.dataset.page;
 const params = new URLSearchParams(location.search);
 let site, members, songs, concerts, memberMap, songMap, sourceMap;
-const evidenceLabels = {confirmed:'연주 확인', planned:'진행 계획', program:'인쇄 프로그램'};
+const evidenceLabels = {confirmed:'', planned:'진행 계획', program:'인쇄 프로그램'};
+function evidenceText(entry) {
+  return [evidenceLabels[entry.evidenceStatus], entry.isEncore ? '앵콜' : ''].filter(Boolean).join(' · ');
+}
 
 // All text from JSON, queries and hashes enters the DOM as text, never HTML.
 function el(tag, text, className) {
@@ -44,7 +47,7 @@ function stats(list) {
   const upcoming = list.filter(c=>c.status==='scheduled').length;
   const confirmed = new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
   const box = el('div',null,'stats');
-  for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[confirmed,'연주 확인 곡','계획·이벤트 제외']]) {
+  for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[confirmed,'연주 곡','계획·이벤트 제외']]) {
     box.append(add(el('div',null,'stat'),el('b',n),el('span',label),el('small',note)));
   }
   return box;
@@ -83,6 +86,9 @@ function credits(entry) {
     if(facePortraits.has(member.avatar)){avatar.classList.add('face-crop');avatar.dataset.memberId=member.id;}
     add(a,avatar,add(el('span',null,'credit-text'),el('strong',member.nickname),el('span',[...roles].join(' · '))));box.append(a);
   }
+  for(const guest of entry.guestCredits || []) {
+    box.append(add(el('span',null,'credit'),add(el('span',null,'credit-text'),el('strong',guest.name),el('span',guest.role))));
+  }
   if (!box.childElementCount || entry.creditsStatus !== 'confirmed') box.append(el('small',`${entry.formats?.includes('합주') ? '합주 · 참여 멤버' : '연주자'} 확인 중`));
   return box;
 }
@@ -110,12 +116,21 @@ function video(entry) {
   if (url.hostname==='youtu.be') id=url.pathname.slice(1);
   if (['www.youtube.com','youtube.com'].includes(url.hostname)) id=url.searchParams.get('v');
   if (!id || !/^[\w-]{11}$/.test(id)) return null;
+  const title=entry.title || songMap.get(entry.songId)?.title || entry.originalTitle || '공연';
+  const card=el('div',null,'video-card');
+  const thumbnail=external(`${title} · YouTube에서 보기`,entry.videoUrl);thumbnail.className='video-thumbnail';
+  const img=el('img');img.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;img.alt=`${title} 공연 영상 썸네일`;img.loading='lazy';img.decoding='async';
+  img.addEventListener('error',()=>img.remove(),{once:true});
+  thumbnail.replaceChildren(img,el('span','YouTube에서 보기 ↗','video-caption'));
+  card.append(thumbnail);
   const b=el('button','공연 영상 보기','button video-button');
   b.addEventListener('click',()=>{
     const frame=el('iframe'); frame.src=`https://www.youtube-nocookie.com/embed/${id}`;
+    const start=url.searchParams.get('t') || url.searchParams.get('start');
+    if(start && /^\d+s?$/.test(start))frame.src+=`?start=${parseInt(start,10)}`;
     frame.title='집단적독백 공연 영상'; frame.allow='fullscreen'; frame.referrerPolicy='strict-origin-when-cross-origin';
     openDialog('공연 영상',frame,b);
-  }); return b;
+  }); card.append(b);return card;
 }
 function preview(c) {
   const a=link('',concertLink(c),'concert-preview');
@@ -154,7 +169,7 @@ function repertoireTable(list) {
     const row=el('tr'); const title=el('th'); title.scope='row'; title.append(link(songMap.get(id).title,`repertoire.html#${id}`)); row.append(title);
     for (const c of list) {
       const td=el('td'); const entries=c.setlist.filter(e=>e.kind==='song' && e.songId===id);
-      for (const e of entries) { const label=`${evidenceLabels[e.evidenceStatus]}${e.isEncore?' · 앵콜':''}${c.status==='scheduled'?' · 공연 예정':''}`; const a=link(label,concertLink(c,e)); a.dataset.entryId=e.id; td.append(a); }
+      for (const e of entries) { const label=[evidenceText(e) || '수록', c.status==='scheduled'?'공연 예정':''].filter(Boolean).join(' · '); const a=link(label,concertLink(c,e)); a.dataset.entryId=e.id; td.append(a); }
       if (!entries.length) td.textContent='—'; row.append(td);
     }
     body.append(row);
@@ -171,7 +186,8 @@ function repertoireViews(list) {
     const records=el('ul');
     for(const {c,e} of occurrences(id,list)) {
       const a=link('',concertLink(c,e));a.dataset.entryId=e.id;
-      add(a,el('span',`${c.no?`No.${c.no} · `:''}${c.venue}`),el('small',`${evidenceLabels[e.evidenceStatus]}${e.isEncore?' · 앵콜':''}${c.status==='scheduled'?' · 공연 예정':''}`));
+      const label=[evidenceText(e),c.status==='scheduled'?'공연 예정':''].filter(Boolean).join(' · ');
+      add(a,el('span',`${c.no?`No.${c.no} · `:''}${c.venue}`),label ? el('small',label) : null);
       records.append(add(el('li'),a));
     }
     card.append(records);cards.append(card);
@@ -212,9 +228,17 @@ function concertSection(c, list, index) {
     copy.append(buttons);
   }
   cover.append(copy);s.append(cover);
+  if(c.rehearsalVideo) {
+    const rehearsal=c.rehearsalVideo;
+    const card=el('div',null,'rehearsal-video');
+    const a=external(rehearsal.title,rehearsal.url);a.className='video-thumbnail';
+    a.replaceChildren(image(rehearsal.thumbnail,rehearsal.title),el('span',`${rehearsal.title} · YouTube에서 보기 ↗`,'video-caption'));
+    card.append(a);s.append(card);
+  }
   if (c.notes?.length) s.append(add(el('div',null,'notice'),...c.notes.map(n=>el('p',n))));
   if(media.length) {
     const materials=disclosure('포스터·프로그램 보기','concert-media');
+    materials.open=true;
     const grid=el('div',null,'print-grid');
     media.forEach(m=>grid.append(printButton(c,m)));materials.append(grid);s.append(materials);
   }
@@ -223,12 +247,12 @@ function concertSection(c, list, index) {
   for (const entry of [...c.setlist].sort((a,b)=>a.order-b.order)) {
     const li=el('li',null,`set-item ${entry.kind==='event'?'event':''}`); li.id=entry.id;
     const body=el('div'); const song=songMap.get(entry.songId);
-    const h=el('h3'); h.append(song ? link(song.title,`repertoire.html#${song.id}`) : el('span',entry.title));
+    const h=el('h3'); h.append(song ? link(entry.title || song.title,`repertoire.html#${song.id}`) : el('span',entry.title));
     body.append(h);
     const badges=el('div');
     for(const format of entry.formats || []) badges.append(pill(format));
     if(entry.isEncore) badges.append(pill('앵콜','red'));
-    badges.append(pill(evidenceLabels[entry.evidenceStatus],'navy'));
+    if(evidenceLabels[entry.evidenceStatus]) badges.append(pill(evidenceLabels[entry.evidenceStatus],'navy'));
     body.append(badges);
     add(body,credits(entry),video(entry));
     const extraSources=(entry.sourceIds||[]).filter(id=>!(c.sourceIds||[]).includes(id));
@@ -237,7 +261,7 @@ function concertSection(c, list, index) {
       if(song?.composer)story.append(el('p',`작곡 · ${song.composer}`,'composer'));
       if(song?.note)story.append(el('p',song.note));
       if(entry.originalTitle && entry.originalTitle!==song?.title)story.append(el('p',`자료의 표기 · ${entry.originalTitle}`,'source-note'));
-      for(const extra of entry.additionalEvents||[])story.append(el('p',`함께 담은 이야기 · ${extra.title} (${evidenceLabels[extra.evidenceStatus]})`));
+      for(const extra of entry.additionalEvents||[])story.append(el('p',`함께 담은 이야기 · ${extra.title}${evidenceLabels[extra.evidenceStatus] ? ` (${evidenceLabels[extra.evidenceStatus]})` : ''}`));
       if(extraSources.length)story.append(el('p',`곡별 근거 · ${sources(entry.sourceIds)}`,'source-note'));
       body.append(story);
     } else if(extraSources.length) {
@@ -250,7 +274,7 @@ function concertSection(c, list, index) {
     s.append(el('h3','무대에 담은 이야기'));
     s.append(add(el('div',null,'moments'),...c.moments.map(m=>el('p',m,'moment'))));
   }
-  s.append(el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','media-note'));
+  s.append(el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':c.setlist.some(e=>e.videoUrl)?'곡별 썸네일을 누르면 YouTube에서 공연 영상을 볼 수 있습니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','media-note'));
   const evidence=disclosure('기록의 근거','concert-evidence');
   const evidenceIds=[...new Set([...(c.sourceIds||[]),...c.setlist.flatMap(e=>e.sourceIds||[])])];
   const sourceList=el('ul');evidenceIds.forEach(id=>{const src=sourceMap.get(id);if(src)sourceList.append(el('li',src.label));});
@@ -309,11 +333,12 @@ function archive() {
   add(cal,grid,el('p','공연을 선택해 그날의 기록을 펼쳐 보세요.','calendar-caption'));navigation.append(cal);main.append(navigation);
   list.forEach((c,i)=>main.append(concertSection(c,list,i)));
   const rep=section(`${year} 레퍼토리`,link('전체 곡 찾아보기 ↗',`repertoire.html?year=${year}`));
-  add(rep,repertoireViews(list),el('p','인쇄 프로그램·진행 계획·연주 확인을 구분합니다. 낭송 이벤트는 곡 수에 포함하지 않습니다.','table-legend'));main.append(rep);
+  add(rep,repertoireViews(list),el('p','인쇄 프로그램과 진행 계획은 별도로 표시합니다. 낭송·낭독 이벤트는 곡 수에 포함하지 않습니다.','table-legend'));main.append(rep);
 }
 function history(c,e) {
   const h=el('div',null,'history');
-  add(h,link(`${c.year} · ${c.no?`No.${c.no} · `:''}${c.venue}`,concertLink(c,e)),el('p',dateText(c)),pill(evidenceLabels[e.evidenceStatus],'navy'));
+  add(h,link(`${c.year} · ${c.no?`No.${c.no} · `:''}${c.venue}`,concertLink(c,e)),el('p',dateText(c)),evidenceLabels[e.evidenceStatus] ? pill(evidenceLabels[e.evidenceStatus],'navy') : null);
+  if(e.title) h.append(el('p',e.title));
   if(c.status==='scheduled')h.append(pill('공연 예정','red'));
   if(e.isEncore)h.append(pill('앵콜','red'));
   add(h,el('p',(e.formats || []).join(' · ')),credits(e),video(e));
@@ -384,7 +409,7 @@ function memberPage() {
     add(detail,el('h2',`${m.nickname}의 무대`),el('p',m.roles.length?`확인된 역할 · ${m.roles.join(' · ')}`:'곡별 출연진 연결을 확인하고 있습니다.','muted'));
     const found=ordered(concerts).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.credits.some(cr=>cr.memberId===m.id)).map(e=>({c,e})));
     if(!found.length)detail.append(el('p','닉네임으로 확인된 참여 기록이 아직 없습니다.','empty-state'));
-    for(const {c,e} of found) { const box=history(c,e);box.prepend(link(songMap.get(e.songId).title,`repertoire.html?member=${m.id}#${e.songId}`));detail.append(box); }
+    for(const {c,e} of found) { const box=history(c,e);box.prepend(link(e.title || songMap.get(e.songId).title,`repertoire.html?member=${m.id}#${e.songId}`));detail.append(box); }
     const participantConcerts=concerts.filter(c=>c.participants.some(p=>p.memberId===m.id));
     if(participantConcerts.length)detail.append(add(el('div',null,'card-grid'),...participantConcerts.map(preview)));
     detail.append(link(`${m.nickname} 참여곡 찾아보기 ↗`,`repertoire.html?member=${m.id}`,'button'));

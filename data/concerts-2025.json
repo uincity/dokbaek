@@ -15,23 +15,23 @@
     "participants": [
       {
         "memberId": "member-becky",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-berry",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-kur",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-rona",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-uni",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-becky",
@@ -57,32 +57,38 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "planning-2025",
           "member-repertoire-list"
         ],
-        "additionalEvents": []
+        "additionalEvents": [],
+        "guestCredits": [
+          {
+            "name": "택건뷰짱",
+            "role": "기타"
+          }
+        ]
       },
       {
         "id": "2025-01-family-item-02",
@@ -99,32 +105,38 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "노래"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "planning-2025",
           "member-repertoire-list"
         ],
-        "additionalEvents": []
+        "additionalEvents": [],
+        "guestCredits": [
+          {
+            "name": "택건뷰짱",
+            "role": "기타"
+          }
+        ]
       },
       {
         "id": "2025-01-family-item-03",
@@ -141,32 +153,38 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "노래"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "노래"
+            "role": "기타 + 노래"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "planning-2025",
           "member-repertoire-list"
         ],
-        "additionalEvents": []
+        "additionalEvents": [],
+        "guestCredits": [
+          {
+            "name": "택건뷰짱",
+            "role": "기타"
+          }
+        ]
       }
     ],
     "media": [],
@@ -213,9 +231,12 @@
         ]
       }
     },
-    "notes": [
-      "정확한 날짜와 일부 참여 멤버의 닉네임은 확인 중입니다. 원곡 이중주와 실제 무대 편성은 구분합니다."
-    ]
+    "notes": [],
+    "rehearsalVideo": {
+      "title": "가족음악회를 준비하며 · 연습 영상",
+      "url": "https://www.youtube.com/watch?v=x-biPXwf0p4",
+      "thumbnail": "image/20241201_showcase.jpg"
+    }
   },
   {
     "id": "2025-11-02-gallery",
@@ -233,27 +254,31 @@
     "participants": [
       {
         "memberId": "member-berry",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-kur",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-becky",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-rona",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-uni",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-becky",
         "role": "노래"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "낭독"
       }
     ],
     "setlist": [
@@ -271,15 +296,15 @@
         "credits": [
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=viDNv_vgXDE",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -300,15 +325,15 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=t1TIz6lVPss",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -329,7 +354,7 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -354,15 +379,15 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "노래"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=EZKLGtMuwow",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -383,11 +408,15 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "노래"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=ofJ3Wb0DnC4",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -408,15 +437,15 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=JjkApMgUOy8",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -437,11 +466,11 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=uYI1Q05iwrc",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -456,25 +485,29 @@
         "originalTitle": "Preludio Triston",
         "formats": [
           "기타",
-          "낭송"
+          "낭독"
         ],
         "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-manager",
+            "role": "낭독"
           }
         ],
-        "creditsStatus": "needs-confirmation",
-        "videoUrl": null,
+        "creditsStatus": "confirmed",
+        "videoUrl": "https://www.youtube.com/watch?v=Ti47YVDMfYk&t=68s",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
         ],
         "additionalEvents": [
           {
-            "title": "『곰스크로 가는 기차』 낭송",
+            "title": "『곰스크로 가는 기차』 낭독",
             "kind": "event",
             "evidenceStatus": "confirmed",
             "sourceIds": [
@@ -482,7 +515,8 @@
               "member-repertoire-list"
             ]
           }
-        ]
+        ],
+        "title": "Preludio Triston + 곰스크로 가는 기차(낭독)"
       },
       {
         "id": "2025-11-02-gallery-item-08",
@@ -497,16 +531,16 @@
         "isEncore": false,
         "credits": [
           {
-            "memberId": "member-becky",
-            "role": "참여"
+            "memberId": "member-uni",
+            "role": "기타"
           },
           {
-            "memberId": "member-uni",
-            "role": "참여"
+            "memberId": "member-becky",
+            "role": "노래"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=E5BWBuuJ-uI",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -527,27 +561,27 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=oPpEC7u5gj4",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -568,27 +602,27 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=QzT6lSa5k00",
         "sourceIds": [
           "cue-2025",
           "member-repertoire-list"
@@ -613,19 +647,19 @@
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -734,23 +768,27 @@
     "participants": [
       {
         "memberId": "member-berry",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-kur",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-becky",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-rona",
-        "role": "참여"
+        "role": "기타"
       },
       {
         "memberId": "member-uni",
-        "role": "참여"
+        "role": "기타"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "낭독"
       }
     ],
     "setlist": [
@@ -768,15 +806,15 @@
         "credits": [
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=viDNv_vgXDE",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -797,15 +835,15 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=t1TIz6lVPss",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -826,15 +864,15 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "노래"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=EZKLGtMuwow",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -855,11 +893,15 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "노래"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=ofJ3Wb0DnC4",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -880,15 +922,15 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=JjkApMgUOy8",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -909,11 +951,11 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=uYI1Q05iwrc",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -928,25 +970,29 @@
         "originalTitle": "Preludio Triston",
         "formats": [
           "기타",
-          "낭송"
+          "낭독"
         ],
         "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-manager",
+            "role": "낭독"
           }
         ],
-        "creditsStatus": "needs-confirmation",
-        "videoUrl": null,
+        "creditsStatus": "confirmed",
+        "videoUrl": "https://www.youtube.com/watch?v=Ti47YVDMfYk&t=68s",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
         ],
         "additionalEvents": [
           {
-            "title": "『곰스크로 가는 기차』 낭송",
+            "title": "『곰스크로 가는 기차』 낭독",
             "kind": "event",
             "evidenceStatus": "confirmed",
             "sourceIds": [
@@ -954,7 +1000,8 @@
               "member-repertoire-list"
             ]
           }
-        ]
+        ],
+        "title": "Preludio Triston + 곰스크로 가는 기차(낭독)"
       },
       {
         "id": "2025-11-22-workshop-item-08",
@@ -969,16 +1016,16 @@
         "isEncore": false,
         "credits": [
           {
-            "memberId": "member-becky",
-            "role": "참여"
+            "memberId": "member-uni",
+            "role": "기타"
           },
           {
-            "memberId": "member-uni",
-            "role": "참여"
+            "memberId": "member-becky",
+            "role": "노래"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=E5BWBuuJ-uI",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -999,27 +1046,27 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=oPpEC7u5gj4",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -1040,27 +1087,27 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
-        "videoUrl": null,
+        "videoUrl": "https://www.youtube.com/watch?v=QzT6lSa5k00",
         "sourceIds": [
           "print-2025-3",
           "member-repertoire-list"
@@ -1081,7 +1128,7 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "needs-confirmation",

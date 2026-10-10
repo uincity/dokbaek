@@ -122,6 +122,8 @@ input:focus,select:focus{border-color:var(--walnut)}.filter-bottom{display:flex;
 .song-card summary strong{font-size:1.1rem;display:block;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere}.song-card summary small{font-size:.875rem;display:block;margin-top:3px}
 .song-card .history-count{font-size:.8125rem;flex:none;margin-left:auto;white-space:nowrap}.song-body{padding:0 0 24px}.song-description{font-size:1rem;color:var(--muted)}
 .history{border-left:2px solid var(--brass);padding:6px 0 6px 18px;margin:18px 0;font-size:1rem}.history p{margin:8px 0;font-size:.9375rem}.history>a{font-weight:500;display:inline-block;min-height:44px;line-height:1.8;padding-top:8px}
+.rehearsal-video{max-width:760px;margin:20px 0 32px}.rehearsal-video .image-wrap{display:block}.rehearsal-video img{object-fit:contain}
+.video-card{margin:16px 0;max-width:360px;width:100%}.video-thumbnail{display:block;overflow:hidden;border:1px solid var(--line);border-radius:3px;background:var(--card);text-decoration:none}.video-thumbnail img{width:100%;aspect-ratio:16/9;object-fit:cover}.video-caption{display:block;padding:9px 12px;font-size:.875rem;color:var(--walnut)}
 .empty-state{padding:28px 16px;border:1px solid var(--line);color:var(--muted);text-align:center;font-size:1rem}
 .member-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:26px 0 38px}
 .member-card{padding:22px 14px;border:1px solid var(--line);background:var(--card);border-radius:3px;text-decoration:none;text-align:center}

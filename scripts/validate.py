@@ -10,8 +10,8 @@ PAGES={'index.html','archive.html','repertoire.html','members.html','about.html'
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
 SONG_KEYS={'id','title','composer','composerStatus','aliases','note','sourceIds','fieldEvidence'}
-CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','story','status','visibility','mediaVisibility','participants','setlist','media','moments','sourceIds','fieldEvidence','notes'}
-ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
+CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','story','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
+ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','guestCredits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
 EVIDENCE={'confirmed','planned','program'}
 STATUSES={'confirmed','needs-confirmation'}
 
@@ -115,6 +115,12 @@ def validate_data(base=ROOT, manifest_base=ROOT):
             require(m['type']=='image' and m['reviewed'] is True and m['path'] in allowed,'Unreviewed public media')
             require(m['path'].startswith('public-media/'),'Media must be a reviewed public copy')
         require(c['mediaVisibility']!='withheld' or not c['media'],'Withheld media cannot be released')
+        if c.get('rehearsalVideo'):
+            rehearsal=c['rehearsalVideo']
+            keys(rehearsal,{'title','url','thumbnail'},'rehearsal video')
+            url=urlsplit(rehearsal['url'])
+            require(url.scheme=='https' and url.hostname in {'youtube.com','www.youtube.com','youtu.be'},'Rehearsal video must be a YouTube link')
+            require(rehearsal['thumbnail'] in allowed,'Rehearsal thumbnail needs allowlist review')
         orders=[e['order'] for e in c['setlist']];require(len(orders)==len(set(orders)),'Duplicate setlist order')
         for e in c['setlist']:
             keys(e,ENTRY_KEYS,'entry');refs(e)
@@ -126,6 +132,10 @@ def validate_data(base=ROOT, manifest_base=ROOT):
             require(e['kind']!='song' or e['songId'] in song_ids,'Unknown song reference')
             require(e['kind']!='event' or e['songId'] is None,'Events must not count as songs')
             for cr in e['credits']:credit_check(cr)
+            for guest in e.get('guestCredits',[]):
+                keys(guest,{'name','role'},'guest credit')
+                require(isinstance(guest.get('name'),str) and guest['name'],'Missing guest name')
+                require(isinstance(guest.get('role'),str) and guest['role'],'Missing guest role')
             for ev in e['additionalEvents']:
                 keys(ev,{'title','kind','evidenceStatus','sourceIds'},'additional event');refs(ev)
                 require(ev['kind']=='event' and ev['evidenceStatus'] in EVIDENCE,'Invalid additional event')

@@ -76,7 +76,14 @@ def run():
             assert page.locator('[id="2025-11-02-gallery"] .set-item').count()==12
             assert page.locator('[id="2025-11-22-workshop"] .set-item').count()==11
             assert not page.locator('[id="2025-11-22-workshop"]').inner_text().count('시 「선물」 낭송')
-            assert page.locator('.video-button').count()==0 and page.locator('iframe').count()==0
+            assert page.locator('.video-button').count()==20 and page.locator('iframe').count()==0
+            assert page.locator('.video-card .video-thumbnail').count()==20
+            assert page.locator('.rehearsal-video a').get_attribute('href')=='https://www.youtube.com/watch?v=x-biPXwf0p4'
+            preludio=page.locator('[id="2025-11-02-gallery-item-07"]')
+            assert preludio.locator('.video-thumbnail').get_attribute('href').endswith('Ti47YVDMfYk&t=68s')
+            preludio.locator('.video-button').click()
+            assert page.locator('iframe').get_attribute('src').endswith('Ti47YVDMfYk?start=68')
+            page.keyboard.press('Escape')
             page.locator('.month a').filter(has_text='꿈꾸는').click()
             assert page.url.endswith('#2025-11-22-workshop')
             record('Independent November calendar links, month-only date and separate event/encore records')

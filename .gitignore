@@ -12,6 +12,8 @@
 /test-results/
 # Only reviewed artwork and media are candidates for a new commit.
 /image/*
+!/image/20241201_showcase.jpg
+!/image/집단적독백밴드 전체사진2.png
 !/image/집단적독백밴드 전체사진.png
 !/image/매니저(열심남).png
 !/image/로나짱.png

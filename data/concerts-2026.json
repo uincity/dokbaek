@@ -18,24 +18,44 @@
         "role": "노래"
       },
       {
-        "memberId": "member-berry",
-        "role": "참여"
-      },
-      {
-        "memberId": "member-kur",
-        "role": "참여"
-      },
-      {
-        "memberId": "member-rona",
-        "role": "참여"
+        "memberId": "member-becky",
+        "role": "기타"
       },
       {
         "memberId": "member-uni",
-        "role": "참여"
+        "role": "기타"
       },
       {
-        "memberId": "member-becky",
-        "role": "참여"
+        "memberId": "member-rona",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "하모니카"
+      },
+      {
+        "memberId": "member-berry",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-senyu",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "어린왕자"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "노래"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "기타"
       }
     ],
     "setlist": [
@@ -46,7 +66,8 @@
         "kind": "song",
         "originalTitle": "Gently, by your side(곁에 있어도 될까요)",
         "formats": [
-          "노래"
+          "노래",
+          "기타"
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
@@ -56,20 +77,8 @@
             "role": "노래"
           },
           {
-            "memberId": "member-berry",
-            "role": "참여"
-          },
-          {
-            "memberId": "member-kur",
-            "role": "참여"
-          },
-          {
-            "memberId": "member-rona",
-            "role": "참여"
-          },
-          {
-            "memberId": "member-uni",
-            "role": "참여"
+            "memberId": "member-becky",
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -95,7 +104,7 @@
         "credits": [
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -121,7 +130,7 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -147,11 +156,11 @@
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -178,10 +187,14 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-manager",
+            "role": "하모니카"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
@@ -204,11 +217,11 @@
         "credits": [
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
           }
         ],
         "creditsStatus": "confirmed",
@@ -225,7 +238,7 @@
         "order": 7,
         "songId": "manha-carnaval",
         "kind": "song",
-        "originalTitle": "Manh? de Carnaval",
+        "originalTitle": "Manhã de Carnaval",
         "formats": [
           "삼중주"
         ],
@@ -234,14 +247,18 @@
         "credits": [
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
@@ -265,10 +282,14 @@
         "credits": [
           {
             "memberId": "member-becky",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-manager",
+            "role": "어린왕자"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
@@ -285,6 +306,13 @@
               "member-repertoire-list"
             ]
           }
+        ],
+        "title": "Canzone d’Amore + 어린왕자",
+        "guestCredits": [
+          {
+            "name": "관객",
+            "role": "여우"
+          }
         ]
       },
       {
@@ -294,14 +322,19 @@
         "kind": "song",
         "originalTitle": "어느 산골소년의 사랑이야기",
         "formats": [
-          "독주"
+          "기타",
+          "노래"
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
         "credits": [
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "노래"
           }
         ],
         "creditsStatus": "confirmed",
@@ -327,22 +360,26 @@
         "credits": [
           {
             "memberId": "member-berry",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-kur",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-rona",
-            "role": "참여"
+            "role": "기타"
           },
           {
             "memberId": "member-uni",
-            "role": "참여"
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
           }
         ],
-        "creditsStatus": "needs-confirmation",
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
@@ -363,14 +400,53 @@
         ],
         "evidenceStatus": "planned",
         "isEncore": false,
-        "credits": [],
-        "creditsStatus": "needs-confirmation",
+        "credits": [
+          {
+            "memberId": "member-manager",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-becky",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "노래"
+          }
+        ],
+        "creditsStatus": "confirmed",
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
           "member-repertoire-list"
         ],
-        "additionalEvents": []
+        "additionalEvents": [],
+        "guestCredits": [
+          {
+            "name": "관객",
+            "role": "노래"
+          }
+        ]
       }
     ],
     "media": [
@@ -440,7 +516,7 @@
         ]
       },
       "participants": {
-        "status": "needs-confirmation",
+        "status": "confirmed",
         "sourceIds": [
           "member-repertoire-list"
         ]
@@ -448,7 +524,7 @@
     },
     "notes": [
       "공연 예정 · 프로그램은 바뀔 수 있습니다.",
-      "멤버 제공 목록을 반영한 11곡입니다. 일부 출연진과 마지막 곡의 전체 참여 범위는 확인 중입니다."
+      "멤버 제공 목록을 반영한 11곡입니다. 곡별 참여자와 관객의 참여 역할을 함께 표시합니다."
     ]
   }
 ]
