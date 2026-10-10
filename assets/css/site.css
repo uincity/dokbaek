@@ -120,9 +120,9 @@ input,select,textarea{display:block;width:100%;border:1px solid var(--line);back
 input:focus,select:focus{border-color:var(--walnut)}.filter-bottom{display:flex;align-items:center;justify-content:space-between;margin:20px 0;gap:15px}.filter-bottom p{margin:0;font-size:.9rem}
 .text-button{border:0;border-bottom:1px solid var(--walnut);padding:4px 0;background:transparent;color:var(--walnut);font-size:.875rem;min-height:44px;flex:none}
 .song-card{border-top:1px solid var(--line);padding:0}.song-card:last-child{border-bottom:1px solid var(--line)}
-.song-card>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}.song-card>summary>span:first-child{min-width:0}
-.song-card summary strong{font-size:1.1rem;display:block;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere}.song-card summary small{font-size:.875rem;display:block;margin-top:3px}
-.song-card .history-count{font-size:.8125rem;flex:none;margin-left:auto;white-space:nowrap}.song-body{padding:0 0 24px}.song-description{font-size:1rem;color:var(--muted)}
+.song-card>summary{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:baseline;column-gap:16px;row-gap:3px;padding:22px 0}.song-card>summary>span:first-child{display:contents}
+.song-card summary strong{grid-column:1;grid-row:1;min-width:0;font-size:1.1rem;display:block;color:var(--ink);word-break:keep-all;overflow-wrap:anywhere}.song-card summary small{grid-column:1;grid-row:2;font-size:.875rem;display:block;margin:0}
+.song-card>summary::after{grid-column:3;grid-row:1;margin-left:0}.song-card .history-count{grid-column:2;grid-row:1;font-size:.8125rem;margin-left:0;white-space:nowrap}.song-body{padding:0 0 24px}.song-description{font-size:1rem;color:var(--muted)}
 .history{border-left:2px solid var(--brass);padding:6px 0 6px 18px;margin:18px 0;font-size:1rem}.history p{margin:8px 0;font-size:.9375rem}.history>a{font-weight:500;display:inline-block;min-height:44px;line-height:1.8;padding-top:8px}
 .rehearsal-video{max-width:760px;margin:20px 0 32px}.rehearsal-video .image-wrap{display:block}.rehearsal-video img{object-fit:contain}
 .video-card{margin:16px 0;max-width:360px;width:100%}.video-thumbnail{display:block;overflow:hidden;border:1px solid var(--line);border-radius:3px;background:var(--card);text-decoration:none}.video-thumbnail img{width:100%;aspect-ratio:16/9;object-fit:cover}.video-caption{display:block;padding:9px 12px;font-size:.875rem;color:var(--walnut)}
@@ -178,7 +178,7 @@ dialog{padding:20px;border:1px solid var(--brass);border-radius:4px;background:v
 @media(max-width:430px){
   .brand small{font-size:8px}.year-grid,.card-grid{grid-template-columns:minmax(0,1fr)}.calendar{grid-template-columns:repeat(2,minmax(0,1fr))}.member-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero-bottom .actions{width:100%}.hero-bottom .button{flex:1;padding:10px;font-size:.875rem}.filter-bottom{align-items:flex-start}.filter-bottom p{font-size:.875rem}
-  .song-card>summary{gap:10px}.song-card summary strong{font-size:1rem}.song-card .history-count{font-size:.75rem}
+  .song-card>summary{column-gap:10px}.song-card summary strong{font-size:1rem}.song-card .history-count{font-size:.75rem}
 }
 .concert-section,.set-item,.member-detail{scroll-margin-top:12px}
 .notice,.historical-note,.history p{font-size:1rem}
