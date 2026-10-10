@@ -38,9 +38,9 @@ def unique(records,label):
 
 def approved_files(base=ROOT):
     manifest=load(base,'scripts/public-files.json')
-    require(set(manifest)=={'html','assets','images','media'},'Unexpected manifest category')
+    require(set(manifest)=={'html','assets','images','media','fonts'},'Unexpected manifest category')
     require(set(manifest['html'])==PAGES,'Only the five public pages may be released')
-    for group,prefix,extensions in [('assets','assets/',{'.css','.js'}),('images','image/',{'.png','.jpg','.jpeg','.webp'}),('media','public-media/',{'.png','.jpg','.jpeg','.webp'})]:
+    for group,prefix,extensions in [('assets','assets/',{'.css','.js'}),('images','image/',{'.png','.jpg','.jpeg','.webp'}),('media','public-media/',{'.png','.jpg','.jpeg','.webp'}),('fonts','assets/fonts/',{'.woff2','.txt','.md'})]:
         for path in manifest[group]:
             local_path(path)
             require(path.startswith(prefix) and Path(path).suffix.lower() in extensions,'Unexpected public file type')
@@ -145,6 +145,12 @@ def validate_data(base=ROOT, manifest_base=ROOT):
         keys(channel,{'label','url'},'channel');url=urlsplit(channel['url'])
         require(url.scheme=='https' and url.hostname in {'www.youtube.com','www.instagram.com'},'Unexpected channel URL')
     for p in allowed | set(data_files):require((base/p).is_file(),f'Missing public file: {p}')
+    for relative in load(manifest_base,'scripts/public-files.json')['fonts']:
+        path=base/relative
+        if path.suffix=='.woff2':
+            content=path.read_bytes()
+            require(len(content)>=48 and content[:4]==b'wOF2','Invalid WOFF2 font')
+            require(int.from_bytes(content[8:12],'big')==len(content),'Truncated WOFF2 font')
     # Catch private fields in arbitrary nested data as well.
     text='\n'.join((base/p).read_text(encoding='utf-8') for p in data_files)
     scan_text(text)
@@ -173,6 +179,13 @@ def validate_dist(base):
         p=base/rel
         if p.suffix in {'.html','.js','.css','.json'}:
             content=p.read_text(encoding='utf-8');scan_text(content)
+            if p.suffix=='.css':
+                for target in re.findall(r'url\([\x22\x27]?([^\x22\x27)]+)[\x22\x27]?\)',content):
+                    url=urlsplit(target)
+                    if not url.scheme:
+                        require(not url.path.startswith('/'),'Domain-root CSS URL breaks project Pages URLs')
+                        resolved=(p.parent/unquote(url.path)).resolve()
+                        require(resolved.is_relative_to(base.resolve()) and resolved.is_file(),'Broken local CSS resource')
             if p.suffix=='.html':
                 parser=References();parser.feed(content)
                 for target in parser.paths:

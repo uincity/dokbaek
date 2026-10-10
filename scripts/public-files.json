@@ -7,6 +7,7 @@
     "about.html"
   ],
   "assets": [
+    "assets/css/fonts.css",
     "assets/css/site.css",
     "assets/js/site.js"
   ],
@@ -28,5 +29,13 @@
     "public-media/2025-no3-program.jpg",
     "public-media/2026-gallery-poster.png",
     "public-media/2026-gallery-program.png"
+  ],
+  "fonts": [
+    "assets/fonts/README.md",
+    "assets/fonts/gowun-batang/OFL.txt",
+    "assets/fonts/gowun-batang/GowunBatang-Regular.woff2",
+    "assets/fonts/gowun-batang/GowunBatang-Bold.woff2",
+    "assets/fonts/pretendard/OFL.txt",
+    "assets/fonts/pretendard/PretendardVariable.woff2"
   ]
 }

@@ -3,8 +3,12 @@
     "id": "member-manager",
     "nickname": "매니저",
     "avatar": "image/매니저(열심남).png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "MC",
+      "하모니카",
+      "낭독"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "하모니카",
     "sourceIds": [
       "character-files"
@@ -15,6 +19,7 @@
     "nickname": "로나짱",
     "avatar": "image/로나짱.png",
     "roles": [
+      "기타",
       "노래"
     ],
     "rolesStatus": "confirmed",
@@ -28,8 +33,10 @@
     "id": "member-berry",
     "nickname": "베리짱",
     "avatar": "image/베리짱.png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "기타"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타",
     "sourceIds": [
       "character-files",
@@ -41,7 +48,9 @@
     "nickname": "베키짱",
     "avatar": "image/베키짱(기타).png",
     "roles": [
-      "노래"
+      "기타",
+      "노래",
+      "MC"
     ],
     "rolesStatus": "confirmed",
     "characterRole": "기타 · 노래",
@@ -54,8 +63,10 @@
     "id": "member-uni",
     "nickname": "유니뀨짱",
     "avatar": "image/유니뀨짱.png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "기타"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타",
     "sourceIds": [
       "character-files",
@@ -66,8 +77,10 @@
     "id": "member-kur",
     "nickname": "쿠르짱",
     "avatar": "image/쿠르짱.png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "기타"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타",
     "sourceIds": [
       "character-files",
@@ -78,8 +91,10 @@
     "id": "member-senyu",
     "nickname": "세뉴짱",
     "avatar": "image/세뉴짱.png",
-    "roles": [],
-    "rolesStatus": "needs-confirmation",
+    "roles": [
+      "기타"
+    ],
+    "rolesStatus": "confirmed",
     "characterRole": "기타",
     "sourceIds": [
       "character-files"

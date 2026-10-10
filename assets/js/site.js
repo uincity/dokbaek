@@ -393,11 +393,12 @@ function repertoire() {
   render();
 }
 function memberPage() {
-  main.append(heading('일곱 사람, 서로 다른 이야기.','OUR MEMBERS','각자의 캐릭터와 닉네임으로 만나는 집단적독백. 확인된 참여 기록은 멤버별로 차곡차곡 이어집니다.'));
+  const roleText=m=>m.roles.join(', ');
+  main.append(heading('일곱 사람, 서로 다른 이야기.','OUR MEMBERS','각자의 닉네임으로 만나는 집단적독백. 참여 기록은 멤버별로 차곡차곡 이어집니다.'));
   const grid=el('div',null,'member-grid');
   for(const m of members) {
     const a=link('',`#${m.id}`,'member-card');a.dataset.member=m.id;
-    add(a,image(m.avatar,''),el('h3',m.nickname),el('p',`${m.characterRole} 캐릭터`),el('p',m.roles.length?m.roles.join(' · '):'공연 역할 확인 중'));grid.append(a);
+    add(a,image(m.avatar,''),el('h3',m.nickname),el('p',roleText(m)));grid.append(a);
   }
   main.append(grid);
   const detail=el('section',null,'member-detail');detail.id='member-detail';detail.setAttribute('aria-live','polite');main.append(detail);
@@ -405,8 +406,8 @@ function memberPage() {
     const m=memberMap.get(hashId());
     grid.querySelectorAll('a').forEach(a=>a.setAttribute('aria-current',String(a.dataset.member===m?.id)));
     detail.replaceChildren();
-    if(!m) { add(detail,el('h2','멤버의 기록 찾아보기'),el('p','캐릭터를 선택하면 확인된 참여 공연과 곡을 볼 수 있습니다.','muted'));return; }
-    add(detail,el('h2',`${m.nickname}의 무대`),el('p',m.roles.length?`확인된 역할 · ${m.roles.join(' · ')}`:'곡별 출연진 연결을 확인하고 있습니다.','muted'));
+    if(!m) { add(detail,el('h2','멤버의 기록 찾아보기'),el('p','멤버를 선택하면 참여 공연과 곡을 볼 수 있습니다.','muted'));return; }
+    add(detail,el('h2',`${m.nickname}의 무대`),el('p',roleText(m),'muted'));
     const found=ordered(concerts).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.credits.some(cr=>cr.memberId===m.id)).map(e=>({c,e})));
     if(!found.length)detail.append(el('p','닉네임으로 확인된 참여 기록이 아직 없습니다.','empty-state'));
     for(const {c,e} of found) { const box=history(c,e);box.prepend(link(e.title || songMap.get(e.songId).title,`repertoire.html?member=${m.id}#${e.songId}`));detail.append(box); }

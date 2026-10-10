@@ -1,0 +1,22 @@
+/* Local full-coverage fonts. Sources and original licenses: ../fonts/README.md. */
+@font-face {
+  font-family: 'Gowun Batang';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/gowun-batang/GowunBatang-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Gowun Batang';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/gowun-batang/GowunBatang-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('../fonts/pretendard/PretendardVariable.woff2') format('woff2');
+}
