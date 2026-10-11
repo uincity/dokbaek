@@ -64,6 +64,20 @@ main{max-width:1160px;margin:auto;padding:0 40px 72px;min-height:55vh;min-width:
 .concert-jumps a{display:flex;align-items:center;min-height:44px;font-size:.875rem;padding:8px 12px;line-height:1.5;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:3px;overflow-wrap:anywhere}.concert-jumps a:hover{border-color:var(--walnut)}
 .historical-note{margin:12px 0 32px;color:var(--muted);font-size:.9rem}
 .concert-timeline{list-style:none;padding:0;margin:0 0 20px;border-top:1px solid var(--line)}.concert-timeline li{border-bottom:1px solid var(--line)}
+.concert-timeline{position:relative}
+.concert-timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--brass);transform-origin:top;pointer-events:none}
+.cover-entering .hero h1,.cover-entering .hero .eyebrow{animation:cover-enter 700ms ease-out both}
+.cover-entering .lede{animation:cover-enter 650ms 100ms ease-out both}
+.cover-entering .album-art{animation:cover-enter 650ms 200ms ease-out both}
+.strings-playing .guitar-string{animation:guitar-pluck 600ms 220ms ease-out both}
+.strings-playing .guitar-string-2{animation-delay:280ms}.strings-playing .guitar-string-3{animation-delay:340ms}
+.strings-playing .guitar-string-4{animation-delay:400ms}.strings-playing .guitar-string-5{animation-delay:460ms}.strings-playing .guitar-string-6{animation-delay:520ms}
+.timeline-entering{animation:timeline-enter 500ms ease-out both}
+.timeline-drawing::before{animation:timeline-line 650ms ease-out both}
+@keyframes cover-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes guitar-pluck{0%,100%{transform:translateY(0)}20%{transform:translateY(-1.5px)}40%{transform:translateY(1px)}60%{transform:translateY(-.6px)}80%{transform:translateY(.3px)}}
+@keyframes timeline-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes timeline-line{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 .timeline-link{display:grid;grid-template-columns:minmax(150px,1fr) minmax(0,2fr) auto 20px;align-items:center;gap:20px;padding:24px 12px;text-decoration:none}.timeline-link:hover{background:var(--card)}
 .timeline-date{font-size:.95rem;font-variant-numeric:tabular-nums;color:var(--walnut)}.timeline-copy{display:flex;flex-direction:column;gap:5px;min-width:0}
 .timeline-copy strong{font-weight:500;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}.timeline-copy small{font:.8125rem var(--mono);color:var(--walnut)}
@@ -156,7 +170,8 @@ dialog{padding:20px;border:1px solid var(--brass);border-radius:4px;background:v
   .album-art{flex-direction:row;gap:16px;justify-content:flex-start;padding:12px 0}.guitar-decoration{width:104px;flex:none}.album-phrase{font-size:.875rem;text-align:left;margin:0;max-width:200px}
   .album-cover .stats{grid-column:1;margin:4px 0 12px}.album-cover .stat{padding:12px 9px}.album-cover .stat b{font-size:1.5rem}.album-cover .stat small{font-size:.6875rem}
   .historical-note{font-size:.875rem;margin:8px 0 26px}.section{padding:28px 0}
-  .timeline-link{grid-template-columns:minmax(0,1fr) 18px;gap:8px;padding:20px 12px 20px 20px;border-left:1px solid var(--brass);position:relative;margin-left:5px}
+  .concert-timeline::before{left:5px}
+  .timeline-link{grid-template-columns:minmax(0,1fr) 18px;gap:8px;padding:20px 12px 20px 20px;border-left:1px solid transparent;position:relative;margin-left:5px}
   .timeline-link::before{content:'';position:absolute;width:7px;height:7px;border:1px solid var(--walnut);border-radius:50%;left:-4px;top:27px;background:var(--paper)}
   .timeline-date{grid-column:1;font-size:.875rem}.timeline-copy{grid-column:1}.timeline-status{grid-column:1;margin-top:4px}.timeline-arrow{grid-column:2;grid-row:1/4;align-self:center}
   .calendar{grid-template-columns:repeat(3,minmax(0,1fr))}.month{padding:10px;min-height:105px}.month a{font-size:.8125rem}
@@ -183,4 +198,7 @@ dialog{padding:20px;border:1px solid var(--brass);border-radius:4px;background:v
 .concert-section,.set-item,.member-detail{scroll-margin-top:12px}
 .notice,.historical-note,.history p{font-size:1rem}
 .album-cover .stat small{font-size:.75rem}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}
+  .cover-entering .hero h1,.cover-entering .hero .eyebrow,.cover-entering .lede,.cover-entering .album-art,.timeline-entering{opacity:1;transform:none}
+  .guitar-string,.concert-timeline::before{transform:none}
+}

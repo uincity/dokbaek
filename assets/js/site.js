@@ -292,7 +292,7 @@ function guitarDecoration() {
   [65,61,56].forEach(r=>shape('circle',{cx:'167',cy:'125',r,fill:r===56?'var(--walnut)':'none',stroke:'var(--brass)','stroke-width':r===61?'3':'1'}));
   shape('circle',{cx:'167',cy:'125',r:'51',fill:'var(--ink)',opacity:'.85'});
   shape('rect',{x:'271',y:'81',width:'12',height:'88',rx:'2',fill:'var(--walnut)'});
-  for(let i=0;i<6;i++)shape('line',{x1:'5',y1:103+i*9,x2:'282',y2:103+i*9,stroke:'var(--brass)','stroke-width':'.85'});
+  for(let i=0;i<6;i++)shape('line',{class:`guitar-string guitar-string-${i+1}`,x1:'5',y1:103+i*9,x2:'282',y2:103+i*9,stroke:'var(--brass)','stroke-width':'.85'});
   return svg;
 }
 function jumpLabel(c) {return `${c.no?`No.${c.no} · `:''}${c.venue || c.title}`;}
@@ -426,6 +426,76 @@ function about() {
   prose.append(el('p','Instagram은 외부 링크로 연결합니다. 게시물을 이곳에서 수집하거나 자동으로 불러오지 않습니다.','source-note'));main.append(prose);
 }
 function hashId() { try{return decodeURIComponent(location.hash.slice(1));}catch{return '';} }
+function initArchiveMotion() {
+  if(page!=='archive')return;
+  const album=main.querySelector('.album-cover'), timeline=main.querySelector('.concert-timeline');
+  if(!album || !timeline)return;
+  const art=album.querySelector('.album-art');
+  const rows=[...timeline.children];
+  const pending=new Set();
+  const controller=new AbortController();
+  const options={signal:controller.signal};
+  let observer;
+  // Visibility is never conditional on the observer: animate only upon entry.
+  // A failed setup, hash jump, restored page or preference change stays readable.
+  const stop=()=>{
+    observer?.disconnect();controller.abort();pending.clear();
+    album.classList.remove('cover-entering');art.classList.remove('strings-playing');
+    timeline.classList.remove('timeline-drawing');
+    rows.forEach(row=>row.classList.remove('timeline-entering'));
+  };
+  try {
+    const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const restored=performance.getEntriesByType('navigation')[0]?.type==='back_forward';
+    if(reduced.matches || location.hash || restored)return;
+    reduced.addEventListener('change',stop,options);
+    window.addEventListener('pagehide',stop,options);
+    window.addEventListener('hashchange',stop,options);
+    const playStrings=()=>{
+      if(!reduced.matches && !art.classList.contains('strings-playing'))art.classList.add('strings-playing');
+    };
+    art.addEventListener('animationend',event=>{
+      if(event.target===art && event.animationName==='cover-enter')album.classList.remove('cover-entering');
+      if(event.target.classList.contains('guitar-string-6'))art.classList.remove('strings-playing');
+    },options);
+    if(window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      art.addEventListener('pointerenter',playStrings,options);
+      // Keep the decoration out of the tab order; existing cover links can trigger it.
+      album.addEventListener('focusin',playStrings,options);
+    }
+    album.classList.add('cover-entering');playStrings();
+    if(!('IntersectionObserver' in window))return;
+    const visibleNow=node=>{
+      const rect=node.getBoundingClientRect();
+      return rect.top<innerHeight && rect.bottom>0;
+    };
+    if(!visibleNow(timeline))pending.add(timeline);
+    rows.forEach(row=>{if(!visibleNow(row))pending.add(row);});
+    observer=new IntersectionObserver(entries=>{
+      try {
+        let animated=0;
+        for(const entry of entries) {
+          if(!entry.isIntersecting || !pending.has(entry.target))continue;
+          pending.delete(entry.target);observer.unobserve(entry.target);
+          // Skip delayed deliveries/fast jumps near the top; cap work per frame.
+          if(performance.now()-entry.time>160 || entry.boundingClientRect.top<innerHeight*.2)continue;
+          if(entry.target===timeline)timeline.classList.add('timeline-drawing');
+          else if(animated++<4)entry.target.classList.add('timeline-entering');
+        }
+        if(!pending.size)observer.disconnect();
+      } catch {stop();}
+    },{threshold:0,rootMargin:'0px 0px -24px 0px'});
+    pending.forEach(node=>observer.observe(node));
+    timeline.addEventListener('focusin',event=>{
+      const row=event.target.closest('li');
+      if(row){row.classList.remove('timeline-entering');pending.delete(row);observer.unobserve(row);}
+    },options);
+    timeline.addEventListener('animationend',event=>{
+      if(event.animationName==='timeline-enter')event.target.classList.remove('timeline-entering');
+      if(event.animationName==='timeline-line')timeline.classList.remove('timeline-drawing');
+    },options);
+  } catch {stop();}
+}
 function revealHash(scroll=true) {
   if(page==='members')return;
   const target=document.getElementById(hashId());if(!target)return;
@@ -451,6 +521,7 @@ try {
   ({index:home,archive,repertoire,members:memberPage,about}[page] || home)();
   for(const c of site.channels)document.querySelector('#footer-links').append(external(c.label,c.url));
   revealHash();
+  initArchiveMotion();
 } catch(error) {
   main.replaceChildren(add(el('div',null,'error'),el('h1','기록을 불러오지 못했습니다.'),el('p',location.protocol==='file:'?'로컬 서버로 사이트를 열어 주세요. README의 실행 방법을 참고하세요.':'잠시 후 새로고침해 주세요. 자료 파일을 확인해야 할 수 있습니다.'),link('다시 열기',location.href,'button')));
   console.error(error);

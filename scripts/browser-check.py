@@ -3,7 +3,7 @@ from pathlib import Path, PurePosixPath
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlsplit, unquote
 from threading import Thread
-import json, sys, traceback
+import base64, json, sys, traceback
 from playwright.sync_api import sync_playwright
 from validate import ROOT, validate_dist
 
@@ -38,6 +38,9 @@ def run():
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
             context=browser.new_context(viewport={'width':1280,'height':900},locale='ko-KR')
+            # Keep local regression checks independent of thumbnail CDN availability.
+            thumbnail=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGP4DwQACfsD/fteaysAAAAASUVORK5CYII=')
+            context.route('https://i.ytimg.com/**',lambda route:route.fulfill(body=thumbnail,content_type='image/png'))
             page=context.new_page();errors=[];bad_requests=[]
             page.on('pageerror',lambda error:errors.append(str(error)))
             page.on('response',lambda res:bad_requests.append(res.url) if res.status>=400 else None)
@@ -122,8 +125,9 @@ def run():
             go('members.html#member-manager')
             assert page.locator('.member-card').count()==7
             assert '매니저의 무대' in page.locator('#member-detail').inner_text()
-            assert page.locator('#member-detail .empty-state').count()==1
-            record('Seven original member characters, direct member hash and unconfirmed participation state')
+            assert page.locator('#member-detail .history').count()==5
+            assert page.locator('#member-detail .empty-state').count()==0
+            record('Seven original member characters, direct member hash and five recorded manager song participations')
             go('members.html#member-berry')
             assert page.locator('#member-detail .history').count()>10
             go('repertoire.html?member=member-berry#beloved')
@@ -135,9 +139,15 @@ def run():
             record('Imported repertoire: actual member participation, two Beloved histories and concert credits')
             # Exercise confirmed credits with an isolated, in-browser fixture. No source data is changed.
             fixture=json.loads((PUBLIC/'data/concerts-2025.json').read_text(encoding='utf-8'))
+            fixture_next=json.loads((PUBLIC/'data/concerts-2026.json').read_text(encoding='utf-8'))
+            for c in fixture+fixture_next:
+                for entry in c['setlist']:
+                    entry['credits']=[cr for cr in entry['credits'] if cr['memberId']!='member-manager']
             fixture[0]['setlist'][1]['credits']=[{'memberId':'member-manager','role':'기타'}]
+            fixture[0]['setlist'][1]['guestCredits']=[]
             fixture[0]['setlist'][1]['creditsStatus']='confirmed'
             page.route('**/data/concerts-2025.json',lambda route:route.fulfill(json=fixture))
+            page.route('**/data/concerts-2026.json',lambda route:route.fulfill(json=fixture_next))
             # Force a document navigation, rather than staying on the same hash URL.
             go('index.html')
             go('members.html#member-manager')
@@ -150,6 +160,7 @@ def run():
             page.wait_for_function("() => document.querySelector('#member-detail .history') !== null")
             assert 'members.html#member-manager' in page.url
             page.unroute('**/data/concerts-2025.json')
+            page.unroute('**/data/concerts-2026.json')
             record('Confirmed member → song → concert and credit → member flow using a test-only fixture')
             go('archive.html?year=2026')
             first=page.locator('.print-button').first
@@ -197,13 +208,13 @@ def run():
                     go(f'archive.html?year={year}')
                     assert page.locator('.concert-jumps a').last.bounding_box()['y']<850
                     assert not page.locator('.year-calendar').evaluate('(d)=>d.open')
-                    assert all(not d.evaluate('(d)=>d.open') for d in page.locator('.concert-media').all())
+                    assert all(d.evaluate('(d)=>d.open') for d in page.locator('.concert-media').all())
                     assert page.locator('.concert-jumps a').count()==page.locator('.timeline-link').count()
                     assert page.locator('.album-art').bounding_box()['y']>page.locator('.concert-jumps').bounding_box()['y']
                     cards=page.locator('.repertoire-mobile')
                     assert cards.is_visible()
-                    card_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.locator('small').text_content()) for a in cards.locator('li a').all()}
-                    table_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.text_content()) for a in page.locator('.repertoire-comparison td a').all()}
+                    card_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.locator('small').text_content() if a.locator('small').count() else '') for a in cards.locator('li a').all()}
+                    table_records={(a.get_attribute('data-entry-id'),a.get_attribute('href'),a.text_content().removeprefix('수록').strip(' ·')) for a in page.locator('.repertoire-comparison td a').all()}
                     assert card_records==table_records
                     compare=page.locator('.repertoire-comparison')
                     compare.locator('summary').click()
@@ -222,6 +233,8 @@ def run():
                 page.keyboard.press('Space');assert not story.evaluate('(d)=>d.open')
                 materials=page.locator('.concert-media').first
                 materials.locator('summary').focus();page.keyboard.press('Enter')
+                assert not materials.evaluate('(d)=>d.open')
+                page.keyboard.press('Enter')
                 b=materials.locator('.print-button').first;b.click()
                 page.keyboard.press('Escape');assert b.evaluate('(b)=>b===document.activeElement')
                 materials.locator('summary').click()
@@ -231,7 +244,7 @@ def run():
                 go('archive.html?year=2025#2025-11-02-gallery-item-07')
                 target=page.locator('[id="2025-11-02-gallery-item-07"]')
                 assert target.bounding_box()['y']>=page.locator('.site-header').bounding_box()['height']
-            record('Mobile quick links above fold, timeline, closed calendar/media/story, keyboard disclosures and modal focus return')
+            record('Mobile quick links above fold, timeline, closed calendar/story, open media with keyboard toggles and modal focus return')
             record('Mobile repertoire cards and table have identical entry IDs, links and evidence; inactive view has no focus targets')
             record('Concert/song deep links remain visible below the measured sticky header at 360px and 390px')
             # Enlarge root/body text to 200%, keeping the viewport narrow.
@@ -257,6 +270,7 @@ def run():
             fixture[0]['setlist'][0]['credits']=[{'memberId':m['id'],'role':'기타'} for m in json.loads((PUBLIC/'data/members.json').read_text(encoding='utf-8'))]
             fixture[0]['setlist'][0]['credits'].append({'memberId':'member-manager','role':'노래'})
             fixture[0]['setlist'][0]['creditsStatus']='confirmed'
+            fixture[0]['setlist'][0]['guestCredits']=[]
             fixture[0]['setlist'][0]['videoUrl']='https://www.youtube.com/watch?v=TESTVIDEO01'
             page.route('**/data/concerts-2025.json',lambda route:route.fulfill(json=fixture))
             page.route('https://www.youtube-nocookie.com/**',lambda route:route.fulfill(body='<html><body>Test-only video frame</body></html>',content_type='text/html'))
@@ -292,7 +306,7 @@ def run():
 if __name__=='__main__':
     try:
         run()
-        (OUT/'validation.md').write_text('# 검증 결과\n\n2026-10-08 · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n미검증: 실제 GitHub Actions/Pages 배포, 외부 공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
+        (OUT/'validation.md').write_text('# 검증 결과\n\n2026-10-11 · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n영상 썸네일 CDN은 시험용 이미지로 대체했습니다.\n미검증: 실제 GitHub Actions/Pages 배포, 외부 CDN·공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
         print(f'PASS: {len(checks)} browser and data checks. Screenshots and report: test-results/')
     except Exception:
         (OUT/'validation.md').write_text('# 검증 진행 결과\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n실패 또는 환경 제약:\n```\n'+traceback.format_exc()+'\n```\n',encoding='utf-8')
