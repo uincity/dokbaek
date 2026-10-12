@@ -519,7 +519,16 @@ try {
   memberMap=new Map(members.map(m=>[m.id,m]));songMap=new Map(songs.map(s=>[s.id,s]));sourceMap=new Map(site.sources.map(s=>[s.id,s]));
   main.replaceChildren();
   ({index:home,archive,repertoire,members:memberPage,about}[page] || home)();
-  for(const c of site.channels)document.querySelector('#footer-links').append(external(c.label,c.url));
+  const channelIcons={YouTube:'image/youtube.png',Instagram:'image/instagram.png'};
+  for(const c of site.channels){
+    const channelLink=external(c.label,c.url);
+    if(page==='index' && channelIcons[c.label]){
+      const icon=el('img');icon.src=channelIcons[c.label];icon.alt=c.label;icon.width=32;icon.height=32;icon.className='channel-icon';
+      channelLink.replaceChildren(icon);
+      channelLink.setAttribute('aria-label',`${c.label} 공식 채널 (새 창)`);
+    }
+    document.querySelector('#footer-links').append(channelLink);
+  }
   revealHash();
   initArchiveMotion();
 } catch(error) {

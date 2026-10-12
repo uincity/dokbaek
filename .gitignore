@@ -12,6 +12,10 @@
 /test-results/
 # Only reviewed artwork and media are candidates for a new commit.
 /image/*
+!/image/dokbake_logo_2.png
+!/image/dokbake_logo_3.png
+!/image/youtube.png
+!/image/instagram.png
 !/image/20241201_showcase.jpg
 !/image/집단적독백밴드 전체사진2.png
 !/image/집단적독백밴드 전체사진.png
