@@ -1,6 +1,7 @@
 :root {
-  --paper:#F7F3EC;--card:#FFFCF7;--ink:#302923;--walnut:#76513D;--brass:#A88652;
-  --red:#C8372D;--muted:#6B6056;--line:#D9CFC1;--wood-light:#EBDEC9;--grid:#C8372D30;
+  --paper:#FFFAF2;--card:#FFFFFF;--ink:#40362F;--walnut:#76513D;--brass:#A88652;
+  --red:#B03E30;--muted:#6B6056;--line:#E6DBCF;--wood-light:#F4D78E;--grid:#C8372D30;
+  --coral:#E77661;--butter:#F4D78E;--sage:#A5BBA5;--control-line:#8D7969;
   --serif:'Gowun Batang','Batang','바탕',Georgia,serif;
   --sans:'Pretendard Variable','Apple SD Gothic Neo','Malgun Gothic',sans-serif;--mono:var(--sans);--header-offset:100px;
 }
@@ -152,7 +153,7 @@ input:focus,select:focus{border-color:var(--walnut)}.filter-bottom{display:flex;
 .site-footer{max-width:1160px;padding:30px 40px 35px;margin:auto;border-top:1px solid var(--line);font-size:.9375rem}.site-footer p{font-weight:500}.site-footer p span{font-weight:normal;color:var(--muted);margin-left:15px}
 .site-footer #footer-links{display:flex;gap:22px;margin-bottom:12px}.site-footer #footer-links a{min-height:44px;display:flex;align-items:center}.site-footer small{font-size:.8125rem}
 .footer-brand{display:flex;align-items:center;gap:16px;margin-bottom:20px}.footer-logo{width:88px;height:auto;flex-shrink:0}.footer-brand p{margin-bottom:0}
-body[data-page="index"] #footer-links a{min-width:44px;justify-content:center}
+.site-footer #footer-links a{min-width:44px;justify-content:center}
 .channel-icon{width:32px;height:32px;object-fit:contain}
 @media(max-width:767px){.brand-logo{width:195px}.footer-brand{gap:12px}.footer-logo{width:72px}}
 dialog{padding:20px;border:1px solid var(--brass);border-radius:4px;background:var(--card);max-width:min(900px,95vw);max-height:94vh;width:fit-content}dialog::backdrop{background:#302923D9}
@@ -200,10 +201,97 @@ dialog{padding:20px;border:1px solid var(--brass);border-radius:4px;background:v
   .hero-bottom .actions{width:100%}.hero-bottom .button{flex:1;padding:10px;font-size:.875rem}.filter-bottom{align-items:flex-start}.filter-bottom p{font-size:.875rem}
   .song-card>summary{column-gap:10px}.song-card summary strong{font-size:1rem}.song-card .history-count{font-size:.75rem}
 }
-.concert-section,.set-item,.member-detail{scroll-margin-top:12px}
+.concert-section,.set-item,.member-detail{scroll-margin-top:var(--header-offset)}
 .notice,.historical-note,.history p{font-size:1rem}
 .album-cover .stat small{font-size:.75rem}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}
   .cover-entering .hero h1,.cover-entering .hero .eyebrow,.cover-entering .lede,.cover-entering .album-art,.timeline-entering{opacity:1;transform:none}
   .guitar-string,.concert-timeline::before{transform:none}
+}
+
+/* Friendly acoustic club: mobile defaults, wider layouts only when space permits. */
+h1,h2{font-family:var(--serif);font-weight:700}
+.album-cover h1,.concert-heading h2,.about-signature{font-family:var(--serif)}
+.button{border-radius:24px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-color:var(--control-line)}
+.button.primary{background:var(--walnut);color:white;border-color:var(--walnut)}
+.menu-toggle,input,select,textarea{border-color:var(--control-line)}
+.year-tabs a{min-width:60px;min-height:44px;flex-shrink:0}
+.year-tabs{overflow-x:auto;flex-wrap:nowrap;max-width:100%}
+#upcoming,#past-shows{scroll-margin-top:var(--header-offset)}
+.home-hero{position:relative;padding:28px 0 20px;min-width:0}
+.home-hero .eyebrow{margin-bottom:12px;font-size:.75rem}
+.home-hero h1{font-size:clamp(1.75rem,7vw,3.5rem);line-height:1.3;max-width:780px;margin-bottom:14px;white-space:normal}
+.home-hero .lede{font:400 1rem/1.65 var(--serif);max-width:620px}
+.home-hero .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.home-hero .button{font-size:.9375rem;padding:10px 16px}
+.home-hero .group-art{margin-top:20px;aspect-ratio:3/1}
+.home-hero .group-art img{object-fit:contain}
+.upcoming-section{padding:12px 0 28px}
+.upcoming-section .section-head{margin-bottom:12px}
+.upcoming-section .section-head h2{font-size:1.25rem}
+.upcoming-feature{position:relative;background:var(--card);border:1px solid var(--line);border-top:4px solid var(--coral);padding:20px;border-radius:12px;min-width:0}
+.upcoming-feature h3{font-size:clamp(1.35rem,5vw,2rem);line-height:1.4;margin:10px 0}
+.upcoming-feature p{margin:6px 0;overflow-wrap:anywhere}
+.upcoming-feature .show-date{font-size:1.125rem;font-weight:600;font-variant-numeric:tabular-nums}
+.upcoming-feature .button{margin-top:12px}
+.upcoming-feature .show-story{font-size:.9375rem;color:var(--muted);margin-top:16px;max-width:650px}
+.upcoming-copy{min-width:0}
+.preview-main{display:block;text-decoration:none}
+.preview-main:hover h3{text-decoration:underline}
+.venue-link{display:inline-flex;align-items:center;min-height:44px;color:var(--walnut);overflow-wrap:anywhere}
+@media(max-width:767px){
+  .upcoming-copy .show-venue{margin:0}
+  .upcoming-copy .show-date{margin-bottom:0}
+  .upcoming-copy .button{margin-top:8px}
+}
+.performance-inquiry{padding:24px 20px;margin:0 0 32px;border:1px solid var(--line);border-radius:12px;background:#F7EDD8;scroll-margin-top:var(--header-offset)}
+.performance-inquiry .eyebrow{margin-bottom:10px}
+.performance-inquiry h2{font-size:clamp(1.5rem,4vw,2rem);margin-bottom:16px}
+.performance-inquiry>p{font-size:1rem;line-height:1.75}
+.inquiry-manager{color:var(--muted)}
+.inquiry-controls{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.inquiry-controls .button{width:100%;min-height:44px}
+.inquiry-controls input{font-size:16px;border-color:var(--control-line)}
+.inquiry-status{margin:12px 0 0;min-height:1.75em;color:var(--ink)}
+.footer-inquiry{display:flex;align-items:center;min-height:44px;width:fit-content;max-width:100%;overflow-wrap:anywhere;word-break:break-word;font-size:1rem;margin-bottom:8px;color:var(--walnut)}
+@media(min-width:768px){
+  .performance-inquiry{padding:32px}
+  .inquiry-controls{grid-template-columns:minmax(0,1fr) auto;align-items:end;max-width:660px}
+  .inquiry-send{grid-column:1/-1;justify-self:start;width:auto!important}
+}
+.upcoming-poster{display:block;width:150px;max-width:100%;margin-top:20px;padding:0;border:0;align-self:start}
+.upcoming-poster .print-image{aspect-ratio:2/3;background:transparent}
+@media(min-width:768px){
+  .upcoming-feature.has-poster{display:grid;grid-template-columns:minmax(0,1fr) 200px;gap:28px;align-items:center}
+  .upcoming-poster{width:100%;margin-top:0}
+}
+.upcoming-section .card-grid{margin-top:16px}
+.schedule-pending{margin-top:14px;border-bottom:1px solid var(--line)}
+.schedule-pending a{display:inline-block;min-height:44px;padding:8px 0}
+.schedule-empty{padding:20px;background:var(--card);border:1px solid var(--line);border-radius:12px}
+.music-highlights{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.music-highlights article{padding:20px;border-radius:12px;background:#F7EDD8;border:1px solid var(--line)}
+.music-highlights article:nth-child(2){background:#EAF0E7}
+.music-highlights article:nth-child(3){background:#FCEAE4}
+.music-highlights article:nth-child(4){background:var(--card)}
+.music-highlights h3{font-size:1.0625rem;margin-bottom:8px}
+.music-highlights p{margin:0;color:var(--muted);font-size:1rem}
+.together-section{margin:20px 0;padding:24px;background:#EAF0E7;border-radius:12px}
+.together-section p{max-width:640px}
+.concert-preview,.year-card,.member-card,.concert-cover,.member-detail{border-radius:10px}
+main,article,section,.card-grid>*{min-width:0;overflow-wrap:anywhere}
+@media(max-width:760px){
+  .site-header{padding:10px 20px}.brand-logo{width:174px;max-width:100%;height:auto}
+  #main-nav a[aria-current=page]{background:#F7EDD8}
+  .home-hero .lede{font-size:1rem}
+}
+@media(max-width:350px){
+  main{padding-left:16px;padding-right:16px}.site-header{padding-left:16px;padding-right:16px;gap:8px}
+  .brand-logo{width:160px}.upcoming-feature{padding:16px}.home-hero .button{padding:10px 12px}
+}
+@media(min-width:600px){.music-highlights{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:900px){
+  .home-hero{padding:42px 0 28px}.home-hero h1{font-size:3.4rem}
+  .upcoming-feature{padding:28px 32px}.upcoming-section .section-head h2{font-size:1.6rem}
+  .music-highlights{grid-template-columns:repeat(4,minmax(0,1fr))}
 }

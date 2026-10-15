@@ -79,6 +79,11 @@
       "id": "member-repertoire-list",
       "label": "멤버 제공 공연별 곡·출연진 목록",
       "type": "member-record"
+    },
+    {
+      "id": "member-song-notes",
+      "label": "멤버 제공 곡설명",
+      "type": "member-record"
     }
   ]
 }

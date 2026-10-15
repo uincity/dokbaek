@@ -7,10 +7,11 @@
     "aliases": [
       "Duet in G"
     ],
-    "note": "기타로 열었던 첫 가족음악회의 시작곡.",
+    "note": "이탈리아 기타 작곡가 카룰리의 2중주곡. 두 대의 기타가 선율과 반주를 주고받으며 밝고 경쾌한 조화를 이룬다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -24,8 +25,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Ferdinando Carulli",
+    "genre": "Classical"
   },
   {
     "id": "fly-me-to-the-moon",
@@ -36,10 +57,11 @@
       "Fly to the moon",
       "Fly me to the moon"
     ],
-    "note": "첫 무대부터 가을 공연의 앵콜까지 이어진 노래.",
+    "note": "달까지 날아가고 싶다는 낭만적인 사랑의 감정을 노래한 재즈 스탠더드. 프랭크 시나트라의 스윙 버전으로 널리 사랑받았다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -53,8 +75,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Bart Howard (Frank Sinatra)",
+    "genre": "Jazz"
   },
   {
     "id": "put-your-head",
@@ -64,10 +106,11 @@
     "aliases": [
       "Put your heads on my shoulder."
     ],
-    "note": "가족음악회에서 기타와 목소리로 나눈 노래.",
+    "note": "1959년 발표된 폴 앵카의 대표적인 러브송. 사랑하는 사람에게 어깨를 내어주고 가까이 머물기를 바라는 따뜻한 노래.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -81,8 +124,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Paul Anka",
+    "genre": "Pop"
   },
   {
     "id": "beloved",
@@ -90,10 +153,11 @@
     "composer": "Michael Hoppé",
     "composerStatus": "confirmed",
     "aliases": [],
-    "note": "사랑하는 이를 떠올리며 듣는 서정적인 선율.",
+    "note": "마이클 호페의 서정적인 뉴에이지 작품. 2000년 영국 왕대비의 100세 생일을 기념한 헌정 앨범에 수록된 곡으로, 부드럽고 애틋한 선율이 특징이다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -107,8 +171,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Michael Hoppé",
+    "genre": "New Age"
   },
   {
     "id": "cavatina",
@@ -116,10 +200,11 @@
     "composer": "Stanley Myers",
     "composerStatus": "confirmed",
     "aliases": [],
-    "note": "영화 〈디어 헌터〉로도 알려진 선율을 두 대의 기타로.",
+    "note": "영화 《디어 헌터》(1978)의 주제곡으로 유명해진 클래식 기타 명곡. 존 윌리엄스의 연주로 널리 알려졌으며 아름답고 애잔한 선율이 깊은 여운을 남긴다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -133,8 +218,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Stanley Myers",
+    "genre": "OST / Classical"
   },
   {
     "id": "misty",
@@ -142,10 +247,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "기타와 목소리로 전하는 사랑의 설렘.",
+    "note": "재즈 피아니스트 에롤 가너가 1954년 작곡한 재즈 발라드. 사랑에 빠진 사람의 몽환적이고 설레는 감정을 표현한 재즈 스탠더드.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -157,8 +263,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Erroll Garner",
+    "genre": "Jazz"
   },
   {
     "id": "neoreul-saranghae",
@@ -166,10 +292,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "함께 흥얼거리며 마음을 나누는 노래.",
+    "note": "사랑하는 사람에게 전하는 진솔하고 따뜻한 고백을 담은 곡. 소박한 가사와 아름다운 선율로 오랫동안 사랑받아 온 한국의 대표적인 사랑 노래.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -181,8 +308,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "한동준",
+    "genre": "K-pop / Ballad"
   },
   {
     "id": "besame-mucho",
@@ -193,10 +340,11 @@
       "B?same mucho",
       "Besame mucho"
     ],
-    "note": "기타 이중주로 만나는 라틴의 선율.",
+    "note": "'나에게 뜨겁게 키스해 주세요'라는 뜻의 멕시코 볼레로 명곡. 사랑하는 사람과 헤어질지도 모른다는 두려움과 간절한 사랑을 표현한다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -208,8 +356,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Consuelo Velázquez",
+    "genre": "Latin / Bolero"
   },
   {
     "id": "autumn-leaves",
@@ -217,10 +385,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "한 대의 클래식 기타로 들려주는 가을의 재즈.",
+    "note": "프랑스 샹송 《Les Feuilles mortes》(고엽)에서 출발한 재즈 스탠더드. 낙엽이 지는 가을 풍경에 지나간 사랑의 그리움을 담은 곡.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -232,8 +401,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Joseph Kosma",
+    "genre": "Jazz"
   },
   {
     "id": "preludio-triston",
@@ -244,10 +433,11 @@
       "Preludio Tristion",
       "Preludio Triston"
     ],
-    "note": "기타 선율과 짧은 소설 낭송이 만나는 시간.",
+    "note": "아르헨티나 기타 작곡가 푸홀의 작품. 밀롱가 특유의 리듬과 쓸쓸한 선율이 어우러져 남미 음악의 서정성을 느낄 수 있다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -261,8 +451,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Máximo Diego Pujol",
+    "genre": "Classical"
   },
   {
     "id": "sarang-loneliness",
@@ -272,10 +482,11 @@
     "aliases": [
       "사랑 그 쓸쓸함에 관하여"
     ],
-    "note": "가을의 쓸쓸함을 목소리로 이어갑니다.",
+    "note": "사랑이 지나간 자리에 남는 외로움과 쓸쓸함을 담담하게 표현한 노래. 양희은의 깊이 있는 목소리와 이병우의 서정적인 작곡이 돋보인다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -287,8 +498,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "이병우 (양희은)",
+    "genre": "K-pop / Ballad"
   },
   {
     "id": "romance-damour",
@@ -299,10 +530,11 @@
       "Romance",
       "Romance D'Amour"
     ],
-    "note": "서로 다른 기타 소리가 하나로 모이는 합주.",
+    "note": "'사랑의 로망스'로 알려진 스페인풍 기타 명곡. 영화 《금지된 장난》을 통해 널리 알려졌으며, 애절하고 낭만적인 아르페지오 선율이 특징이다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -314,8 +546,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Anonymous (Francis Goya)",
+    "genre": "Classical"
   },
   {
     "id": "recuerdos-alhambra",
@@ -325,10 +577,11 @@
     "aliases": [
       "알함브라 궁전의 추억"
     ],
-    "note": "2025년 가을 프로그램의 공식 마지막 곡.",
+    "note": "'알함브라 궁전의 추억'이라는 뜻의 클래식 기타 대표작. 빠르게 반복되는 트레몰로 기법으로 아련하고 환상적인 선율을 만들어 낸다.",
     "sourceIds": [
       "planning-2025",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -342,8 +595,28 @@
           "planning-2025"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Francisco Tárrega",
+    "genre": "Classical"
   },
   {
     "id": "gently-by-your-side",
@@ -353,10 +626,11 @@
     "aliases": [
       "Gently, by your side(곁에 있어도 될까요)"
     ],
-    "note": "목소리로 문을 여는 가을의 오후.",
+    "note": "인디 포크 싱어송라이터 시와의 노래. 누군가의 곁에 조심스럽게 머물고 싶은 마음을 소박한 목소리와 따뜻한 선율로 전한다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -368,8 +642,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "시와 (Siwa)",
+    "genre": "K-pop / Indie Folk"
   },
   {
     "id": "valse-des-loges",
@@ -377,10 +671,11 @@
     "composer": "Roland Dyens",
     "composerStatus": "confirmed",
     "aliases": [],
-    "note": "한 대의 기타로 시작하는 작은 이야기.",
+    "note": "프랑스 기타리스트 롤랑 디앙의 독창적인 왈츠곡. 공연장의 대기실에서 조금씩 작곡한 작품으로, 경쾌한 왈츠 리듬과 재치 있는 음악적 표현이 특징이다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -394,8 +689,28 @@
           "script-2026"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Roland Dyens",
+    "genre": "Classical"
   },
   {
     "id": "melodia-noite",
@@ -403,10 +718,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "어느 밤의 정서를 기타 독주로 들려줍니다.",
+    "note": "'어느 밤의 선율'이라는 뜻의 포르투갈 기타 작품. 밤의 고요함을 연상시키는 부드럽고 서정적인 선율이 매력적인 곡.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -418,8 +734,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Silvestre Fonseca",
+    "genre": "Classical"
   },
   {
     "id": "romance-no1",
@@ -427,10 +763,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "두 대의 기타가 선율을 주고받는 대화.",
+    "note": "프랑스 기타 작곡가 클레냥스의 기타 2중주 작품(Op.100). 두 대의 기타가 부드러운 선율을 주고받으며 낭만적인 분위기를 만들어 낸다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -442,8 +779,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Francis Kleynjans",
+    "genre": "Classical"
   },
   {
     "id": "ijeoya",
@@ -451,10 +808,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "기타와 하모니카가 기억의 노래를 나눕니다.",
+    "note": "떠나간 사랑을 잊으려 하지만 지울 수 없는 그리움을 노래한 김광석의 대표곡. 절제된 감정과 담담한 가사가 깊은 울림을 전한다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -466,8 +824,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "김광석",
+    "genre": "K-pop / Folk"
   },
   {
     "id": "angae",
@@ -475,10 +853,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "기타 이중주로 그려 보는 그리움의 풍경.",
+    "note": "1967년 정훈희의 데뷔곡. 안개처럼 불확실하고 쓸쓸한 사랑의 감정을 몽환적인 분위기와 호소력 있는 목소리로 표현한 명곡.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -490,8 +869,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "이봉조 (정훈희)",
+    "genre": "K-pop"
   },
   {
     "id": "manha-carnaval",
@@ -501,10 +900,11 @@
     "aliases": [
       "Manh? de Carnaval"
     ],
-    "note": "세 대의 기타로 들려주는 카니발의 아침.",
+    "note": "브라질 영화 《흑인 오르페》(1959)의 대표적인 삽입곡. '카니발의 아침'이라는 뜻으로, 브라질 음악 특유의 리듬에 서정적이고 애틋한 선율을 담았다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -518,8 +918,28 @@
           "script-2026"
         ],
         "status": "confirmed"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Luiz Bonfá",
+    "genre": "OST / Bossa Nova"
   },
   {
     "id": "canzone-amore",
@@ -527,10 +947,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "음악에 『어린왕자』의 이야기를 더하는 계획 프로그램.",
+    "note": "'사랑의 노래'라는 뜻의 클래식 기타 소품. 노래하듯 자연스럽게 흐르는 선율과 섬세한 화성이 따뜻하고 낭만적인 분위기를 자아낸다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -542,8 +963,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "Maria Linnemann",
+    "genre": "Classical"
   },
   {
     "id": "sangol-boy",
@@ -553,10 +994,11 @@
     "aliases": [
       "어느 산골소년의 슬픈 사랑이야기"
     ],
-    "note": "여럿의 기타로 함께하는 노래.",
+    "note": "순수한 산골 소년의 사랑과 자연의 아름다움을 동화처럼 그려 낸 노래. 맑고 서정적인 멜로디가 어린 시절의 추억과 순수함을 떠올리게 한다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -568,8 +1010,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "예민",
+    "genre": "K-pop / Folk"
   },
   {
     "id": "trot-medley",
@@ -579,10 +1041,11 @@
     "aliases": [
       "트롯 메들리"
     ],
-    "note": "함께 흥얼거릴 수 있는 노래를 모은 합주.",
+    "note": "그리운 이를 기다리는 마음, 사랑에 대한 헌신, 지나간 청춘에 대한 향수를 담은 세 곡의 메들리. 한국 대중가요 특유의 정서와 흥겨움을 함께 느낄 수 있다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -594,8 +1057,28 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "조용필, 심수봉, 최백호",
+    "genre": "K-pop / Trot"
   },
   {
     "id": "urineun",
@@ -603,10 +1086,11 @@
     "composer": null,
     "composerStatus": "needs-confirmation",
     "aliases": [],
-    "note": "관객과 함께 부르도록 진행 대본에 추가된 마지막 노래.",
+    "note": "서로 다른 사람들이 함께 살아가는 삶과 인연의 의미를 노래한 송창식의 대표곡. 힘 있는 선율과 철학적인 가사가 어우러져 깊은 울림을 전한다.",
     "sourceIds": [
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "member-song-notes"
     ],
     "fieldEvidence": {
       "title": {
@@ -618,7 +1102,27 @@
       "composer": {
         "sourceIds": [],
         "status": "needs-confirmation"
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
       }
-    }
+    },
+    "artistCredit": "송창식",
+    "genre": "K-pop / Folk"
   }
 ]

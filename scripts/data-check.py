@@ -34,6 +34,12 @@ class PublicDataChecks(unittest.TestCase):
         for text in ['private@example.com','010-1234-5678','C:/Users/private/file','D:\\private\\file']:
             with self.assertRaises(ValueError):validate.scan_text(text)
         validate.scan_text('https://www.youtube.com/@dokback-u4l')
+    def test_only_authorized_inquiry_email_is_public(self):
+        validate.scan_text('공연 문의 · uuincity@naver.com')
+        for address in ['private@example.com','uuincity+private@naver.com','xuuincity@naver.com','uuincity@naver.com.example.org']:
+            with self.assertRaises(ValueError):validate.scan_text(address)
+        with self.assertRaises(ValueError):
+            validate.scan_text('uuincity@naver.com private@example.com')
     def test_png_removes_metadata_without_changing_pixels(self):
         def chunk(kind,data):return struct.pack('>I',len(data))+kind+data+struct.pack('>I',zlib.crc32(kind+data)&0xffffffff)
         pixels=zlib.compress(b'\x00\x12\x34\x56')

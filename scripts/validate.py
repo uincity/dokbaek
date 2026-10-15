@@ -9,7 +9,7 @@ ROOT=Path(__file__).resolve().parents[1]
 PAGES={'index.html','archive.html','repertoire.html','members.html','about.html'}
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
-SONG_KEYS={'id','title','composer','composerStatus','aliases','note','sourceIds','fieldEvidence'}
+SONG_KEYS={'id','title','composer','composerStatus','artistCredit','genre','aliases','note','sourceIds','fieldEvidence'}
 CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','story','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
 ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','guestCredits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
 EVIDENCE={'confirmed','planned','program'}
@@ -74,6 +74,10 @@ def validate_data(base=ROOT, manifest_base=ROOT):
         keys(s,SONG_KEYS,'song'); refs(s); fields(s)
         require(s['composerStatus'] in STATUSES,'Invalid composer status')
         require((s['composer'] is not None)==(s['composerStatus']=='confirmed'),'Composer confirmation mismatch')
+        for field in ('artistCredit','genre'):
+            if field in s:
+                require(isinstance(s[field],str) and bool(s[field].strip()),'Empty song information')
+                require(s.get('fieldEvidence',{}).get(field,{}).get('status')=='confirmed','Song information needs evidence')
     years=[y['year'] for y in site['years']]
     require(len(years)==len(set(years)),'Duplicate years')
     concerts=[]; data_files=['data/site.json','data/members.json','data/songs.json']
@@ -157,7 +161,10 @@ def validate_data(base=ROOT, manifest_base=ROOT):
     return {'files':data_files,'concerts':concerts,'songs':songs,'members':members}
 
 def scan_text(text):
-    for pattern in [r'(?<![A-Za-z])[A-Za-z]:[\\/]',r'/(?:Users|home)/',r'\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b',r'\b01[016789][ -]?\d{3,4}[ -]?\d{4}\b',r'private-notes',r'큐시트[^\n]*\.hwp',r'cloudflareinsights',r'googletagmanager',r'google-analytics',r'"(?:realName|email|phone|privatePath|stageDirections)"\s*:']:
+    # Only this explicitly authorized public inquiry address is permitted.
+    for address in re.findall(r'\b[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}\b',text):
+        require(address=='uuincity@naver.com','Unapproved email address found')
+    for pattern in [r'(?<![A-Za-z])[A-Za-z]:[\\/]',r'/(?:Users|home)/',r'\b01[016789][ -]?\d{3,4}[ -]?\d{4}\b',r'private-notes',r'큐시트[^\n]*\.hwp',r'cloudflareinsights',r'googletagmanager',r'google-analytics',r'"(?:realName|email|phone|privatePath|stageDirections)"\s*:']:
         require(not re.search(pattern,text,re.I),'Private information or tracking pattern found')
     terms_file=ROOT/'private-notes'/'privacy-terms.json'
     if terms_file.exists():

@@ -1,6 +1,10 @@
 const main = document.querySelector('#main');
 const page = document.body.dataset.page;
 const params = new URLSearchParams(location.search);
+const inquiryEmail='uuincity@naver.com';
+const inquirySubject='[집단적독백] 공연 초청 문의';
+const inquiryBody='안녕하세요. 집단적독백 공연 초청을 문의드립니다.\n\n1. 문의자 / 단체명:\n2. 연락 가능한 이메일:\n3. 공연 희망 날짜 및 시간:\n4. 공연 장소:\n5. 행사 성격 및 예상 관객:\n6. 기타 요청사항:\n\n감사합니다.';
+const inquiryMailto=`mailto:${inquiryEmail}?subject=${encodeURIComponent(inquirySubject)}&body=${encodeURIComponent(inquiryBody)}`;
 let site, members, songs, concerts, memberMap, songMap, sourceMap;
 const evidenceLabels = {confirmed:'', planned:'진행 계획', program:'인쇄 프로그램'};
 function evidenceText(entry) {
@@ -19,6 +23,13 @@ function link(text, href, className) { const a = el('a', text, className); a.hre
 function external(text, url) {
   const a = link(text, url); a.target = '_blank'; a.rel = 'noopener noreferrer';
   a.setAttribute('aria-label', `${text} (새 창)`); return a;
+}
+function venueLink(venue) {
+  const maps={'고덕우갤러리':'https://naver.me/xMni5Yd6','꿈꾸는공작소':'https://naver.me/xMni5Yd6'};
+  const url=maps[(venue || '').replace(/\s/g,'')];
+  if(!url)return el('span',venue || '장소 확인 중');
+  const a=external(venue,url);a.className='venue-link';
+  a.setAttribute('aria-label',`${venue} 네이버지도 (새 창)`);return a;
 }
 function pill(text, color='') { return el('span',text,`pill ${color}`); }
 function safeMedia(path) {
@@ -68,6 +79,15 @@ function section(title, more=null) {
 function sources(ids) { return (ids || []).map(id=>sourceMap.get(id)?.label).filter(Boolean).join(' · '); }
 function disclosure(label, className='') {
   const d=el('details',null,className);d.append(el('summary',label));return d;
+}
+function songInformation(song) {
+  const info=el('div',null,'song-information');
+  if(song.artistCredit || song.composer)info.append(el('p',`작곡가(가수) · ${song.artistCredit || song.composer}`,'composer'));
+  if(song.genre)info.append(el('p',`장르 · ${song.genre}`,'song-genre'));
+  if(song.note)info.append(el('p',song.note,'song-description'));
+  const ids=[...new Set(['artistCredit','genre','note'].flatMap(field=>song.fieldEvidence?.[field]?.sourceIds || []))];
+  if(ids.length)info.append(el('p',`곡 정보 · ${sources(ids)}`,'source-note'));
+  return info;
 }
 // These original portraits were visually checked; other artwork stays uncropped.
 const facePortraits=new Set(['매니저(열심남).png','로나짱.png','베리짱.png','베키짱(기타).png','유니뀨짱.png','쿠르짱.png','세뉴짱.png'].map(n=>'image/'+n));
@@ -133,30 +153,94 @@ function video(entry) {
   }); card.append(b);return card;
 }
 function preview(c) {
-  const a=link('',concertLink(c),'concert-preview');
-  add(a,el('p',dateText(c),'preview-date'),pill(c.status==='scheduled' ? '공연 예정' : c.no ? `No.${c.no}` : '공연 기록',c.status==='scheduled'?'red':''),
-    el('h3',c.title),el('p',c.venue || '장소 확인 중'),el('small',c.story));
-  return a;
+  const card=el('article',null,'concert-preview');
+  const a=link('',concertLink(c),'preview-main');
+  add(a,el('p',dateText(c),'preview-date'),pill(c.status==='scheduled' ? '공연 예정' : c.no ? `No.${c.no}` : '공연 기록',c.status==='scheduled'?'red':''),el('h3',c.title));
+  add(card,a,add(el('p'),venueLink(c.venue)),el('small',c.story));return card;
+}
+function performanceInquiry() {
+  const card=el('section',null,'performance-inquiry');card.id='performance-inquiry';
+  const title=el('h2','집단적독백을 초대하고 싶으신가요?');title.id='inquiry-title';
+  card.setAttribute('aria-labelledby',title.id);
+  add(card,el('p','공연 초청 및 문의','eyebrow'),title,
+    el('p','집단적독백은 음악을 함께 나누는 즐거움을 소중하게 생각하는 아마추어 기타 밴드입니다. 기본적으로 무료 공연을 지향하며, 작은 음악회부터 지역 행사, 문화공간의 공연까지 다양한 무대를 함께하고 싶습니다. 공연 초청이나 협업 제안은 이메일로 문의해주세요. 일정과 공연 내용은 사전 협의를 통해 결정합니다.'),
+    el('p','담당 · 집단적독백 매니저','inquiry-manager'));
+  const controls=el('div',null,'inquiry-controls');
+  const send=link('공연 문의 이메일 보내기',inquiryMailto,'button primary inquiry-send');
+  const label=el('label','문의 이메일');label.htmlFor='inquiry-address';
+  const address=el('input');address.id='inquiry-address';address.type='text';address.readOnly=true;address.value=inquiryEmail;
+  address.setAttribute('aria-describedby','inquiry-status');label.append(address);
+  const copy=el('button','이메일 주소 복사','button inquiry-copy');copy.type='button';
+  const status=el('p','','inquiry-status');status.id='inquiry-status';status.setAttribute('role','status');status.setAttribute('aria-live','polite');status.setAttribute('aria-atomic','true');
+  copy.addEventListener('click',async()=>{
+    copy.disabled=true;status.textContent='';
+    try {
+      await navigator.clipboard.writeText(inquiryEmail);
+      status.textContent='이메일 주소를 복사했습니다.';
+    } catch {
+      status.textContent='자동 복사를 사용할 수 없습니다. 위 이메일 주소를 직접 선택해 복사해주세요.';
+      address.focus();address.select();
+    } finally {copy.disabled=false;}
+  });
+  add(controls,send,label,copy);add(card,controls,status,
+    el('p','버튼을 누르면 기본 메일 앱에서 편지를 작성합니다. 발송은 메일 앱에서 직접 진행해주세요.','source-note'));
+  return card;
 }
 function home() {
-  const hero=heading('서로 다른 소리,\n함께 쓰는 음악.','DOKBAEK · CONCERT ARCHIVE',site.description);
+  const hero=heading('기타로 만나, 함께 웃고, 무대에서 만납니다.','DOKBAEK · ACOUSTIC CLUB','익숙한 노래부터 재즈와 영화음악, 작은 소품곡까지. 클래식 기타로 함께 음악을 즐기는 사람들, 집단적독백입니다.');
   hero.classList.add('home-hero');
-  const art=image(site.groupImage,'집단적독백 일곱 멤버의 단체 캐릭터','group-art',true);
-  hero.append(art);
-  const actions=add(el('div',null,'actions'),link('공연 기록 읽기 ↗',`archive.html?year=${site.years[0].year}`,'button primary'),link('곡으로 찾아보기','repertoire.html','button'));
-  hero.append(add(el('div',null,'hero-bottom'),el('small','일곱 사람의 이야기 · 클래식 기타 밴드'),actions));
-  add(main,hero,stats(concerts));
-  const years=section('한 해씩, 한 장씩.'); const grid=el('div',null,'year-grid');
+  hero.append(add(el('div',null,'actions'),link('공연소식 보기','#upcoming','button primary'),link('지난 공연 보기','#past-shows','button')));
+  hero.append(image(site.groupImage,'집단적독백 일곱 멤버의 단체 캐릭터','group-art',true));
+  main.append(hero);
+  const schedule=homeSchedule(concerts);
+  const upcoming=section('다음 무대');upcoming.id='upcoming';upcoming.classList.add('upcoming-section');
+  if(schedule.upcoming.length) {
+    const [first,...rest]=schedule.upcoming;
+    const feature=el('article',null,'upcoming-feature');feature.dataset.concertId=first.id;
+    const copy=el('div',null,'upcoming-copy');
+    add(copy,pill('공연 예정','red'),el('h3',first.title),el('p',dateText(first),'show-date'),add(el('p',null,'show-venue'),venueLink(first.venue)),link('공연 상세 보기 ↗',concertLink(first),'button primary'),el('p',first.story,'show-story'));
+    feature.append(copy);
+    const poster=first.visibility==='public' && first.mediaVisibility!=='withheld'
+      ? (first.media || []).find(m=>m.reviewed && m.type==='image' && m.label.includes('포스터')) : null;
+    if(poster){feature.classList.add('has-poster');feature.append(printButton(first,poster,'upcoming-poster'));}
+    upcoming.append(feature);
+    if(rest.length)upcoming.append(add(el('div',null,'card-grid'),...rest.map(preview)));
+  } else upcoming.append(add(el('div',null,'schedule-empty'),el('p','다음 공연을 준비 중입니다.'),link('레퍼토리 살펴보기 ↗','repertoire.html','button')));
+  for(const [list,label] of [[schedule.pending,'일정 확인 중'],[schedule.past,'공연 기록 확인 중']]) {
+    if(!list.length)continue;
+    const d=disclosure(label,'schedule-pending');
+    for(const c of list)d.append(add(el('p'),link(`${c.title} · ${dateText(c)}`,concertLink(c))));
+    upcoming.append(d);
+  }
+  main.append(upcoming);
+  const music=section('우리가 연주하는 음악',link('레퍼토리 살펴보기 ↗','repertoire.html'));
+  const highlights=el('div',null,'music-highlights');
+  for(const [title,copy] of [['익숙한 노래','함께 흥얼거릴 수 있는 멜로디.'],['재즈와 보사노바','기타로 나누는 가벼운 리듬.'],['영화음악과 소품','짧은 선율에 담긴 장면들.'],['클래식 기타의 매력','여섯 줄이 들려주는 다양한 소리.']])highlights.append(add(el('article'),el('h3',title),el('p',copy)));
+  music.append(highlights);main.append(music);
+  const together=section('함께 만드는 시간');together.classList.add('together-section');
+  add(together,el('p','연습하고 이야기하고, 다시 기타를 잡습니다. 함께 소리를 맞추고 무대를 준비하는 시간도 우리가 음악을 즐기는 방법입니다.'),link('집단적독백 이야기 ↗','about.html','button'));main.append(together);
+  const recent=section('지난 무대',link('아카이브 보기 ↗',`archive.html?year=${site.years[0].year}`));recent.id='past-shows';
+  recent.append(add(el('div',null,'card-grid'),...ordered(concerts.filter(c=>c.status==='completed')).reverse().slice(0,2).map(preview)));main.append(recent);
+  const years=section('한 해씩, 한 장씩'); const grid=el('div',null,'year-grid');
   for (const y of site.years) {
     const card=link('',`archive.html?year=${y.year}`,'year-card');
     add(card,el('span',y.year,'year-number'),el('span','↗','arrow'),el('h3',y.title),el('p',y.phrase)); grid.append(card);
   }
-  years.append(grid); main.append(years);
-  const planned=ordered(concerts.filter(c=>c.status==='scheduled' && c.visibility==='public'));
-  const upcoming=section('다음 무대');
-  upcoming.append(planned.length ? add(el('div',null,'card-grid'),...planned.map(preview)) : el('p','새로운 공개 공연이 정해지면 이곳에 기록합니다.','muted')); main.append(upcoming);
-  const recent=section('지난 무대의 기록',link('아카이브 보기 ↗',`archive.html?year=${site.years[0].year}`));
-  recent.append(add(el('div',null,'card-grid'),...ordered(concerts.filter(c=>c.status==='completed')).reverse().slice(0,2).map(preview))); main.append(recent);
+  years.append(grid); add(main,years,stats(concerts),performanceInquiry());
+}
+function seoulToday(now=new Date()) {
+  const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+  const value=type=>parts.find(p=>p.type===type).value;
+  return `${value('year')}-${value('month')}-${value('day')}`;
+}
+function homeSchedule(list, today=seoulToday()) {
+  const scheduled=ordered(list.filter(c=>['public','public-summary'].includes(c.visibility) && c.status==='scheduled'));
+  const dated=c=>c.datePrecision==='day' && /^\d{4}-\d{2}-\d{2}$/.test(c.date || '');
+  return {
+    upcoming:scheduled.filter(c=>dated(c) && c.date>=today),
+    past:scheduled.filter(c=>dated(c) && c.date<today),
+    pending:scheduled.filter(c=>!dated(c))
+  };
 }
 function repertoireTable(list) {
   const songIds=[...new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song').map(e=>e.songId)))];
@@ -212,7 +296,7 @@ function concertSection(c, list, index) {
   const s=el('section',null,'concert-section'); s.id=c.id;
   const number=add(el('div',null,'concert-number'),el('small',c.no ? 'NO.' : 'LIVE'),el('span',c.no || '♪'));
   const info=el('div',null,'concert-info');
-  add(info,pill(c.status==='scheduled'?'공연 예정':c.visibility==='public-summary'?'사적 공연 · 요약 기록':'공연 기록',c.status==='scheduled'?'red':''),el('h2',c.title),el('p',dateText(c)),el('p',c.venue || '장소 확인 중'));
+  add(info,pill(c.status==='scheduled'?'공연 예정':c.visibility==='public-summary'?'사적 공연 · 요약 기록':'공연 기록',c.status==='scheduled'?'red':''),el('h2',c.title),el('p',dateText(c)),add(el('p'),venueLink(c.venue)));
   const cover=el('div',null,'concert-cover');
   const copy=el('div',null,'concert-cover-copy');
   add(copy,add(el('div',null,'concert-heading'),number,info),el('p',c.story,'concert-story'));
@@ -238,7 +322,8 @@ function concertSection(c, list, index) {
   if (c.notes?.length) s.append(add(el('div',null,'notice'),...c.notes.map(n=>el('p',n))));
   if(media.length) {
     const materials=disclosure('포스터·프로그램 보기','concert-media');
-    materials.open=true;
+    // Mobile readers reach the songs before choosing to open the printed material.
+    materials.open=false;
     const grid=el('div',null,'print-grid');
     media.forEach(m=>grid.append(printButton(c,m)));materials.append(grid);s.append(materials);
   }
@@ -258,8 +343,7 @@ function concertSection(c, list, index) {
     const extraSources=(entry.sourceIds||[]).filter(id=>!(c.sourceIds||[]).includes(id));
     if(song || entry.additionalEvents?.length) {
       const story=disclosure('곡 이야기','song-story');
-      if(song?.composer)story.append(el('p',`작곡 · ${song.composer}`,'composer'));
-      if(song?.note)story.append(el('p',song.note));
+      if(song)story.append(songInformation(song));
       if(entry.originalTitle && entry.originalTitle!==song?.title)story.append(el('p',`자료의 표기 · ${entry.originalTitle}`,'source-note'));
       for(const extra of entry.additionalEvents||[])story.append(el('p',`함께 담은 이야기 · ${extra.title}${evidenceLabels[extra.evidenceStatus] ? ` (${evidenceLabels[extra.evidenceStatus]})` : ''}`));
       if(extraSources.length)story.append(el('p',`곡별 근거 · ${sources(entry.sourceIds)}`,'source-note'));
@@ -338,6 +422,7 @@ function archive() {
 function history(c,e) {
   const h=el('div',null,'history');
   add(h,link(`${c.year} · ${c.no?`No.${c.no} · `:''}${c.venue}`,concertLink(c,e)),el('p',dateText(c)),evidenceLabels[e.evidenceStatus] ? pill(evidenceLabels[e.evidenceStatus],'navy') : null);
+  const map=venueLink(c.venue);if(map.tagName==='A')h.append(map);
   if(e.title) h.append(el('p',e.title));
   if(c.status==='scheduled')h.append(pill('공연 예정','red'));
   if(e.isEncore)h.append(pill('앵콜','red'));
@@ -375,9 +460,9 @@ function repertoire() {
       if(q && ![song.title,...song.aliases].some(t=>normalize(t).includes(q))) continue;
       const rows=occurrences(song.id).filter(({c,e})=>matches(c,e));if(!rows.length)continue;n++;
       const card=el('details',null,'song-card');card.id=song.id;
-      const title=add(el('span'),el('strong',song.title),el('small',song.composer || '작곡 정보 확인 중'));
+      const title=add(el('span'),el('strong',song.title),el('small',song.artistCredit || song.composer || '작곡 정보 확인 중'));
       add(card,add(el('summary'),title,el('span',`${rows.length}개 기록`,'history-count')),
-        add(el('div',null,'song-body'),el('p',song.note,'song-description'),...rows.map(({c,e})=>history(c,e))));
+        add(el('div',null,'song-body'),songInformation(song),...rows.map(({c,e})=>history(c,e))));
       results.append(card);
     }
     count.textContent=`${n}곡 · 선택한 조건의 공연 기록`;
@@ -419,11 +504,10 @@ function memberPage() {
   window.addEventListener('hashchange',choose); choose();
 }
 function about() {
-  main.append(heading('독백이 모여, 하나의 음악으로.','ABOUT DOKBAEK','클래식 기타를 사랑하는 사람들이 모여 서로의 소리를 듣습니다.'));
+  main.append(heading('기타를 함께 즐기는 사람들.','ABOUT DOKBAEK','익숙한 노래와 재즈, 영화음악과 작은 소품곡. 클래식 기타를 매개로 만나 음악을 즐기는 밴드입니다.'));
   const prose=el('div',null,'prose');
-  add(prose,el('h2','이름에 담은 이야기'),el('p','‘집단적 독백’은 여럿이 함께 있어도 각자 자기 이야기를 하는 모습을 가리킵니다. 밴드의 대화도 종종 그렇게 흘러갑니다.'),el('p','하지만 연주할 때는 다릅니다. 서로 다른 소리와 표현을 듣고 맞추며, 하나의 음악을 만들어 갑니다. 집단적독백이라는 이름에는 그 즐거움이 담겨 있습니다.'),el('h2','우리가 남기는 기록'),el('p','작은 가족음악회에서 공개 무대까지, 기타와 노래에 짧은 낭송을 더하며 공연을 준비합니다. 이곳에는 공연의 이야기와 프로그램, 곡마다 이어지는 무대의 이력을 모읍니다.'),el('p','확인된 연주와 인쇄 프로그램, 진행 계획을 구분해 기록합니다. 멤버는 닉네임으로 소개하며, 아직 확인되지 않은 내용은 천천히 채워 갑니다.'),el('p','서로 다른 소리, 함께 쓰는 음악.','about-signature'),el('h2','공식 채널'));
-  const channels=el('div',null,'channel-list');site.channels.forEach(c=>channels.append(external(c.label+' ↗',c.url)));prose.append(channels);
-  prose.append(el('p','Instagram은 외부 링크로 연결합니다. 게시물을 이곳에서 수집하거나 자동으로 불러오지 않습니다.','source-note'));main.append(prose);
+  add(prose,el('h2','이름에 담은 이야기'),el('p','‘집단적 독백’은 여럿이 함께 있어도 각자 자기 이야기를 하는 모습을 가리킵니다. 밴드의 대화도 종종 그렇게 흘러갑니다.'),el('p','하지만 연주할 때는 다릅니다. 서로 다른 소리와 표현을 듣고 맞추며, 하나의 음악을 만들어 갑니다. 집단적독백이라는 이름에는 그 즐거움이 담겨 있습니다.'),el('h2','우리가 남기는 기록'),el('p','작은 가족음악회에서 공개 무대까지, 기타와 노래에 짧은 낭송을 더하며 공연을 준비합니다. 이곳에는 공연의 이야기와 프로그램, 곡마다 이어지는 무대의 이력을 모읍니다.'),el('p','확인된 연주와 인쇄 프로그램, 진행 계획을 구분해 기록합니다. 멤버는 닉네임으로 소개하며, 아직 확인되지 않은 내용은 천천히 채워 갑니다.'),el('p','서로 다른 소리, 함께 쓰는 음악.','about-signature'));
+  main.append(prose);
 }
 function hashId() { try{return decodeURIComponent(location.hash.slice(1));}catch{return '';} }
 function initArchiveMotion() {
@@ -510,9 +594,17 @@ const headerObserver=new ResizeObserver(([entry])=>{
 });
 headerObserver.observe(document.querySelector('.site-header'));
 menu.addEventListener('click',()=>{const expanded=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(expanded));document.querySelector('#main-nav').classList.toggle('is-open',expanded);});
+function closeMenu(focus=false) {
+  menu.setAttribute('aria-expanded','false');document.querySelector('#main-nav').classList.remove('is-open');
+  if(focus)menu.focus();
+}
+document.addEventListener('click',event=>{if(menu.getAttribute('aria-expanded')==='true' && !event.target.closest('.site-header'))closeMenu();});
+document.querySelector('#main-nav').addEventListener('click',event=>{if(event.target.closest('a'))closeMenu();});
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){menu.setAttribute('aria-expanded','false');document.querySelector('#main-nav').classList.remove('is-open');menu.focus();}});
 document.querySelectorAll('#main-nav a').forEach(a=>{if(a.getAttribute('href').split(/[.?]/)[0]===page)a.setAttribute('aria-current','page');});
 async function load(path) { const response=await fetch(path);if(!response.ok)throw new Error(`자료를 불러오지 못했습니다 (${response.status})`);return response.json(); }
+const footerInquiry=link(`공연 문의 · ${inquiryEmail}`,inquiryMailto,'footer-inquiry');
+document.querySelector('.site-footer').insertBefore(footerInquiry,document.querySelector('.site-footer>small'));
 try {
   [site,members,songs]=await Promise.all(['data/site.json','data/members.json','data/songs.json'].map(load));
   concerts=(await Promise.all(site.years.map(y=>load(y.file)))).flat().filter(c=>['public','public-summary'].includes(c.visibility));
@@ -522,7 +614,7 @@ try {
   const channelIcons={YouTube:'image/youtube.png',Instagram:'image/instagram.png'};
   for(const c of site.channels){
     const channelLink=external(c.label,c.url);
-    if(page==='index' && channelIcons[c.label]){
+    if(channelIcons[c.label]){
       const icon=el('img');icon.src=channelIcons[c.label];icon.alt=c.label;icon.width=32;icon.height=32;icon.className='channel-icon';
       channelLink.replaceChildren(icon);
       channelLink.setAttribute('aria-label',`${c.label} 공식 채널 (새 창)`);

@@ -1,8 +1,9 @@
 """Optional end-to-end checks. Requires an installed Playwright and Chromium."""
 from pathlib import Path, PurePosixPath
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
-from urllib.parse import urlsplit, unquote
+from urllib.parse import urlsplit, unquote, parse_qs
 from threading import Thread
+from datetime import datetime, timezone, timedelta
 import base64, json, sys, traceback
 from playwright.sync_api import sync_playwright
 from validate import ROOT, validate_dist
@@ -29,9 +30,13 @@ class PublicHandler(SimpleHTTPRequestHandler):
 
 def record(label):checks.append(label);print('PASS: '+label,flush=True)
 
+class PublicServer(ThreadingHTTPServer):
+    # Browser navigations/lazy artwork can briefly open many parallel connections.
+    request_queue_size=128
+
 def run():
     validate_dist(PUBLIC);record('Public allowlist, references, dates, evidence states and privacy scan')
-    server=ThreadingHTTPServer(('127.0.0.1',0),PublicHandler)
+    server=PublicServer(('127.0.0.1',0),PublicHandler)
     Thread(target=server.serve_forever,daemon=True).start()
     base=f'http://127.0.0.1:{server.server_port}{PREFIX}'
     try:
@@ -42,6 +47,8 @@ def run():
             thumbnail=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGP4DwQACfsD/fteaysAAAAASUVORK5CYII=')
             context.route('https://i.ytimg.com/**',lambda route:route.fulfill(body=thumbnail,content_type='image/png'))
             page=context.new_page();errors=[];bad_requests=[]
+            # Stable reference date; do not depend on the machine running this check.
+            page.clock.set_fixed_time(datetime(2026,10,15,3,tzinfo=timezone.utc))
             page.on('pageerror',lambda error:errors.append(str(error)))
             page.on('response',lambda res:bad_requests.append(res.url) if res.status>=400 else None)
             def go(path):
@@ -56,17 +63,56 @@ def run():
                 page.screenshot(path=str(OUT/name),full_page=True)
             for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
                 go(path)
+                assert page.locator('.site-header .brand-logo').get_attribute('src')=='image/dokbake_logo_2.png'
+                assert page.locator('.footer-logo').count()==1
+                assert page.locator('a[href="https://www.youtube.com/@dokback-u4l"]').count()==1
+                assert page.locator('a[href="https://www.instagram.com/stringband.dokbaek/"]').count()==1
+                assert page.locator('#footer-links .channel-icon').count()==2
+                assert page.locator('.footer-inquiry').count()==1
+                assert page.locator('.footer-inquiry').get_attribute('href').startswith('mailto:uuincity@naver.com?')
+                for venue in page.locator('.venue-link').all():
+                    assert venue.get_attribute('href')=='https://naver.me/xMni5Yd6'
+                    assert venue.get_attribute('target')=='_blank'
+                    assert venue.get_attribute('rel')=='noopener noreferrer'
+                assert page.locator('a a').count()==0
                 assert page.locator('#main h1').count()==1
                 for anchor in page.locator('a[href]').all():
                     href=anchor.get_attribute('href')
-                    if not href or href.startswith(('http:','https:')):continue
+                    if not href or href.startswith(('http:','https:','mailto:')):continue
                     response=context.request.get(base+href.split('#')[0] if not href.startswith('#') else page.url.split('#')[0])
                     assert response.ok,f'Broken internal link {href}'
             record('Six page routes and all generated internal links load under /dokbaek/')
             go('index.html')
             assert page.locator('.stat b').all_text_contents()==['3','1','13']
             assert page.locator('.year-card').count()==2
-            assert page.locator('.concert-preview').first.inner_text().find('15:00')>=0
+            assert '15:00' in page.locator('.upcoming-feature').inner_text()
+            assert page.locator('.upcoming-poster img').get_attribute('src')=='public-media/2026-gallery-poster.png'
+            assert page.locator('.upcoming-poster').bounding_box()['x']>page.locator('.upcoming-copy').bounding_box()['x']
+            assert page.locator('.home-hero .group-art img').get_attribute('src')=='image/집단적독백밴드 전체사진2.png'
+            assert 'Gowun Batang' in page.locator('h1').evaluate('e=>getComputedStyle(e).fontFamily')
+            assert page.locator('#upcoming').bounding_box()['y'] < page.locator('.music-highlights').bounding_box()['y']
+            assert page.locator('meta[property="og:image"]').get_attribute('content').startswith('https://uincity.github.io/dokbaek/')
+            card=page.locator('.performance-inquiry')
+            assert page.locator('#main>section:last-child').get_attribute('id')=='performance-inquiry'
+            assert card.bounding_box()['y']>page.locator('.music-highlights').bounding_box()['y']
+            mail=urlsplit(card.locator('.inquiry-send').get_attribute('href'))
+            assert mail.scheme=='mailto' and mail.path=='uuincity@naver.com'
+            query=parse_qs(mail.query)
+            assert query['subject']==['[집단적독백] 공연 초청 문의']
+            expected_body='안녕하세요. 집단적독백 공연 초청을 문의드립니다.\n\n1. 문의자 / 단체명:\n2. 연락 가능한 이메일:\n3. 공연 희망 날짜 및 시간:\n4. 공연 장소:\n5. 행사 성격 및 예상 관객:\n6. 기타 요청사항:\n\n감사합니다.'
+            assert query['body']==[expected_body]
+            assert not card.locator('#inquiry-status').text_content()
+            page.evaluate("Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async text=>{window.copiedInquiry=text}}})")
+            card.locator('.inquiry-copy').click()
+            page.wait_for_function("document.querySelector('#inquiry-status').textContent.includes('복사했습니다')")
+            assert page.evaluate('window.copiedInquiry')=='uuincity@naver.com'
+            page.evaluate("Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw new Error('denied')}}})")
+            card.locator('.inquiry-copy').click()
+            page.wait_for_function("document.querySelector('#inquiry-status').textContent.includes('직접 선택')")
+            assert card.locator('#inquiry-status').get_attribute('role')=='status'
+            assert card.locator('#inquiry-address').evaluate('(e)=>e===document.activeElement && e.readOnly && e.selectionEnd-e.selectionStart===e.value.length')
+            record('Inquiry is last in home content; exact mailto recipient/subject/body, clipboard success/failure feedback and manual selection fallback')
+            go('index.html')
             capture('home-desktop.png')
             record('Home statistics separate recorded concerts, upcoming concerts and confirmed songs')
             go('archive.html?year=2025')
@@ -91,7 +137,8 @@ def run():
             assert page.url.endswith('#2025-11-22-workshop')
             record('Independent November calendar links, month-only date and separate event/encore records')
             go('archive.html?year=2025#2025-11-02-gallery-item-07')
-            assert abs(page.locator('[id="2025-11-02-gallery-item-07"]').bounding_box()['y'])<250
+            anchor_y=page.locator('[id="2025-11-02-gallery-item-07"]').bounding_box()['y']
+            assert page.locator('.site-header').bounding_box()['height']<=anchor_y<page.viewport_size['height']
             go('archive.html?year=2026')
             assert page.locator('[id="2026-10-18-gallery"] .set-item').count()==11
             assert '15:00' in page.locator('.concert-heading').inner_text()
@@ -185,13 +232,36 @@ def run():
             assert not errors,errors
             assert not bad_requests,bad_requests
             record('Normal page flows have no JavaScript exceptions or failed HTTP responses')
-            for width in [360,390,768,1280]:
+            # Shared metadata must agree in every performance and repertoire view.
+            song_info={s['id']:s for s in json.loads((PUBLIC/'data/songs.json').read_text(encoding='utf-8'))}
+            for year in [2025,2026]:
+                go(f'archive.html?year={year}')
+                for c in json.loads((PUBLIC/f'data/concerts-{year}.json').read_text(encoding='utf-8')):
+                    for e in c['setlist']:
+                        if e['kind']!='song':continue
+                        s=song_info[e['songId']]
+                        info=page.locator(f'[id="{e["id"]}"] .song-information')
+                        assert info.locator('.composer').text_content()=='작곡가(가수) · '+s['artistCredit']
+                        assert info.locator('.song-genre').text_content()=='장르 · '+s['genre']
+                        assert info.locator('.song-description').text_content()==s['note']
+            go('repertoire.html')
+            for song_id,s in song_info.items():
+                info=page.locator(f'#{song_id} .song-information')
+                assert info.locator('.composer').text_content()=='작곡가(가수) · '+s['artistCredit']
+                assert info.locator('.song-genre').text_content()=='장르 · '+s['genre']
+                assert info.locator('.song-description').text_content()==s['note']
+            record('All concert song stories and 24 repertoire entries share the exact credit, genre and description')
+            for width in [320,360,375,390,430,768,1024,1280]:
                 page.set_viewport_size({'width':width,'height':900})
                 for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
                     go(path)
                     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1'),(width,path)
                     if path=='repertoire.html':
                         assert all(float(field.evaluate('e=>getComputedStyle(e).fontSize').replace('px',''))>=16 for field in page.locator('input,select').all())
+                    if path=='index.html':
+                        assert page.locator('.inquiry-send').bounding_box()['height']>=44
+                        assert page.locator('.inquiry-copy').bounding_box()['height']>=44
+                        assert float(page.locator('#inquiry-address').evaluate('e=>getComputedStyle(e).fontSize').replace('px',''))>=16
                     if width==360:
                         page.locator('.menu-toggle').click()
                         assert page.locator('#main-nav a').count()==5 and page.locator('#main-nav').is_visible()
@@ -200,7 +270,23 @@ def run():
                 if width==360:
                     go('index.html');capture('home-mobile-360.png')
                     go('members.html');capture('members-mobile-360.png')
-            record('360/390/768/1280px: all pages fit, forms use 16px text, mobile menu stays accessible')
+            record('320/360/375/390/430/768/1024/1280px: all pages fit, forms use 16px text, mobile menu stays accessible')
+            page.set_viewport_size({'width':360,'height':800});go('index.html')
+            assert page.locator('.upcoming-feature .button').bounding_box()['y']<800
+            page.locator('.menu-toggle').click()
+            page.locator('.home-hero h1').click()
+            assert page.locator('.menu-toggle').get_attribute('aria-expanded')=='false'
+            capture('home-mobile-360.png')
+            for width in [390,768]:
+                page.set_viewport_size({'width':width,'height':844});go('index.html');capture(f'home-{width}.png')
+            # All expired scheduled dates remain unconfirmed; no invented completed show.
+            page.clock.set_fixed_time(datetime(2027,1,1,3,tzinfo=timezone.utc));go('index.html')
+            assert page.locator('.upcoming-feature').count()==0
+            assert '다음 공연을 준비 중' in page.locator('#upcoming').inner_text()
+            assert page.locator('.schedule-pending').count()==1
+            assert page.locator('#past-shows .concert-preview').count()==2
+            page.clock.set_fixed_time(datetime(2026,10,15,3,tzinfo=timezone.utc))
+            record('360×800 upcoming CTA, outside-click menu close, restored group artwork and serif headings, consistent branding/channels, static sharing metadata and expired schedule fallback')
             # Program-book design: mobile disclosures, alternate repertoire views and sticky anchors.
             for width in [360,390]:
                 page.set_viewport_size({'width':width,'height':900})
@@ -208,7 +294,7 @@ def run():
                     go(f'archive.html?year={year}')
                     assert page.locator('.concert-jumps a').last.bounding_box()['y']<850
                     assert not page.locator('.year-calendar').evaluate('(d)=>d.open')
-                    assert all(d.evaluate('(d)=>d.open') for d in page.locator('.concert-media').all())
+                    assert all(not d.evaluate('(d)=>d.open') for d in page.locator('.concert-media').all())
                     assert page.locator('.concert-jumps a').count()==page.locator('.timeline-link').count()
                     assert page.locator('.album-art').bounding_box()['y']>page.locator('.concert-jumps').bounding_box()['y']
                     cards=page.locator('.repertoire-mobile')
@@ -233,8 +319,7 @@ def run():
                 page.keyboard.press('Space');assert not story.evaluate('(d)=>d.open')
                 materials=page.locator('.concert-media').first
                 materials.locator('summary').focus();page.keyboard.press('Enter')
-                assert not materials.evaluate('(d)=>d.open')
-                page.keyboard.press('Enter')
+                assert materials.evaluate('(d)=>d.open')
                 b=materials.locator('.print-button').first;b.click()
                 page.keyboard.press('Escape');assert b.evaluate('(b)=>b===document.activeElement')
                 materials.locator('summary').click()
@@ -244,7 +329,7 @@ def run():
                 go('archive.html?year=2025#2025-11-02-gallery-item-07')
                 target=page.locator('[id="2025-11-02-gallery-item-07"]')
                 assert target.bounding_box()['y']>=page.locator('.site-header').bounding_box()['height']
-            record('Mobile quick links above fold, timeline, closed calendar/story, open media with keyboard toggles and modal focus return')
+            record('Mobile quick links above fold, timeline, closed calendar/story/media with keyboard toggles and modal focus return')
             record('Mobile repertoire cards and table have identical entry IDs, links and evidence; inactive view has no focus targets')
             record('Concert/song deep links remain visible below the measured sticky header at 360px and 390px')
             # Enlarge root/body text to 200%, keeping the viewport narrow.
@@ -306,7 +391,8 @@ def run():
 if __name__=='__main__':
     try:
         run()
-        (OUT/'validation.md').write_text('# 검증 결과\n\n2026-10-11 · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n영상 썸네일 CDN은 시험용 이미지로 대체했습니다.\n미검증: 실제 GitHub Actions/Pages 배포, 외부 CDN·공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
+        checked_date=datetime.now(timezone(timedelta(hours=9))).date().isoformat()
+        (OUT/'validation.md').write_text(f'# 검증 결과\n\n{checked_date} · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n영상 썸네일 CDN은 시험용 이미지로 대체했습니다.\n미검증: 실제 GitHub Actions/Pages 배포, 외부 CDN·공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
         print(f'PASS: {len(checks)} browser and data checks. Screenshots and report: test-results/')
     except Exception:
         (OUT/'validation.md').write_text('# 검증 진행 결과\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n실패 또는 환경 제약:\n```\n'+traceback.format_exc()+'\n```\n',encoding='utf-8')
