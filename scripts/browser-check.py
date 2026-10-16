@@ -63,7 +63,7 @@ def run():
                 page.screenshot(path=str(OUT/name),full_page=True)
             for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
                 go(path)
-                assert page.locator('.site-header .brand-logo').get_attribute('src')=='image/dokbake_logo_2.png'
+                assert page.locator('.site-header .brand-logo').get_attribute('src')=='image/dokbaek_logo_horizontal.png'
                 assert page.locator('.footer-logo').count()==1
                 assert page.locator('a[href="https://www.youtube.com/@dokback-u4l"]').count()==1
                 assert page.locator('a[href="https://www.instagram.com/stringband.dokbaek/"]').count()==1

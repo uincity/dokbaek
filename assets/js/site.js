@@ -53,13 +53,13 @@ function ordered(list) { return [...list].sort((a,b)=>(a.date || '').localeCompa
 function occurrences(songId, list=concerts) {
   return ordered(list).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId===songId).map(e=>({c,e})));
 }
-function stats(list) {
+function stats(list, showNotes=true) {
   const complete = list.filter(c=>c.status==='completed').length;
   const upcoming = list.filter(c=>c.status==='scheduled').length;
   const confirmed = new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
   const box = el('div',null,'stats');
   for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[confirmed,'연주 곡','계획·이벤트 제외']]) {
-    box.append(add(el('div',null,'stat'),el('b',n),el('span',label),el('small',note)));
+    box.append(add(el('div',null,'stat'),el('b',n),el('span',label),showNotes ? el('small',note) : null));
   }
   return box;
 }
@@ -226,7 +226,7 @@ function home() {
     const card=link('',`archive.html?year=${y.year}`,'year-card');
     add(card,el('span',y.year,'year-number'),el('span','↗','arrow'),el('h3',y.title),el('p',y.phrase)); grid.append(card);
   }
-  years.append(grid); add(main,years,stats(concerts),performanceInquiry());
+  years.append(grid); add(main,years,stats(concerts,false),performanceInquiry());
 }
 function seoulToday(now=new Date()) {
   const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
