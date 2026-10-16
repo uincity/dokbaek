@@ -505,8 +505,16 @@ function memberPage() {
 }
 function about() {
   main.append(heading('기타를 함께 즐기는 사람들.','ABOUT DOKBAEK','익숙한 노래와 재즈, 영화음악과 작은 소품곡. 클래식 기타를 매개로 만나 음악을 즐기는 밴드입니다.'));
+  const moment=(path,alt,caption,eager=false)=>add(el('figure',null,'about-moment'),image(path,alt,'',eager),el('figcaption',caption));
+  main.append(moment('image/따뜻한 기타 앙상블 리허설.png','연습실에서 함께 클래식 기타를 연주하는 다섯 사람의 일러스트','서로의 소리에 귀 기울이며, 함께 맞춰 가는 시간.',true));
   const prose=el('div',null,'prose');
   add(prose,el('h2','이름에 담은 이야기'),el('p','‘집단적 독백’은 여럿이 함께 있어도 각자 자기 이야기를 하는 모습을 가리킵니다. 밴드의 대화도 종종 그렇게 흘러갑니다.'),el('p','하지만 연주할 때는 다릅니다. 서로 다른 소리와 표현을 듣고 맞추며, 하나의 음악을 만들어 갑니다. 집단적독백이라는 이름에는 그 즐거움이 담겨 있습니다.'),el('h2','우리가 남기는 기록'),el('p','작은 가족음악회에서 공개 무대까지, 기타와 노래에 짧은 낭송을 더하며 공연을 준비합니다. 이곳에는 공연의 이야기와 프로그램, 곡마다 이어지는 무대의 이력을 모읍니다.'),el('p','확인된 연주와 인쇄 프로그램, 진행 계획을 구분해 기록합니다. 멤버는 닉네임으로 소개하며, 아직 확인되지 않은 내용은 천천히 채워 갑니다.'),el('p','서로 다른 소리, 함께 쓰는 음악.','about-signature'));
+  const moments=el('div',null,'about-moments');
+  add(moments,
+    moment('image/카페에서 함께한 따뜻한 셀카.png','카페에 모여 음료와 디저트를 즐기는 멤버들의 단체 셀카 일러스트','음악 밖에서도 이어지는, 우리의 이야기.'),
+    moment('image/따뜻한 음악실 단체 셀카.png','기타와 악보가 있는 음악실에서 함께 웃는 멤버들의 단체 셀카 일러스트','기타와 웃음이 함께하는 연습실.'),
+    moment('image/따뜻한 한식당 단체 셀카.png','한식당에서 음식을 나누며 함께 웃는 멤버들의 단체 셀카 일러스트','함께 먹고 웃으며, 또 하나의 추억을 쌓습니다.'));
+  prose.insertBefore(moments,prose.querySelectorAll('h2')[1]);
   main.append(prose);
 }
 function hashId() { try{return decodeURIComponent(location.hash.slice(1));}catch{return '';} }
