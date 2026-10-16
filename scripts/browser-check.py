@@ -86,9 +86,9 @@ def run():
             assert page.locator('.stat b').all_text_contents()==['3','1','13']
             assert page.locator('.year-card').count()==2
             assert '15:00' in page.locator('.upcoming-feature').inner_text()
-            assert page.locator('.upcoming-poster img').get_attribute('src')=='public-media/2026-gallery-poster.png'
+            assert page.locator('.upcoming-poster img').get_attribute('data-original-src')=='public-media/2026-gallery-poster.png'
             assert page.locator('.upcoming-poster').bounding_box()['x']>page.locator('.upcoming-copy').bounding_box()['x']
-            assert page.locator('.home-hero .group-art img').get_attribute('src')=='image/집단적독백밴드 전체사진2.png'
+            assert page.locator('.home-hero .group-art img').get_attribute('data-original-src')=='image/집단적독백밴드 전체사진2.png'
             assert 'Gowun Batang' in page.locator('h1').evaluate('e=>getComputedStyle(e).fontFamily')
             assert page.locator('#upcoming').bounding_box()['y'] < page.locator('.music-highlights').bounding_box()['y']
             assert page.locator('meta[property="og:image"]').get_attribute('content').startswith('https://uincity.github.io/dokbaek/')

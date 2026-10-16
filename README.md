@@ -4,6 +4,10 @@
 
 ## 로컬 실행
 
+화면에 표시하는 이미지는 `image/optimized/`의 WebP 크기별 사본을 사용합니다. 브라우저가 화면 크기와 픽셀 밀도에 맞춰 선택하며, 첫 화면 이미지는 우선 로딩하고 나머지는 지연 로딩합니다. 포스터·프로그램 확대 창에서는 원본을 표시합니다.
+
+공개 이미지를 추가·교체하면 `scripts/public-files.json`에 원본을 등록한 뒤 Pillow가 설치된 환경에서 `python scripts/optimize-images.py`를 실행합니다. 생성된 `image/optimized/`, `assets/js/image-sources.js`, 공개 파일 목록과 HTML 변경을 함께 커밋합니다. 원본은 보존되며 일반 빌드와 GitHub Pages 배포에는 Pillow가 필요하지 않습니다.
+
 Python 3.10 이상으로 공개 산출물을 만든 후 HTTP 서버로 엽니다. 별도 패키지 설치가 필요하지 않습니다.
 
 ```powershell

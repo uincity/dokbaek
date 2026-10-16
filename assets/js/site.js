@@ -1,3 +1,4 @@
+import imageSources from './image-sources.js';
 const main = document.querySelector('#main');
 const page = document.body.dataset.page;
 const params = new URLSearchParams(location.search);
@@ -35,12 +36,21 @@ function pill(text, color='') { return el('span',text,`pill ${color}`); }
 function safeMedia(path) {
   return typeof path === 'string' && /^(image|public-media)\//.test(path) && !path.split('/').includes('..') && !/[\\?#]/.test(path);
 }
-function image(path, alt, className='', eager=false) {
+function image(path, alt, className='', eager=false, fullResolution=false) {
   const wrap = el('span',null,`image-wrap ${className}`);
   const fallback = () => { wrap.replaceChildren(el('span', '이미지 준비 중', 'image-placeholder')); };
   if (!safeMedia(path)) { fallback(); return wrap; }
   const img = el('img'); img.alt = alt; img.loading = eager ? 'eager' : 'lazy'; img.decoding = 'async';
-  img.addEventListener('error',fallback,{once:true}); img.src = path;
+  img.dataset.originalSrc=path;
+  const info=imageSources[path];
+  if(info){img.width=info.width;img.height=info.height;}
+  if(eager && !fullResolution)img.fetchPriority='high';
+  img.addEventListener('error',fallback,{once:true});
+  if(info && !fullResolution){
+    img.sizes=className==='credit-avatar' ? '68px' : className==='print-image' ? '(min-width:768px) 240px, 45vw' : className==='group-art' ? '(min-width:1200px) 1120px, calc(100vw - 40px)' : page==='members' ? '(min-width:1000px) 140px, (min-width:431px) 28vw, 42vw' : eager ? '(min-width:1200px) 1120px, calc(100vw - 40px)' : 'auto, (min-width:1200px) 1120px, calc(100vw - 40px)';
+    img.srcset=info.variants.map(([src,width])=>`${src} ${width}w`).join(', ');
+    img.src=info.variants.at(-1)[0];
+  }else img.src=path;
   wrap.append(img); return wrap;
 }
 function dateText(c) {
@@ -290,7 +300,7 @@ function printButton(c,media,className='') {
   const b=el('button',null,`print-button ${className}`);b.type='button';
   b.setAttribute('aria-label',`${c.venue} ${media.label} 크게 보기`);
   add(b,image(media.path,`${c.venue} ${media.label}`,'print-image'),add(el('span',null,'print-caption'),el('span',media.label),el('span','확대 ↗')));
-  b.addEventListener('click',()=>openDialog(`${c.venue} · ${media.label}`,image(media.path,`${c.venue} ${media.label}`,'',true),b));return b;
+  b.addEventListener('click',()=>openDialog(`${c.venue} · ${media.label}`,image(media.path,`${c.venue} ${media.label}`,'',true,true),b));return b;
 }
 function concertSection(c, list, index) {
   const s=el('section',null,'concert-section'); s.id=c.id;
@@ -307,7 +317,7 @@ function concertSection(c, list, index) {
     const buttons=el('div',null,'cover-print-actions');
     for(const m of media.filter(m=>m!==poster)) {
       const b=el('button',`${m.label.includes('프로그램')?'프로그램 보기':m.label+' 보기'} ↗`,'button');b.type='button';
-      b.addEventListener('click',()=>openDialog(`${c.venue} · ${m.label}`,image(m.path,`${c.venue} ${m.label}`,'',true),b));buttons.append(b);
+      b.addEventListener('click',()=>openDialog(`${c.venue} · ${m.label}`,image(m.path,`${c.venue} ${m.label}`,'',true,true),b));buttons.append(b);
     }
     copy.append(buttons);
   }
