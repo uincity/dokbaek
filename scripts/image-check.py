@@ -47,7 +47,7 @@ try:
                     page.locator('.print-button:visible').first.click()
                     image = page.locator('#media-content img')
                     image.evaluate('i => i.decode()')
-                    assert image.get_attribute('src') == image.get_attribute('data-original-src')
+                    assert unquote(image.get_attribute('src')) == image.get_attribute('data-original-src')
                     page.locator('#close-dialog').click()
             assert not errors, errors
             context.close()

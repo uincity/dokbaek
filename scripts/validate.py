@@ -10,10 +10,12 @@ PAGES={'index.html','archive.html','repertoire.html','members.html','about.html'
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
 SONG_KEYS={'id','title','composer','composerStatus','artistCredit','genre','aliases','note','sourceIds','fieldEvidence'}
-CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','story','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
+CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','address','story','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
 ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','guestCredits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
 EVIDENCE={'confirmed','planned','program'}
 STATUSES={'confirmed','needs-confirmation'}
+# The requested poster is the only original-year path approved for publication.
+REVIEWED_POSTERS={'2026/포스터/포스터_수녀원 음악회(20261108).png'}
 
 def require(condition,message):
     if not condition: raise ValueError(message)
@@ -43,7 +45,7 @@ def approved_files(base=ROOT):
     for group,prefix,extensions in [('assets','assets/',{'.css','.js'}),('images','image/',{'.png','.jpg','.jpeg','.webp'}),('media','public-media/',{'.png','.jpg','.jpeg','.webp'}),('fonts','assets/fonts/',{'.woff2','.txt','.md'})]:
         for path in manifest[group]:
             local_path(path)
-            require(path.startswith(prefix) and Path(path).suffix.lower() in extensions,'Unexpected public file type')
+            require((path.startswith(prefix) or group=='media' and path in REVIEWED_POSTERS) and Path(path).suffix.lower() in extensions,'Unexpected public file type')
     paths=[p for group in manifest.values() for p in group]
     require(len(paths)==len(set(paths)),'Duplicate allowlist path')
     return paths
@@ -113,11 +115,12 @@ def validate_data(base=ROOT, manifest_base=ROOT):
         else: raise ValueError('Invalid date precision')
         if c['date']:require(c['date'].startswith(str(c['year'])+'-'),'Date year mismatch')
         require(c['time'] is None or re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',c['time']),'Invalid time')
+        if 'address' in c:require(isinstance(c['address'],str) and c['address'].strip(),'Invalid venue address')
         for participant in c['participants']: credit_check(participant)
         for m in c['media']:
             keys(m,{'type','label','path','sourceIds','reviewed'},'media');refs(m)
             require(m['type']=='image' and m['reviewed'] is True and m['path'] in allowed,'Unreviewed public media')
-            require(m['path'].startswith('public-media/'),'Media must be a reviewed public copy')
+            require(m['path'].startswith('public-media/') or m['path'] in REVIEWED_POSTERS,'Media must be a reviewed public copy or explicitly approved poster')
         require(c['mediaVisibility']!='withheld' or not c['media'],'Withheld media cannot be released')
         if c.get('rehearsalVideo'):
             rehearsal=c['rehearsalVideo']

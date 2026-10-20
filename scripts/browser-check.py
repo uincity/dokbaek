@@ -24,6 +24,9 @@ class PublicHandler(SimpleHTTPRequestHandler):
         if not result.is_relative_to(PUBLIC.resolve()):return str(PUBLIC/'.missing')
         return str(result)
     def log_message(self,*args):pass
+    def list_directory(self,path):
+        self.send_error(404,'Directory listings are unavailable')
+        return None
     def copyfile(self,source,outputfile):
         try:super().copyfile(source,outputfile)
         except (BrokenPipeError,ConnectionResetError,ConnectionAbortedError):pass
@@ -42,13 +45,13 @@ def run():
     try:
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
-            context=browser.new_context(viewport={'width':1280,'height':900},locale='ko-KR')
+            context=browser.new_context(viewport={'width':1280,'height':900},locale='ko-KR',has_touch=True)
             # Keep local regression checks independent of thumbnail CDN availability.
             thumbnail=base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGP4DwQACfsD/fteaysAAAAASUVORK5CYII=')
             context.route('https://i.ytimg.com/**',lambda route:route.fulfill(body=thumbnail,content_type='image/png'))
             page=context.new_page();errors=[];bad_requests=[]
             # Stable reference date; do not depend on the machine running this check.
-            page.clock.set_fixed_time(datetime(2026,10,15,3,tzinfo=timezone.utc))
+            page.clock.set_fixed_time(datetime(2026,10,20,3,tzinfo=timezone.utc))
             page.on('pageerror',lambda error:errors.append(str(error)))
             page.on('response',lambda res:bad_requests.append(res.url) if res.status>=400 else None)
             def go(path):
@@ -83,10 +86,18 @@ def run():
                     assert response.ok,f'Broken internal link {href}'
             record('Six page routes and all generated internal links load under /dokbaek/')
             go('index.html')
-            assert page.locator('.stat b').all_text_contents()==['3','1','13']
+            assert page.locator('.stat b').all_text_contents()==['4','1','13']
             assert page.locator('.year-card').count()==2
             assert '15:00' in page.locator('.upcoming-feature').inner_text()
-            assert page.locator('.upcoming-poster img').get_attribute('data-original-src')=='public-media/2026-gallery-poster.png'
+            poster_path='2026/포스터/포스터_수녀원 음악회(20261108).png'
+            assert page.locator('.upcoming-poster img').get_attribute('data-original-src')==poster_path
+            assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='2026-11-08-convent'
+            assert '2026년 11월 8일(일)' in page.locator('.show-date').inner_text()
+            assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#2026-10-18-gallery')
+            assert page.locator('#past-shows .concert-preview').first.locator('.pill').inner_text()=='종료 공연'
+            assert page.locator('#past-shows .section-head a').get_attribute('href')=='archive.html?year=2026'
+            assert page.locator('.upcoming-copy .button').last.get_attribute('href').endswith('#2026-11-08-convent-program')
+            assert page.locator('.upcoming-program li').count()==11
             assert page.locator('.upcoming-poster').bounding_box()['x']>page.locator('.upcoming-copy').bounding_box()['x']
             assert page.locator('.home-hero .group-art img').get_attribute('data-original-src')=='image/집단적독백밴드 전체사진2.png'
             assert 'Gowun Batang' in page.locator('h1').evaluate('e=>getComputedStyle(e).fontFamily')
@@ -141,14 +152,19 @@ def run():
             assert page.locator('.site-header').bounding_box()['height']<=anchor_y<page.viewport_size['height']
             go('archive.html?year=2026')
             assert page.locator('[id="2026-10-18-gallery"] .set-item').count()==11
-            assert '15:00' in page.locator('.concert-heading').inner_text()
-            assert page.locator('.stat b').all_text_contents()==['0','1','0']
+            assert '15:00' in page.locator('[id="2026-10-18-gallery"] .concert-heading').inner_text()
+            assert page.locator('.stat b').all_text_contents()==['1','1','0']
+            assert page.locator('[data-status="scheduled"] .concert-section').count()==1
+            assert page.locator('[data-status="completed"] .concert-section').count()==1
+            assert page.locator('[id="2026-11-08-convent"] .set-item').count()==11
+            assert page.locator('[id="2026-10-18-gallery"] .concert-info .pill').inner_text()=='종료 공연'
+            assert '공연 예정' not in page.locator('[id="2026-10-18-gallery"]').inner_text()
             capture('archive-2026-desktop.png')
-            record('2026 scheduled concert: poster time, ten printed songs and added closing song')
+            record('2026: No.4 completed with its 11 preserved songs; No.5 scheduled with 11 Excel songs and verified poster time/address')
             go('archive.html?year=1900')
             assert '아직 기록되지 않은 해' in page.locator('h1').inner_text()
             go('repertoire.html')
-            assert page.locator('.song-card').count()==24
+            assert page.locator('.song-card').count()==28
             page.locator('#song-query').fill('fly')
             assert page.locator('.song-card').count()==1
             page.locator('#filter-year').select_option('2025')
@@ -159,7 +175,7 @@ def run():
             page.locator('#filter-member').select_option('member-manager')
             assert page.locator('.empty-state').count()==1
             page.get_by_role('button',name='필터 초기화').click()
-            assert page.locator('.song-card').count()==24
+            assert page.locator('.song-card').count()==28
             page.locator('#song-query').fill('<img src=x onerror=alert(1)>')
             assert page.locator('.empty-state').count()==1 and page.locator('#song-results img').count()==0
             record('Combined search/year/member/format filters, reset, no results and safe query text')
@@ -172,9 +188,9 @@ def run():
             go('members.html#member-manager')
             assert page.locator('.member-card').count()==7
             assert '매니저의 무대' in page.locator('#member-detail').inner_text()
-            assert page.locator('#member-detail .history').count()==5
+            assert page.locator('#member-detail .history').count()==6
             assert page.locator('#member-detail .empty-state').count()==0
-            record('Seven original member characters, direct member hash and five recorded manager song participations')
+            record('Seven original member characters, direct member hash and six manager song participations including the No.5 program')
             go('members.html#member-berry')
             assert page.locator('#member-detail .history').count()>10
             go('repertoire.html?member=member-berry#beloved')
@@ -250,7 +266,7 @@ def run():
                 assert info.locator('.composer').text_content()=='작곡가(가수) · '+s['artistCredit']
                 assert info.locator('.song-genre').text_content()=='장르 · '+s['genre']
                 assert info.locator('.song-description').text_content()==s['note']
-            record('All concert song stories and 24 repertoire entries share the exact credit, genre and description')
+            record(f'All concert song stories and {len(song_info)} repertoire entries share the exact credit, genre and description')
             for width in [320,360,375,390,430,768,1024,1280]:
                 page.set_viewport_size({'width':width,'height':900})
                 for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
@@ -272,20 +288,51 @@ def run():
                     go('members.html');capture('members-mobile-360.png')
             record('320/360/375/390/430/768/1024/1280px: all pages fit, forms use 16px text, mobile menu stays accessible')
             page.set_viewport_size({'width':360,'height':800});go('index.html')
-            assert page.locator('.upcoming-feature .button').bounding_box()['y']<800
+            assert page.locator('.upcoming-feature .button').first.bounding_box()['y']<800
             page.locator('.menu-toggle').click()
             page.locator('.home-hero h1').click()
             assert page.locator('.menu-toggle').get_attribute('aria-expanded')=='false'
             capture('home-mobile-360.png')
             for width in [390,768]:
                 page.set_viewport_size({'width':width,'height':844});go('index.html');capture(f'home-{width}.png')
-            # All expired scheduled dates remain unconfirmed; no invented completed show.
+            for width in [360,390,768,1280]:
+                page.set_viewport_size({'width':width,'height':900});go('index.html')
+                assert page.locator('.upcoming-poster img').evaluate("i=>getComputedStyle(i).objectFit==='contain'")
+                page.locator('.upcoming-program summary').tap()
+                no5=next(c for c in json.loads((PUBLIC/'data/concerts-2026.json').read_text(encoding='utf-8')) if c['no']==5)
+                expected=[entry['title'] for entry in no5['setlist']]
+                assert page.locator('.upcoming-program li a').all_text_contents()==expected
+                assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
+                page.locator('.upcoming-poster').tap()
+                original=page.locator('#media-content img')
+                original.evaluate('i=>i.decode()')
+                assert unquote(original.get_attribute('src'))==poster_path
+                assert original.get_attribute('alt').startswith('수녀원 음악회 · 2026년 11월 8일(일)')
+                page.locator('#close-dialog').tap()
+                assert not page.locator('#media-dialog').evaluate('d=>d.open')
+                assert page.locator('.upcoming-poster').evaluate('b=>b===document.activeElement')
+                page.locator('.upcoming-copy .button').last.tap()
+                page.wait_for_function("()=>document.getElementById('2026-11-08-convent-program')!==null")
+                target=page.locator('[id="2026-11-08-convent-program"]')
+                assert target.bounding_box()['y']>=page.locator('.site-header').bounding_box()['height']-1
+                assert target.locator('.set-item').count()==11
+            record('No.5 program preview/order, full original poster URL/alt, touch open/close/focus return and program deep links at 360/390/768/1280px')
+            # Display classification follows Seoul dates; song evidence stays unchanged.
             page.clock.set_fixed_time(datetime(2027,1,1,3,tzinfo=timezone.utc));go('index.html')
             assert page.locator('.upcoming-feature').count()==0
             assert '다음 공연을 준비 중' in page.locator('#upcoming').inner_text()
-            assert page.locator('.schedule-pending').count()==1
+            assert page.locator('.schedule-pending').count()==0
             assert page.locator('#past-shows .concert-preview').count()==2
-            page.clock.set_fixed_time(datetime(2026,10,15,3,tzinfo=timezone.utc))
+            assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#2026-11-08-convent')
+            assert page.locator('.stat b').all_text_contents()==['5','0','13']
+            page.clock.set_fixed_time(datetime(2026,11,8,14,59,59,tzinfo=timezone.utc));go('index.html')
+            assert page.locator('.upcoming-feature').count()==1
+            page.clock.set_fixed_time(datetime(2026,11,8,15,tzinfo=timezone.utc));go('archive.html?year=2026')
+            assert page.locator('[data-status="scheduled"]').count()==0
+            assert page.locator('[data-status="completed"] .concert-section').count()==2
+            assert page.locator('.concert-section').first.get_attribute('id')=='2026-11-08-convent'
+            assert page.locator('[id="2026-11-08-convent"] .pill').filter(has_text='진행 계획').count()==11
+            page.clock.set_fixed_time(datetime(2026,10,20,3,tzinfo=timezone.utc))
             record('360×800 upcoming CTA, outside-click menu close, restored group artwork and serif headings, consistent branding/channels, static sharing metadata and expired schedule fallback')
             # Program-book design: mobile disclosures, alternate repertoire views and sticky anchors.
             for width in [360,390]:
@@ -324,7 +371,7 @@ def run():
                 page.keyboard.press('Escape');assert b.evaluate('(b)=>b===document.activeElement')
                 materials.locator('summary').click()
                 assert not b.is_visible()
-                page.locator('.timeline-link').last.click()
+                page.locator('.timeline-link[href="#2025-11-22-workshop"]').click()
                 assert page.url.endswith('#2025-11-22-workshop')
                 go('archive.html?year=2025#2025-11-02-gallery-item-07')
                 target=page.locator('[id="2025-11-02-gallery-item-07"]')
@@ -384,7 +431,7 @@ def run():
             # Original documents are not served by the preview server or present in the release.
             for path in ['2025/','2026/','private-notes/','2025-archive.html','dokbaek_archive_codex_prompt.md']:
                 assert context.request.get(base+path).status==404
-            record('Original year folders, draft, instructions and private notes are unavailable in public output')
+            record('Only the approved No.5 poster is released from original year folders; directory listings, drafts, instructions and private notes stay unavailable')
             browser.close()
     finally:server.shutdown();server.server_close()
 

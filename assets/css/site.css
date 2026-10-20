@@ -243,6 +243,13 @@ h1,h2{font-family:var(--serif);font-weight:700}
 .upcoming-feature .button{margin-top:12px}
 .upcoming-feature .show-story{font-size:.9375rem;color:var(--muted);margin-top:16px;max-width:650px}
 .upcoming-copy{min-width:0}
+.upcoming-copy>.button{margin-right:8px}
+.show-address{font-size:.9375rem;color:var(--muted);overflow-wrap:anywhere}
+.upcoming-program{margin-top:16px;border-top:1px solid var(--line);padding-top:8px}
+.upcoming-program summary{min-height:44px;padding:8px 0;cursor:pointer}
+.upcoming-program ol{padding-left:24px;margin-bottom:0}
+.upcoming-program li{padding:5px 0;overflow-wrap:anywhere}
+.setlist{scroll-margin-top:var(--header-offset)}
 .preview-main{display:block;text-decoration:none}
 .preview-main:hover h3{text-decoration:underline}
 .venue-link{display:inline-flex;align-items:center;min-height:44px;color:var(--walnut);overflow-wrap:anywhere}

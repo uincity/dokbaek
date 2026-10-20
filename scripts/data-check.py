@@ -21,13 +21,20 @@ class PublicDataChecks(unittest.TestCase):
     def test_month_precision_cannot_invent_day(self):
         self.check_invalid(lambda d:d['data/concerts-2025.json'][0].update(date='2025-01-01'))
     def test_upcoming_does_not_confirm_performance(self):
-        self.check_invalid(lambda d:d['data/concerts-2026.json'][0]['setlist'][0].update(evidenceStatus='confirmed'))
+        self.check_invalid(lambda d:next(c for c in d['data/concerts-2026.json'] if c['status']=='scheduled')['setlist'][0].update(evidenceStatus='confirmed'))
     def test_real_name_field_not_allowed(self):
         self.check_invalid(lambda d:d['data/members.json'][0].update(realName='private person'))
     def test_unreviewed_media_not_allowed(self):
         self.check_invalid(lambda d:d['data/concerts-2025.json'][1]['media'][0].update(reviewed=False))
     def test_document_path_not_allowed(self):
         self.check_invalid(lambda d:d['scripts/public-files.json']['media'].append('2025/private.hwp'))
+    def test_original_images_need_explicit_approval(self):
+        self.check_invalid(lambda d:d['scripts/public-files.json']['media'].append('2026/포스터/other.png'))
+    def test_only_requested_original_poster_is_approved(self):
+        paths=validate.approved_files()
+        originals=[p for p in paths if p.startswith(('2025/','2026/'))]
+        self.assertEqual(originals,sorted(validate.REVIEWED_POSTERS))
+        self.assertFalse(any(p.endswith('.xlsx') for p in paths))
     def test_poem_not_counted_as_song(self):
         self.check_invalid(lambda d:next(e for e in d['data/concerts-2025.json'][1]['setlist'] if e['kind']=='event').update(songId='misty'))
     def test_contact_and_machine_path_detection(self):

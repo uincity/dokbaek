@@ -29,7 +29,7 @@
       "year": 2026,
       "title": "우리가 되는 오후",
       "phrase": "혼자였던 노래가 우리가 되는 오후",
-      "description": "한 대의 기타에서 시작해 이중주와 합주로 이어지는 가을의 프로그램. 음악과 이야기가 만나는 다음 무대를 준비합니다.",
+      "description": "고덕우 갤러리에서 나눈 가을의 음악과 수녀님들과 함께하는 작은 나눔 음악회. 기타 선율로 이어가는 2026년의 무대입니다.",
       "file": "data/concerts-2026.json",
       "historicalLineup": null
     }
@@ -84,6 +84,21 @@
       "id": "member-song-notes",
       "label": "멤버 제공 곡설명",
       "type": "member-record"
+    },
+    {
+      "id": "concert-update-20261020",
+      "label": "멤버 제공 2026 공연 일정 갱신",
+      "type": "confirmed-record"
+    },
+    {
+      "id": "member-no5-program",
+      "label": "멤버 제공 No.5 공연 목록",
+      "type": "member-record"
+    },
+    {
+      "id": "poster-2026-convent",
+      "label": "2026 수녀원 음악회 포스터",
+      "type": "poster"
     }
   ]
 }

@@ -1,6 +1,9 @@
 # Source documents and extraction are local only.
 /2025/
-/2026/
+/2026/*
+!/2026/포스터/
+/2026/포스터/*
+!/2026/포스터/포스터_수녀원 음악회(20261108).png
 /private-notes/
 /레파토리목록.csv
 /2025-archive.html

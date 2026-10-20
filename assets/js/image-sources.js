@@ -464,5 +464,27 @@ export default {
         1024
       ]
     ]
+  },
+  "2026/포스터/포스터_수녀원 음악회(20261108).png": {
+    "width": 1055,
+    "height": 1491,
+    "variants": [
+      [
+        "image/optimized/94f2533bcde95f77-160.webp",
+        160
+      ],
+      [
+        "image/optimized/94f2533bcde95f77-480.webp",
+        480
+      ],
+      [
+        "image/optimized/94f2533bcde95f77-800.webp",
+        800
+      ],
+      [
+        "image/optimized/94f2533bcde95f77-1055.webp",
+        1055
+      ]
+    ]
   }
 };

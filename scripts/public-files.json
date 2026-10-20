@@ -111,7 +111,11 @@
     "image/optimized/105eb6e106a66a02-160.webp",
     "image/optimized/105eb6e106a66a02-480.webp",
     "image/optimized/105eb6e106a66a02-800.webp",
-    "image/optimized/105eb6e106a66a02-1024.webp"
+    "image/optimized/105eb6e106a66a02-1024.webp",
+    "image/optimized/94f2533bcde95f77-160.webp",
+    "image/optimized/94f2533bcde95f77-480.webp",
+    "image/optimized/94f2533bcde95f77-800.webp",
+    "image/optimized/94f2533bcde95f77-1055.webp"
   ],
   "media": [
     "public-media/2025-no2-poster.jpg",
@@ -119,7 +123,8 @@
     "public-media/2025-no3-poster.jpg",
     "public-media/2025-no3-program.jpg",
     "public-media/2026-gallery-poster.png",
-    "public-media/2026-gallery-program.png"
+    "public-media/2026-gallery-program.png",
+    "2026/포스터/포스터_수녀원 음악회(20261108).png"
   ],
   "fonts": [
     "assets/fonts/README.md",

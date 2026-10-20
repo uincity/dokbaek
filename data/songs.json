@@ -1124,5 +1124,165 @@
     },
     "artistCredit": "송창식",
     "genre": "K-pop / Folk"
+  },
+  {
+    "id": "hua-kai-gu-ren-lai",
+    "title": "화개고인래 (花開故人來)",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "화개고인래(花開故人來) — 중국 기악곡"
+    ],
+    "artistCredit": "차이쥔리(蔡军礼) 작곡",
+    "genre": "Chinese Traditional / Instrumental",
+    "note": "'꽃이 피니 옛 벗이 찾아온다'는 뜻으로, 꽃이 피는 계절의 재회와 그리움을 표현한 중국 기악곡. 중국 전통 대나무 피리인 죽적(디즈)의 서정적인 선율이 특징이다.",
+    "sourceIds": [
+      "member-song-notes"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      }
+    }
+  },
+  {
+    "id": "ave-maria-gounod",
+    "title": "아베 마리아 (Ave Maria)",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [
+      "아베 마리아(Ave Maria)"
+    ],
+    "artistCredit": "샤를 구노(Charles Gounod) 작곡 / J. S. 바흐 원곡",
+    "genre": "Classical / Sacred Music",
+    "note": "바흐의 《평균율 클라비어곡집》 제1권 전주곡 1번 위에 구노가 아름다운 선율을 덧붙인 작품. 성모 마리아에게 바치는 기도의 경건함과 평온함을 담은 대표적인 종교음악이다.",
+    "sourceIds": [
+      "member-song-notes"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      }
+    }
+  },
+  {
+    "id": "siesta-in-granada",
+    "title": "Siesta in Granada",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "artistCredit": "엘 카디스(El Cadiz) 작곡*",
+    "genre": "Spanish Guitar / Instrumental",
+    "note": "'그라나다에서의 낮잠'이라는 뜻으로, 스페인 남부의 따뜻한 햇살과 여유로운 오후를 연상시키는 기타 기악곡. 스페인 특유의 정취를 어쿠스틱 기타 선율로 표현한다.",
+    "sourceIds": [
+      "member-song-notes"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      }
+    }
+  },
+  {
+    "id": "kkot",
+    "title": "생활성가 「꽃」",
+    "composer": null,
+    "composerStatus": "needs-confirmation",
+    "aliases": [],
+    "artistCredit": "현덕 프란치스코 작사·작곡",
+    "genre": "Catholic CCM / 생활성가",
+    "note": "1997년에 만들어진 생활성가로, 순교자들의 믿음과 삶을 한 송이 꽃에 비유한 곡. 어려움 속에서도 신앙을 지키며 세상에 사랑을 전하는 모습을 서정적인 선율에 담았다",
+    "sourceIds": [
+      "member-song-notes"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-song-notes"
+        ]
+      }
+    }
   }
 ]

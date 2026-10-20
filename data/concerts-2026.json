@@ -8,8 +8,8 @@
     "time": "15:00",
     "title": "혼자였던 노래가, 우리가 되는 오후",
     "venue": "고덕우 갤러리",
-    "story": "한 사람의 노래에서 독주, 이중주, 삼중주와 합주로 이어집니다. 서로 다른 이야기가 함께하는 오후를 준비합니다.",
-    "status": "scheduled",
+    "story": "한 사람의 노래에서 독주, 이중주, 삼중주와 합주로 이어집니다. 서로 다른 이야기가 함께하는 오후의 프로그램입니다.",
+    "status": "completed",
     "visibility": "public",
     "mediaVisibility": "reviewed-only",
     "participants": [
@@ -474,7 +474,8 @@
       "poster-2026",
       "program-2026",
       "script-2026",
-      "member-repertoire-list"
+      "member-repertoire-list",
+      "concert-update-20261020"
     ],
     "fieldEvidence": {
       "date": {
@@ -520,11 +521,470 @@
         "sourceIds": [
           "member-repertoire-list"
         ]
+      },
+      "status": {
+        "status": "confirmed",
+        "sourceIds": [
+          "concert-update-20261020"
+        ]
       }
     },
     "notes": [
-      "공연 예정 · 프로그램은 바뀔 수 있습니다.",
+      "종료 공연 · 곡별 기록은 제공된 프로그램과 진행 계획을 기준으로 보존합니다.",
       "멤버 제공 목록을 반영한 11곡입니다. 곡별 참여자와 관객의 참여 역할을 함께 표시합니다."
+    ]
+  },
+  {
+    "id": "2026-11-08-convent",
+    "year": 2026,
+    "no": 5,
+    "date": "2026-11-08",
+    "datePrecision": "day",
+    "time": "15:00",
+    "title": "수녀원 음악회",
+    "venue": "예수성심전교수녀회",
+    "address": "부산 금정구 금샘로18번길 79-16",
+    "story": "기타 선율에 마음을 담아 수녀님들과 음악으로 교감하는 소규모 나눔 공연입니다. 플루트와 기타, 함께 부르는 노래로 따뜻한 음악의 시간을 나눕니다.",
+    "status": "scheduled",
+    "visibility": "public",
+    "mediaVisibility": "reviewed-only",
+    "participants": [
+      {
+        "memberId": "member-uni",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-rona",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-becky",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-manager",
+        "role": "하모니카"
+      },
+      {
+        "memberId": "member-berry",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-senyu",
+        "role": "기타"
+      },
+      {
+        "memberId": "member-kur",
+        "role": "기타"
+      }
+    ],
+    "setlist": [
+      {
+        "id": "2026-11-08-convent-item-01",
+        "order": 1,
+        "songId": "valse-des-loges",
+        "kind": "song",
+        "title": "Valse des loges",
+        "originalTitle": "Valse des loges",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-02",
+        "order": 2,
+        "songId": "melodia-noite",
+        "kind": "song",
+        "title": "Melodia de uma Noite",
+        "originalTitle": "Melodia de uma Noite",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-03",
+        "order": 3,
+        "songId": "romance-no1",
+        "kind": "song",
+        "title": "Romance No.1",
+        "originalTitle": "Romance No.1",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-04",
+        "order": 4,
+        "songId": "ijeoya",
+        "kind": "song",
+        "title": "잊어야 한다는 마음으로",
+        "originalTitle": "잊어야 한다는 마음으로",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-becky",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-manager",
+            "role": "하모니카"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-05",
+        "order": 5,
+        "songId": "hua-kai-gu-ren-lai",
+        "kind": "song",
+        "title": "화개고인래(花開故人來) — 중국 기악곡",
+        "originalTitle": "화개고인래(花開故人來) — 중국 기악곡",
+        "formats": [
+          "플루트"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "guestCredits": [
+          {
+            "name": "수녀님1",
+            "role": "플루트"
+          }
+        ],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-06",
+        "order": 6,
+        "songId": "ave-maria-gounod",
+        "kind": "song",
+        "title": "아베 마리아(Ave Maria)",
+        "originalTitle": "아베 마리아(Ave Maria)",
+        "formats": [
+          "플루트"
+        ],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "guestCredits": [
+          {
+            "name": "수녀님1",
+            "role": "플루트"
+          }
+        ],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-07",
+        "order": 7,
+        "songId": "siesta-in-granada",
+        "kind": "song",
+        "title": "Siesta in Granada",
+        "originalTitle": "Siesta in Granada",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [
+          {
+            "name": "수녀님2",
+            "role": "참여"
+          }
+        ],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-08",
+        "order": 8,
+        "songId": "manha-carnaval",
+        "kind": "song",
+        "title": "Manhã de Carnaval",
+        "originalTitle": "Manhã de Carnaval",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-09",
+        "order": 9,
+        "songId": "sangol-boy",
+        "kind": "song",
+        "title": "어느 산골소년의 사랑이야기",
+        "originalTitle": "어느 산골소년의 사랑이야기",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-10",
+        "order": 10,
+        "songId": "kkot",
+        "kind": "song",
+        "title": "생활성가 「꽃」",
+        "originalTitle": "생활성가 「꽃」",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-11",
+        "order": 11,
+        "songId": "trot-medley",
+        "kind": "song",
+        "title": "Trot Medley",
+        "originalTitle": "Trot Medley",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [
+          {
+            "memberId": "member-berry",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-kur",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-rona",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-uni",
+            "role": "기타"
+          },
+          {
+            "memberId": "member-senyu",
+            "role": "기타"
+          }
+        ],
+        "guestCredits": [],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program"
+        ],
+        "additionalEvents": []
+      }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "포스터",
+        "path": "2026/포스터/포스터_수녀원 음악회(20261108).png",
+        "sourceIds": [
+          "poster-2026-convent"
+        ],
+        "reviewed": true
+      }
+    ],
+    "moments": [],
+    "sourceIds": [
+      "concert-update-20261020",
+      "member-no5-program",
+      "poster-2026-convent"
+    ],
+    "fieldEvidence": {
+      "date": {
+        "status": "confirmed",
+        "sourceIds": [
+          "poster-2026-convent"
+        ]
+      },
+      "time": {
+        "status": "confirmed",
+        "sourceIds": [
+          "poster-2026-convent"
+        ]
+      },
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "poster-2026-convent"
+        ]
+      },
+      "venue": {
+        "status": "confirmed",
+        "sourceIds": [
+          "poster-2026-convent"
+        ]
+      },
+      "address": {
+        "status": "confirmed",
+        "sourceIds": [
+          "poster-2026-convent"
+        ]
+      },
+      "no": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program"
+        ]
+      },
+      "participants": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program"
+        ]
+      }
+    },
+    "notes": [
+      "곡 목록은 제공된 No.5 프로그램을 기준으로 하며 실제 곡별 연주 여부와 구분합니다.",
+      "갱신된 멤버 제공 No.5 레파토리 목록의 연주자를 반영했습니다."
     ]
   }
 ]
