@@ -65,12 +65,18 @@ function ordered(list) { return [...list].sort((a,b)=>(a.date || '').localeCompa
 function occurrences(songId, list=concerts) {
   return ordered(list).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId===songId).map(e=>({c,e})));
 }
-function stats(list, showNotes=true) {
+function memberRepertoireIds(list=concerts) {
+  return new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.credits?.length).map(e=>e.songId)));
+}
+function stats(list, showNotes=true, useMemberRepertoire=false) {
   const complete = list.filter(c=>concertStatus(c)==='completed').length;
   const upcoming = list.filter(c=>concertStatus(c)==='scheduled').length;
-  const confirmed = new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
+  const songCount = useMemberRepertoire
+    ? memberRepertoireIds(list).size
+    : new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
   const box = el('div',null,'stats');
-  for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[confirmed,'연주 곡','계획·이벤트 제외']]) {
+  const songNote=useMemberRepertoire ? '멤버 참여곡 기준' : '계획·이벤트 제외';
+  for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[songCount,'연주 곡',songNote]]) {
     box.append(add(el('div',null,'stat'),el('b',n),el('span',label),showNotes ? el('small',note) : null));
   }
   return box;
@@ -247,7 +253,7 @@ function home() {
     const card=link('',`archive.html?year=${y.year}`,'year-card');
     add(card,el('span',y.year,'year-number'),el('span','↗','arrow'),el('h3',y.title),el('p',y.phrase)); grid.append(card);
   }
-  years.append(grid); add(main,years,stats(concerts,false),performanceInquiry());
+  years.append(grid); add(main,years,stats(concerts,false,true),performanceInquiry());
 }
 function seoulToday(now=new Date()) {
   const parts=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
@@ -269,7 +275,7 @@ function homeSchedule(list, today=seoulToday()) {
   };
 }
 function repertoireTable(list) {
-  const songIds=[...new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song').map(e=>e.songId)))];
+  const songIds=[...memberRepertoireIds(list)];
   const wrap=el('div',null,'table-wrap'); wrap.tabIndex=0; wrap.setAttribute('aria-label','공연별 레퍼토리 비교표, 가로 스크롤 가능');
   const table=el('table'); const caption=el('caption','프로그램에 기록된 레퍼토리'); caption.className='sr-only';
   const head=el('thead'); const tr=el('tr'); add(tr,el('th','곡'));
@@ -289,7 +295,7 @@ function repertoireTable(list) {
 function repertoireViews(list) {
   const view=el('div',null,'repertoire-views');
   const cards=el('div',null,'repertoire-mobile');
-  const ids=[...new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song').map(e=>e.songId)))];
+  const ids=[...memberRepertoireIds(list)];
   for(const id of ids) {
     const card=el('article',null,'repertoire-mini');card.dataset.songId=id;
     add(card,add(el('h3'),link(songMap.get(id).title,`repertoire.html#${id}`)));
@@ -361,7 +367,8 @@ function concertSection(c, list, index) {
   for (const entry of [...c.setlist].sort((a,b)=>a.order-b.order)) {
     const li=el('li',null,`set-item ${entry.kind==='event'?'event':''}`); li.id=entry.id;
     const body=el('div'); const song=songMap.get(entry.songId);
-    const h=el('h3'); h.append(song ? link(entry.title || song.title,`repertoire.html#${song.id}`) : el('span',entry.title));
+    const h=el('h3');
+    h.append(song && memberRepertoireIds().has(song.id) ? link(entry.title || song.title,`repertoire.html#${song.id}`) : el('span',entry.title || song?.title));
     body.append(h);
     const badges=el('div');
     for(const format of entry.formats || []) badges.append(pill(format));
@@ -490,7 +497,7 @@ function repertoire() {
   }
   function render(updateUrl=false) {
     results.replaceChildren();let n=0;const q=normalize(query.value);
-    for(const song of songs) {
+    for(const song of songs.filter(s=>memberRepertoireIds().has(s.id))) {
       if(q && ![song.title,...song.aliases].some(t=>normalize(t).includes(q))) continue;
       const rows=occurrences(song.id).filter(({c,e})=>matches(c,e));if(!rows.length)continue;n++;
       const card=el('details',null,'song-card');card.id=song.id;

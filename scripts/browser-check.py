@@ -86,7 +86,7 @@ def run():
                     assert response.ok,f'Broken internal link {href}'
             record('Six page routes and all generated internal links load under /dokbaek/')
             go('index.html')
-            assert page.locator('.stat b').all_text_contents()==['4','1','13']
+            assert page.locator('.stat b').all_text_contents()==['4','1','26']
             assert page.locator('.year-card').count()==2
             assert '15:00' in page.locator('.upcoming-feature').inner_text()
             poster_path='2026/포스터/포스터_수녀원 음악회(20261108).png'
@@ -125,7 +125,7 @@ def run():
             record('Inquiry is last in home content; exact mailto recipient/subject/body, clipboard success/failure feedback and manual selection fallback')
             go('index.html')
             capture('home-desktop.png')
-            record('Home statistics separate recorded concerts, upcoming concerts and confirmed songs')
+            record('Home statistics show recorded concerts, upcoming concerts and 26 member repertoire songs')
             go('archive.html?year=2025')
             assert page.locator('.concert-timeline .timeline-link').count()==3
             assert page.locator('.year-calendar').get_attribute('open') is None
@@ -164,7 +164,8 @@ def run():
             go('archive.html?year=1900')
             assert '아직 기록되지 않은 해' in page.locator('h1').inner_text()
             go('repertoire.html')
-            assert page.locator('.song-card').count()==28
+            assert page.locator('.song-card').count()==26
+            assert page.locator('#hua-kai-gu-ren-lai, #ave-maria-gounod').count()==0
             page.locator('#song-query').fill('fly')
             assert page.locator('.song-card').count()==1
             page.locator('#filter-year').select_option('2025')
@@ -175,7 +176,7 @@ def run():
             page.locator('#filter-member').select_option('member-manager')
             assert page.locator('.empty-state').count()==1
             page.get_by_role('button',name='필터 초기화').click()
-            assert page.locator('.song-card').count()==28
+            assert page.locator('.song-card').count()==26
             page.locator('#song-query').fill('<img src=x onerror=alert(1)>')
             assert page.locator('.empty-state').count()==1 and page.locator('#song-results img').count()==0
             record('Combined search/year/member/format filters, reset, no results and safe query text')
@@ -261,12 +262,15 @@ def run():
                         assert info.locator('.song-genre').text_content()=='장르 · '+s['genre']
                         assert info.locator('.song-description').text_content()==s['note']
             go('repertoire.html')
-            for song_id,s in song_info.items():
+            member_song_ids={e['songId'] for year in [2025,2026] for c in json.loads((PUBLIC/f'data/concerts-{year}.json').read_text(encoding='utf-8')) for e in c['setlist'] if e['kind']=='song' and e['credits']}
+            assert len(member_song_ids)==26 and {'hua-kai-gu-ren-lai','ave-maria-gounod'}.isdisjoint(member_song_ids)
+            for song_id in member_song_ids:
+                s=song_info[song_id]
                 info=page.locator(f'#{song_id} .song-information')
                 assert info.locator('.composer').text_content()=='작곡가(가수) · '+s['artistCredit']
                 assert info.locator('.song-genre').text_content()=='장르 · '+s['genre']
                 assert info.locator('.song-description').text_content()==s['note']
-            record(f'All concert song stories and {len(song_info)} repertoire entries share the exact credit, genre and description')
+            record(f'All concert song stories and {len(member_song_ids)} member repertoire entries share the exact credit, genre and description')
             for width in [320,360,375,390,430,768,1024,1280]:
                 page.set_viewport_size({'width':width,'height':900})
                 for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
@@ -324,7 +328,7 @@ def run():
             assert page.locator('.schedule-pending').count()==0
             assert page.locator('#past-shows .concert-preview').count()==2
             assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#2026-11-08-convent')
-            assert page.locator('.stat b').all_text_contents()==['5','0','13']
+            assert page.locator('.stat b').all_text_contents()==['5','0','26']
             page.clock.set_fixed_time(datetime(2026,11,8,14,59,59,tzinfo=timezone.utc));go('index.html')
             assert page.locator('.upcoming-feature').count()==1
             page.clock.set_fixed_time(datetime(2026,11,8,15,tzinfo=timezone.utc));go('archive.html?year=2026')
