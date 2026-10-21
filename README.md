@@ -2,6 +2,42 @@
 
 빌드 도구와 서버 의존성이 없는 HTML/CSS/JavaScript 사이트입니다. 홈, 연도별 아카이브, 레퍼토리, 멤버, 소개 페이지가 JSON 데이터를 함께 사용합니다. 캐릭터와 포스터는 기존 자료에서 가져왔습니다.
 
+## 독백의 작은 무대 운영
+
+`unit.html`은 멤버들이 다양한 조합으로 참여한 활동을 기록합니다. 홈의 ‘지난 공연’ 다음 미리보기와 같은 `data/unit-performances.json`을 읽으며, 정식 공연의 회차·연도별 통계·레퍼토리 이력에는 합산하지 않습니다. 새 프레임워크나 브라우저용 Excel 라이브러리는 사용하지 않습니다.
+
+원천은 루트 `레파토리목록.xlsx`의 `파일럿공연` 시트입니다. `구분`, `곡명`, `연주자(역할)`, `장소`, `일시` 열을 사용하며 같은 `구분`은 한 행사로 묶습니다. 새 행사에는 새로운 `구분`을 사용하고, 그 행사에 속한 모든 행의 날짜·장소를 일치시키세요. 역할은 `로나짱(기타,멜로디언)`처럼 괄호 안에 적습니다. 새 멤버는 먼저 `data/members.json`에 공개 닉네임을 등록합니다. 곡은 기존 제목·별칭으로 연결하며, 미등록 곡은 경고와 함께 `song_id: null`인 독립 표시로 저장합니다.
+
+Excel 갱신 후 기존 환경의 openpyxl로 가져옵니다. openpyxl은 가져오기와 원본 대조 검사에만 필요하며 일반 빌드에는 필요하지 않습니다.
+
+```powershell
+python scripts/import-unit-performances.py
+python scripts/unit-check.py
+python scripts/build.py
+python scripts/data-check.py
+node scripts/home-check.cjs
+python scripts/browser-check.py
+```
+
+작은 무대의 초기 화면만 확인하려면 `python scripts/browser-check.py --unit-preview`를 실행합니다. 375px·1280px 캡처와 결과는 `test-results/`에 저장되며, 전체 검증 보고서는 보존합니다.
+
+일반 빌드/배포는 Excel을 다시 읽지 않습니다. 가져오기 결과 JSON을 함께 반영해야 화면이 갱신됩니다. 오류 시 출력 파일을 교체하지 않으며, 같은 행사 내 날짜·장소 충돌, 빈 곡명, 잘못된 멤버·역할, 중복 행사 ID, 잘못된 상태를 검사합니다. 기존 행사가 시트에서 사라지면 중단하므로 삭제 여부를 명시적으로 검토해야 합니다. 시트명을 변경하거나 원본 `구분`을 바꾸면 기존 행사와 자동으로 연결되지 않습니다.
+
+2026-10-21 기준으로 초기 데이터는 결혼축가 2건(완료, 2곡씩, 참여 3명·5명), 노을음악회 1건(2026-10-24 예정, 1곡, 참여 2명)입니다. 원본에서 첫 번째 결혼축가의 로나짱 역할은 **기타·멜로디언**입니다. 구현 지시문의 아코디언 예시와 달라 실제 Excel을 우선했습니다. `Bésame Mucho`, `Fly Me to the Moon`, `잊어야 한다는 마음으로`를 기존 곡 ID에 연결하며, 원문 제목과 연주자 문자열은 `source_title`, `source_performers`에 보존합니다. 시작 시각은 추가하지 않습니다.
+
+행사가 실제로 열렸음을 확인한 뒤 JSON의 해당 `status`를 `scheduled`에서 `completed`로 직접 변경하고 다시 빌드하세요. 날짜 경과로 상태를 자동 변경하지 않습니다. 새로 가져온 행사는 기본 `scheduled`이며, 초기 두 결혼축가만 확인된 완료값으로 시작합니다. 재가져오기는 원본 `source_category`로 연결해 기존 ID·상태·제목·유형·설명·메모·승인 미디어를 보존합니다.
+
+선택 필드 `description`, `notes`는 JSON에 기록할 수 있습니다. 자료가 없는 경우 `media`를 생략하거나 빈 배열로 두면 이미지 영역을 만들지 않습니다. 사진·영상은 공개 승인을 확인한 사본만 `public-media/`에 두고 `scripts/public-files.json`의 `media` 허용 목록에 명시적으로 등록하세요. 행사 JSON 예시는 다음과 같습니다. 승인되지 않은 매체는 등록하지 않습니다.
+
+```json
+"media": [
+  {"type": "image", "label": "공개 승인된 활동 사진", "path": "public-media/reviewed-stage.jpg", "reviewed": true},
+  {"type": "video", "label": "공개 승인된 연주 영상", "path": "public-media/reviewed-stage.mp4", "reviewed": true}
+]
+```
+
+이미지는 JPG·PNG·WebP, 영상은 MP4·WebM을 지원합니다. 이미지는 빌드에서 메타데이터를 제거하며, 영상은 게시 전 별도로 메타데이터와 공개 범위를 확인한 사본을 사용합니다. 영상은 자동 재생하지 않습니다. 검증과 빌드를 통과한 `dist`만 기존 GitHub Pages 절차로 배포합니다. 이 구현 작업에서는 원격 push나 배포를 수행하지 않습니다.
+
 ## 로컬 실행
 
 화면에 표시하는 이미지는 `image/optimized/`의 WebP 크기별 사본을 사용합니다. 브라우저가 화면 크기와 픽셀 밀도에 맞춰 선택하며, 첫 화면 이미지는 우선 로딩하고 나머지는 지연 로딩합니다. 포스터·프로그램 확대 창에서는 원본을 표시합니다.

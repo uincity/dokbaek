@@ -4,9 +4,10 @@ from datetime import date
 from html.parser import HTMLParser
 from urllib.parse import urlsplit, unquote
 import json, re, sys, struct
+from unit_data import validate_units
 
 ROOT=Path(__file__).resolve().parents[1]
-PAGES={'index.html','archive.html','repertoire.html','members.html','about.html'}
+PAGES={'index.html','archive.html','unit.html','repertoire.html','members.html','about.html'}
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
 SONG_KEYS={'id','title','composer','composerStatus','artistCredit','genre','aliases','note','sourceIds','fieldEvidence'}
@@ -41,8 +42,8 @@ def unique(records,label):
 def approved_files(base=ROOT):
     manifest=load(base,'scripts/public-files.json')
     require(set(manifest)=={'html','assets','images','media','fonts'},'Unexpected manifest category')
-    require(set(manifest['html'])==PAGES,'Only the five public pages may be released')
-    for group,prefix,extensions in [('assets','assets/',{'.css','.js'}),('images','image/',{'.png','.jpg','.jpeg','.webp'}),('media','public-media/',{'.png','.jpg','.jpeg','.webp'}),('fonts','assets/fonts/',{'.woff2','.txt','.md'})]:
+    require(set(manifest['html'])==PAGES,'Only the approved public pages may be released')
+    for group,prefix,extensions in [('assets','assets/',{'.css','.js'}),('images','image/',{'.png','.jpg','.jpeg','.webp'}),('media','public-media/',{'.png','.jpg','.jpeg','.webp','.mp4','.webm'}),('fonts','assets/fonts/',{'.woff2','.txt','.md'})]:
         for path in manifest[group]:
             local_path(path)
             require((path.startswith(prefix) or group=='media' and path in REVIEWED_POSTERS) and Path(path).suffix.lower() in extensions,'Unexpected public file type')
@@ -82,7 +83,9 @@ def validate_data(base=ROOT, manifest_base=ROOT):
                 require(s.get('fieldEvidence',{}).get(field,{}).get('status')=='confirmed','Song information needs evidence')
     years=[y['year'] for y in site['years']]
     require(len(years)==len(set(years)),'Duplicate years')
-    concerts=[]; data_files=['data/site.json','data/members.json','data/songs.json']
+    units=load(base,'data/unit-performances.json')
+    validate_units(units,songs,members,allowed)
+    concerts=[]; data_files=['data/site.json','data/members.json','data/songs.json','data/unit-performances.json']
     for y in site['years']:
         keys(y,{'year','title','phrase','description','file','historicalLineup'},'year')
         require(isinstance(y['year'],int) and 1900<=y['year']<=2200,'Invalid year')
@@ -161,7 +164,7 @@ def validate_data(base=ROOT, manifest_base=ROOT):
     # Catch private fields in arbitrary nested data as well.
     text='\n'.join((base/p).read_text(encoding='utf-8') for p in data_files)
     scan_text(text)
-    return {'files':data_files,'concerts':concerts,'songs':songs,'members':members}
+    return {'files':data_files,'concerts':concerts,'songs':songs,'members':members,'units':units}
 
 def scan_text(text):
     # Only this explicitly authorized public inquiry address is permitted.

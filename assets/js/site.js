@@ -7,6 +7,7 @@ const inquirySubject='[집단적독백] 공연 초청 문의';
 const inquiryBody='안녕하세요. 집단적독백 공연 초청을 문의드립니다.\n\n1. 문의자 / 단체명:\n2. 연락 가능한 이메일:\n3. 공연 희망 날짜 및 시간:\n4. 공연 장소:\n5. 행사 성격 및 예상 관객:\n6. 기타 요청사항:\n\n감사합니다.';
 const inquiryMailto=`mailto:${inquiryEmail}?subject=${encodeURIComponent(inquirySubject)}&body=${encodeURIComponent(inquiryBody)}`;
 let site, members, songs, concerts, memberMap, songMap, sourceMap;
+let unitPerformances=[], unitError=null;
 const evidenceLabels = {confirmed:'', planned:'진행 계획', program:'인쇄 프로그램'};
 function evidenceText(entry) {
   return [evidenceLabels[entry.evidenceStatus], entry.isEncore ? '앵콜' : ''].filter(Boolean).join(' · ');
@@ -177,6 +178,110 @@ function preview(c) {
   add(a,el('p',dateText(c),'preview-date'),pill(scheduled ? '공연 예정' : '종료 공연',scheduled?'red':''),el('h3',c.title));
   add(card,a,add(el('p'),venueLink(c.venue)),el('small',c.story));return card;
 }
+function unitParticipants(event) {
+  return [...new Map(event.songs.flatMap(song=>song.performers).map(p=>[p.member_id,p])).values()];
+}
+// Small stages use editorial status only, even after the scheduled date passes.
+function unitSchedule(list) {
+  return {
+    upcoming:ordered(list.filter(event=>event.status==='scheduled')),
+    past:ordered(list.filter(event=>event.status==='completed')).reverse()
+  };
+}
+function checkUnitData(events) {
+  if(!Array.isArray(events))throw new Error('작은 무대 자료는 행사 목록이어야 합니다.');
+  const ids=new Set();
+  for(const event of events) {
+    if(!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(event.id) || ids.has(event.id) ||
+       !['scheduled','completed'].includes(event.status) || !/^\d{4}-\d{2}-\d{2}$/.test(event.date) ||
+       !event.title?.trim() || !event.venue?.trim() || !Array.isArray(event.songs) || !event.songs.length)
+      throw new Error('작은 무대 행사 정보가 올바르지 않습니다.');
+    ids.add(event.id);
+    for(const song of event.songs) {
+      if(!song.title?.trim() || !Array.isArray(song.performers) || !song.performers.length ||
+         song.performers.some(p=>!memberMap.has(p.member_id) || !p.name?.trim() || !Array.isArray(p.roles) || !p.roles.length || p.roles.some(role=>!role?.trim())))
+        throw new Error(`작은 무대 프로그램 정보가 올바르지 않습니다 (${event.id}).`);
+    }
+  }
+  return events;
+}
+function unitLoadNotice() {
+  const box=el('div',null,'notice unit-error');box.setAttribute('role','alert');
+  return add(box,el('p','작은 무대 기록을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.'),link('다시 열기',location.href,'button'));
+}
+function unitCard(event, compact=false) {
+  const card=el('article',null,`unit-card${compact?' unit-compact':''}`);
+  card.dataset.unitId=event.id;
+  if(!compact)card.id=event.id;
+  const [year,month,day]=event.date.split('-');
+  const stamp=el('time',null,'unit-date');stamp.dateTime=event.date;
+  stamp.setAttribute('aria-label',`${year}년 ${Number(month)}월 ${Number(day)}일`);
+  add(stamp,el('span',`${Number(month)}월`),el('strong',Number(day)),el('small',year));
+  const body=el('div',null,'unit-copy');
+  const title=el('h3');title.append(compact?link(event.title,`unit.html#${event.id}`):document.createTextNode(event.title));
+  const participants=unitParticipants(event);
+  add(body,pill(event.status==='scheduled'?'공연 예정':'공연 완료',event.status==='scheduled'?'red':''),title,
+    el('p',event.venue,'unit-venue'));
+  if(event.description && !compact)body.append(el('p',event.description,'unit-description'));
+  if(!compact && event.status==='scheduled')body.append(el('p','함께 나눌 음악을 준비하고 있습니다.','unit-description'));
+  const names=el('ul',null,'unit-members');names.setAttribute('aria-label','참여 멤버');
+  for(const person of participants)names.append(add(el('li'),link(person.name,`members.html#${person.member_id}`)));
+  add(body,el('p',`${participants.length}명 참여 · ${event.songs.length}곡`,'unit-count'),names);
+  if(compact)body.append(el('p',event.songs.map(song=>song.title).join(' · '),'unit-song-preview'));
+  else {
+    const summary=el('p',event.songs.map(song=>song.title).join(' · '),'unit-song-preview');
+    const detail=disclosure('프로그램 자세히 보기','unit-program');
+    const list=el('ol');
+    for(const song of [...event.songs].sort((a,b)=>a.order-b.order)) {
+      const item=el('li');
+      const songTitle=el('h4');songTitle.append(song.song_id && songMap.has(song.song_id)?link(song.title,`repertoire.html#${song.song_id}`):document.createTextNode(song.title));
+      item.append(songTitle);
+      if(song.formats.length)item.append(el('small',song.formats.join(' · '),'unit-format'));
+      const players=el('ul',null,'unit-performers');
+      for(const person of song.performers)players.append(add(el('li'),link(person.name,`members.html#${person.member_id}`),el('span',person.roles.join(' · '))));
+      item.append(players);list.append(item);
+    }
+    detail.append(list);add(body,summary,detail);
+    const approved=(event.media || []).filter(media=>media.reviewed===true && safeMedia(media.path));
+    if(approved.length) {
+      const mediaList=el('div',null,'unit-media');
+      for(const media of approved) {
+        if(media.type==='image')mediaList.append(image(media.path,media.label));
+        if(media.type==='video') {
+          const player=el('video');player.controls=true;player.preload='none';player.src=media.path;player.setAttribute('aria-label',media.label);mediaList.append(player);
+        }
+      }
+      body.append(mediaList);
+    }
+  }
+  add(card,stamp,body);return card;
+}
+function unitHomePreview() {
+  const preview=section('독백의 작은 무대',link('작은 무대 전체 보기 ↗','unit.html'));preview.id='small-stages';
+  preview.append(el('p','때로는 둘이서, 때로는 함께.','unit-intro'));
+  if(unitError)preview.append(unitLoadNotice());
+  else {
+    const schedule=unitSchedule(unitPerformances);
+    const selected=schedule.upcoming.length?[schedule.upcoming[0],...(schedule.past.length?[schedule.past[0]]:schedule.upcoming.slice(1,2))]:schedule.past.slice(0,2);
+    if(!selected.length)return null;
+    preview.append(add(el('div',null,'unit-grid'),...selected.map(event=>unitCard(event,true))));
+  }
+  return preview;
+}
+function unitPage() {
+  const hero=heading('독백의 작은 무대','SMALL STAGES · UNIT SESSIONS','때로는 둘이서, 때로는 함께.');hero.classList.add('unit-hero');
+  hero.append(el('p','정식 공연의 무대 밖에서도 집단적독백의 음악은 계속됩니다. 결혼식의 축복을 전하는 노래부터 누군가의 하루를 위로하는 작은 음악회까지. 멤버들이 다양한 조합으로 만들어가는 특별한 음악의 순간을 기록합니다.','unit-hero-copy'));
+  main.append(hero);
+  if(unitError){main.append(unitLoadNotice());return;}
+  const schedule=unitSchedule(unitPerformances);
+  for(const [title,id,events,empty] of [
+    ['예정된 작은 무대','unit-upcoming',schedule.upcoming,'새로운 작은 무대를 준비하면 이곳에서 전하겠습니다.'],
+    ['지나온 작은 무대','unit-past',schedule.past,'작은 무대의 기록을 차곡차곡 모읍니다.']]) {
+    const group=section(title);group.id=id;
+    group.append(events.length?add(el('div',null,'unit-grid'),...events.map(event=>unitCard(event))):el('p',empty,'empty-state'));
+    main.append(group);
+  }
+}
 function performanceInquiry() {
   const card=el('section',null,'performance-inquiry');card.id='performance-inquiry';
   const title=el('h2','집단적독백을 초대하고 싶으신가요?');title.id='inquiry-title';
@@ -248,6 +353,7 @@ function home() {
   add(together,el('p','연습하고 이야기하고, 다시 기타를 잡습니다. 함께 소리를 맞추고 무대를 준비하는 시간도 우리가 음악을 즐기는 방법입니다.'),link('집단적독백 이야기 ↗','about.html','button'));main.append(together);
   const recent=section('지난 공연',link('아카이브 보기 ↗',`archive.html?year=${schedule.past[0]?.year || site.years[0].year}`));recent.id='past-shows';
   recent.append(add(el('div',null,'card-grid'),...schedule.past.slice(0,2).map(preview)));main.append(recent);
+  add(main,unitHomePreview());
   const years=section('한 해씩, 한 장씩'); const grid=el('div',null,'year-grid');
   for (const y of site.years) {
     const card=link('',`archive.html?year=${y.year}`,'year-card');
@@ -658,8 +764,12 @@ try {
   [site,members,songs]=await Promise.all(['data/site.json','data/members.json','data/songs.json'].map(load));
   concerts=(await Promise.all(site.years.map(y=>load(y.file)))).flat().filter(c=>['public','public-summary'].includes(c.visibility));
   memberMap=new Map(members.map(m=>[m.id,m]));songMap=new Map(songs.map(s=>[s.id,s]));sourceMap=new Map(site.sources.map(s=>[s.id,s]));
+  if(['index','unit'].includes(page)) {
+    try {unitPerformances=checkUnitData(await load('data/unit-performances.json'));}
+    catch(error){unitError=error;console.error('작은 무대 데이터 로드 실패:',error);}
+  }
   main.replaceChildren();
-  ({index:home,archive,repertoire,members:memberPage,about}[page] || home)();
+  ({index:home,archive,unit:unitPage,repertoire,members:memberPage,about}[page] || home)();
   const channelIcons={YouTube:'image/youtube.png',Instagram:'image/instagram.png'};
   for(const c of site.channels){
     const channelLink=external(c.label,c.url);

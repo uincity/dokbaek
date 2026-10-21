@@ -62,9 +62,22 @@ def run():
                 # Full-page capture does not trigger off-screen lazy loads by itself.
                 for img in page.locator('#main img').all():
                     img.evaluate("i => { i.loading='eager'; return i.decode(); }")
-                page.evaluate("window.scrollTo({top:0,behavior:'instant'})")
+                page.evaluate("() => { document.activeElement?.blur(); window.scrollTo({top:0,behavior:'instant'}); }")
+                page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
                 page.screenshot(path=str(OUT/name),full_page=True)
-            for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
+            if '--unit-preview' in sys.argv:
+                for width in [375,1280]:
+                    page.set_viewport_size({'width':width,'height':900})
+                    go('unit.html')
+                    assert page.locator('.unit-hero h1').bounding_box()['y']>page.locator('.site-header').bounding_box()['height']
+                    assert page.locator('.unit-hero .eyebrow').is_visible()
+                    assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
+                    capture(f'small-stages-{width}.png')
+                record('Small-stage desktop/mobile previews have an unobscured hero and no horizontal overflow')
+                browser.close()
+                return
+            checked_links=set()
+            for path in ['index.html','archive.html?year=2025','archive.html?year=2026','unit.html','repertoire.html','members.html','about.html']:
                 go(path)
                 assert page.locator('.site-header .brand-logo').get_attribute('src')=='image/dokbaek_logo_horizontal.png'
                 assert page.locator('.footer-logo').count()==1
@@ -79,12 +92,45 @@ def run():
                     assert venue.get_attribute('rel')=='noopener noreferrer'
                 assert page.locator('a a').count()==0
                 assert page.locator('#main h1').count()==1
+                assert page.locator('#main-nav a[href="unit.html"]').count()==1
+                assert page.locator('.footer-nav a[href="unit.html"]').count()==1
                 for anchor in page.locator('a[href]').all():
                     href=anchor.get_attribute('href')
                     if not href or href.startswith(('http:','https:','mailto:')):continue
-                    response=context.request.get(base+href.split('#')[0] if not href.startswith('#') else page.url.split('#')[0])
-                    assert response.ok,f'Broken internal link {href}'
-            record('Six page routes and all generated internal links load under /dokbaek/')
+                    target=base+href.split('#')[0] if not href.startswith('#') else page.url.split('#')[0]
+                    if target not in checked_links:
+                        response=context.request.get(target)
+                        assert response.ok,f'Broken internal link {href}'
+                        checked_links.add(target)
+            record('Seven page routes, small-stage header/footer navigation and generated links load under /dokbaek/')
+            go('unit.html')
+            assert page.locator('h1').inner_text()=='독백의 작은 무대'
+            assert page.locator('#main-nav a[aria-current="page"]').inner_text()=='작은 무대'
+            assert page.locator('#unit-upcoming .unit-card').count()==1
+            assert page.locator('#unit-past .unit-card').count()==2
+            assert page.locator('#unit-past .unit-card').first.get_attribute('id')=='wedding-20251227'
+            assert page.locator('#wedding-20251207 .unit-count').inner_text()=='3명 참여 · 2곡'
+            assert page.locator('#wedding-20251227 .unit-count').inner_text()=='5명 참여 · 2곡'
+            assert page.locator('#sunset-20261024 .unit-count').inner_text()=='2명 참여 · 1곡'
+            assert page.locator('.unit-card img, .unit-card video, .unit-card .image-placeholder').count()==0
+            assert page.locator('.unit-date').first.get_attribute('datetime')=='2026-10-24'
+            summary=page.locator('#wedding-20251207 summary')
+            summary.focus();page.keyboard.press('Enter')
+            assert page.locator('#wedding-20251207 details').get_attribute('open') is not None
+            assert '기타 · 멜로디언' in page.locator('#wedding-20251207 .unit-program').inner_text()
+            assert page.locator('#wedding-20251207 .unit-program>ol>li').count()==2
+            assert page.locator('#wedding-20251207 .unit-program>ol>li').nth(1).locator('.unit-performers>li').count()==3
+            capture('small-stages-desktop.png')
+            page.clock.set_fixed_time(datetime(2027,1,1,3,tzinfo=timezone.utc))
+            go('unit.html')
+            assert page.locator('#unit-upcoming #sunset-20261024 .pill').inner_text()=='공연 예정'
+            page.clock.set_fixed_time(datetime(2026,10,20,3,tzinfo=timezone.utc))
+            go('index.html')
+            assert page.locator('#small-stages .unit-card').count()==2
+            assert page.locator('#small-stages .unit-card').first.get_attribute('data-unit-id')=='sunset-20261024'
+            assert page.locator('#small-stages .unit-card').last.get_attribute('data-unit-id')=='wedding-20251227'
+            assert page.locator('#small-stages').bounding_box()['y']>page.locator('#past-shows').bounding_box()['y']
+            record('Small stages: 3 events / 5 songs, exact members and roles, keyboard details, preview ordering and explicit status after 2026')
             go('index.html')
             assert page.locator('.stat b').all_text_contents()==['4','1','26']
             assert page.locator('.year-card').count()==2
@@ -275,7 +321,7 @@ def run():
             record(f'All concert song stories and {len(member_song_ids)} member repertoire entries share the exact credit, genre and description')
             for width in [320,360,375,390,430,768,1024,1280]:
                 page.set_viewport_size({'width':width,'height':900})
-                for path in ['index.html','archive.html?year=2025','archive.html?year=2026','repertoire.html','members.html','about.html']:
+                for path in ['index.html','archive.html?year=2025','archive.html?year=2026','unit.html','repertoire.html','members.html','about.html']:
                     go(path)
                     assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1'),(width,path)
                     if path=='repertoire.html':
@@ -284,9 +330,15 @@ def run():
                         assert page.locator('.inquiry-send').bounding_box()['height']>=44
                         assert page.locator('.inquiry-copy').bounding_box()['height']>=44
                         assert float(page.locator('#inquiry-address').evaluate('e=>getComputedStyle(e).fontSize').replace('px',''))>=16
+                    if path=='unit.html':
+                        for summary in page.locator('.unit-program>summary').all():
+                            summary.click()
+                        assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1'),(width,'unit details')
+                        assert all(control.bounding_box()['height']>=44 for control in page.locator('.unit-program>summary, .unit-members a, .unit-performers a').all())
+                        if width==375:capture('small-stages-mobile-375.png')
                     if width==360:
                         page.locator('.menu-toggle').click()
-                        assert page.locator('#main-nav a').count()==5 and page.locator('#main-nav').is_visible()
+                        assert page.locator('#main-nav a').count()==6 and page.locator('#main-nav').is_visible()
                         page.keyboard.press('Escape')
                         assert page.locator('.menu-toggle').get_attribute('aria-expanded')=='false'
                 if width==360:
@@ -438,6 +490,20 @@ def run():
             for path in ['2025/','2026/','private-notes/','2025-archive.html','dokbaek_archive_codex_prompt.md']:
                 assert context.request.get(base+path).status==404
             record('Only the approved No.5 poster is released from original year folders; directory listings, drafts, instructions and private notes stay unavailable')
+            for response_body in [None, '{broken json', '[{"id":"broken"}]']:
+                def fail_unit(route, request, body=response_body):
+                    route.fulfill(status=503 if body is None else 200, body=body or 'Unavailable', content_type='application/json')
+                page.route('**/data/unit-performances.json',fail_unit)
+                for path in ['index.html','unit.html']:
+                    go(path)
+                    assert page.locator('.unit-error[role="alert"]').count()==1
+                    assert page.locator('#footer-links .channel-icon').count()==2
+                    if path=='index.html':
+                        assert page.locator('.stat b').all_text_contents()==['4','1','26']
+                        assert page.locator('#past-shows .concert-preview').count()==2
+                page.unroute('**/data/unit-performances.json',fail_unit)
+            record('Missing, malformed and invalid small-stage JSON shows an accessible error while official home/archive data remains available')
+            assert not errors,errors
             browser.close()
     finally:server.shutdown();server.server_close()
 
@@ -445,7 +511,8 @@ if __name__=='__main__':
     try:
         run()
         checked_date=datetime.now(timezone(timedelta(hours=9))).date().isoformat()
-        (OUT/'validation.md').write_text(f'# 검증 결과\n\n{checked_date} · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n영상 썸네일 CDN은 시험용 이미지로 대체했습니다.\n미검증: 실제 GitHub Actions/Pages 배포, 외부 CDN·공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
+        report_name='unit-visual.md' if '--unit-preview' in sys.argv else 'validation.md'
+        (OUT/report_name).write_text(f'# 검증 결과\n\n{checked_date} · Chromium / Playwright · 로컬 공개 산출물\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n영상 썸네일 CDN은 시험용 이미지로 대체했습니다.\n미검증: 실제 GitHub Actions/Pages 배포, 외부 CDN·공식 채널의 로그인·게시물 접근, 미확인 원본 내용.\n',encoding='utf-8')
         print(f'PASS: {len(checks)} browser and data checks. Screenshots and report: test-results/')
     except Exception:
         (OUT/'validation.md').write_text('# 검증 진행 결과\n\n'+'\n'.join('- PASS: '+s for s in checks)+'\n\n실패 또는 환경 제약:\n```\n'+traceback.format_exc()+'\n```\n',encoding='utf-8')
