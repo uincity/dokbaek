@@ -69,7 +69,7 @@
           "노래",
           "기타"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -86,7 +86,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -99,7 +100,7 @@
         "formats": [
           "독주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -112,7 +113,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -125,7 +127,7 @@
         "formats": [
           "독주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -138,7 +140,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -151,7 +154,7 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -168,7 +171,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -182,7 +186,7 @@
           "기타",
           "하모니카"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -199,7 +203,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -212,7 +217,7 @@
         "formats": [
           "이중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -229,7 +234,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -242,7 +248,7 @@
         "formats": [
           "삼중주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -263,7 +269,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -277,7 +284,7 @@
           "기타",
           "낭송"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -294,7 +301,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": [
           {
@@ -325,7 +333,7 @@
           "기타",
           "노래"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -342,7 +350,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -355,7 +364,7 @@
         "formats": [
           "합주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -384,7 +393,8 @@
         "sourceIds": [
           "script-2026",
           "program-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": []
       },
@@ -398,7 +408,7 @@
           "노래",
           "합주"
         ],
-        "evidenceStatus": "planned",
+        "evidenceStatus": "confirmed",
         "isEncore": false,
         "credits": [
           {
@@ -438,7 +448,8 @@
         "videoUrl": null,
         "sourceIds": [
           "script-2026",
-          "member-repertoire-list"
+          "member-repertoire-list",
+          "member-no4-performance-20261021"
         ],
         "additionalEvents": [],
         "guestCredits": [
@@ -475,7 +486,8 @@
       "program-2026",
       "script-2026",
       "member-repertoire-list",
-      "concert-update-20261020"
+      "concert-update-20261020",
+      "member-no4-performance-20261021"
     ],
     "fieldEvidence": {
       "date": {
@@ -530,7 +542,7 @@
       }
     },
     "notes": [
-      "종료 공연 · 곡별 기록은 제공된 프로그램과 진행 계획을 기준으로 보존합니다.",
+      "종료 공연 · 멤버 확인에 따라 프로그램 11곡을 실제 연주 기록으로 반영했습니다.",
       "멤버 제공 목록을 반영한 11곡입니다. 곡별 참여자와 관객의 참여 역할을 함께 표시합니다."
     ]
   },

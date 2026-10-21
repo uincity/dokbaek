@@ -153,14 +153,16 @@ def run():
             go('archive.html?year=2026')
             assert page.locator('[id="2026-10-18-gallery"] .set-item').count()==11
             assert '15:00' in page.locator('[id="2026-10-18-gallery"] .concert-heading').inner_text()
-            assert page.locator('.stat b').all_text_contents()==['1','1','0']
+            assert page.locator('.stat b').all_text_contents()==['1','1','11']
             assert page.locator('[data-status="scheduled"] .concert-section').count()==1
             assert page.locator('[data-status="completed"] .concert-section').count()==1
             assert page.locator('[id="2026-11-08-convent"] .set-item').count()==11
+            assert page.locator('[id="2026-10-18-gallery"] .pill').filter(has_text='진행 계획').count()==0
+            assert page.locator('[id="2026-11-08-convent"] .pill').filter(has_text='진행 계획').count()==11
             assert page.locator('[id="2026-10-18-gallery"] .concert-info .pill').inner_text()=='종료 공연'
             assert '공연 예정' not in page.locator('[id="2026-10-18-gallery"]').inner_text()
             capture('archive-2026-desktop.png')
-            record('2026: No.4 completed with its 11 preserved songs; No.5 scheduled with 11 Excel songs and verified poster time/address')
+            record('2026: No.4 completed with 11 confirmed performed songs; No.5 remains scheduled with 11 planned songs')
             go('archive.html?year=1900')
             assert '아직 기록되지 않은 해' in page.locator('h1').inner_text()
             go('repertoire.html')

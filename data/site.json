@@ -99,6 +99,11 @@
       "id": "poster-2026-convent",
       "label": "2026 수녀원 음악회 포스터",
       "type": "poster"
+    },
+    {
+      "id": "member-no4-performance-20261021",
+      "label": "멤버 제공 No.4 연주 완료 확인",
+      "type": "confirmed-record"
     }
   ]
 }

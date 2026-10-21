@@ -34,5 +34,6 @@ assert.equal(context.homeSchedule(actual,'2026-11-09').past.map(c=>c.no).join(',
 assert.equal(context.seoulToday(new Date('2026-11-08T14:59:59Z')),'2026-11-08');
 assert.equal(context.seoulToday(new Date('2026-11-08T15:00:00Z')),'2026-11-09');
 assert.equal(JSON.stringify(actual),original);
+assert(actual[0].setlist.every(e=>e.evidenceStatus==='confirmed'));
 assert(actual[1].setlist.every(e=>e.evidenceStatus==='planned'));
-console.log('PASS: Seoul midnight, same-day schedule, automatic past classification, No.4/5 ordering, uncertain dates, privacy and immutable song evidence');
+console.log('PASS: Seoul midnight, same-day schedule, automatic past classification, No.4/5 ordering, 11 confirmed No.4 songs and planned No.5 songs');
