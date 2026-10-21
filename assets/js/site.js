@@ -35,8 +35,8 @@ function venueLink(venue) {
 }
 function pill(text, color='') { return el('span',text,`pill ${color}`); }
 function safeMedia(path) {
-  const reviewedPoster='2026/포스터/포스터_수녀원 음악회(20261108).png';
-  return typeof path === 'string' && (/^(image|public-media)\//.test(path) || path===reviewedPoster) && !path.split('/').includes('..') && !/[\\?#]/.test(path);
+  const reviewedPosters=new Set(['2026/포스터/포스터_수녀원 음악회(20261108).png','2026/포스터/포스터_노을음악회_20261024.jpg']);
+  return typeof path === 'string' && (/^(image|public-media)\//.test(path) || reviewedPosters.has(path)) && !path.split('/').includes('..') && !/[\\?#]/.test(path);
 }
 function image(path, alt, className='', eager=false, fullResolution=false) {
   const wrap = el('span',null,`image-wrap ${className}`);
@@ -209,6 +209,42 @@ function unitLoadNotice() {
   const box=el('div',null,'notice unit-error');box.setAttribute('role','alert');
   return add(box,el('p','작은 무대 기록을 불러오지 못했습니다. 잠시 후 다시 열어 주세요.'),link('다시 열기',location.href,'button'));
 }
+function unitMediaImage(media) {
+  // Use the supplied original; width/height reserve its uncropped aspect ratio.
+  const art=image(media.path,media.label,'unit-media-image',false,true);
+  const img=art.querySelector('img');
+  if(media.width && media.height) {
+    art.style.aspectRatio=`${media.width} / ${media.height}`;
+    if(img){img.width=media.width;img.height=media.height;}
+  }
+  return art;
+}
+function unitMedia(event) {
+  const approved=(event.media || []).filter(media=>media.reviewed===true && safeMedia(media.path));
+  if(!approved.length)return null;
+  const poster=approved.length===1 && approved[0].usage==='poster';
+  const box=el('div',null,`unit-media${poster?' unit-poster':''}`);
+  if(approved.some(media=>media.usage==='sketch'))box.append(el('h4','현장 스케치','unit-media-heading'));
+  const gallery=el('div',null,'unit-media-grid');
+  for(const media of approved) {
+    if(media.type==='image') {
+      const button=el('button',null,'unit-media-button');button.type='button';
+      button.setAttribute('aria-label',`${media.label} 크게 보기`);button.setAttribute('aria-haspopup','dialog');
+      const art=unitMediaImage(media);
+      add(button,art,el('span','크게 보기 ↗','unit-media-caption'));
+      art.querySelector('img')?.addEventListener('error',()=>{
+        button.disabled=true;
+        button.querySelector('.unit-media-caption').textContent='이미지를 불러오지 못했습니다.';
+      },{once:true});
+      button.addEventListener('click',()=>openDialog(media.label,unitMediaImage(media),button));
+      gallery.append(button);
+    }
+    if(media.type==='video') {
+      const player=el('video');player.controls=true;player.preload='none';player.src=media.path;player.setAttribute('aria-label',media.label);gallery.append(player);
+    }
+  }
+  box.append(gallery);return box;
+}
 function unitCard(event, compact=false) {
   const card=el('article',null,`unit-card${compact?' unit-compact':''}`);
   card.dataset.unitId=event.id;
@@ -242,19 +278,14 @@ function unitCard(event, compact=false) {
       item.append(players);list.append(item);
     }
     detail.append(list);add(body,summary,detail);
-    const approved=(event.media || []).filter(media=>media.reviewed===true && safeMedia(media.path));
-    if(approved.length) {
-      const mediaList=el('div',null,'unit-media');
-      for(const media of approved) {
-        if(media.type==='image')mediaList.append(image(media.path,media.label));
-        if(media.type==='video') {
-          const player=el('video');player.controls=true;player.preload='none';player.src=media.path;player.setAttribute('aria-label',media.label);mediaList.append(player);
-        }
-      }
-      body.append(mediaList);
-    }
   }
-  add(card,stamp,body);return card;
+  add(card,stamp,body);
+  if(!compact) {
+    const media=unitMedia(event);
+    if(media?.classList.contains('unit-poster'))card.classList.add('unit-has-poster');
+    add(card,media);
+  }
+  return card;
 }
 function unitHomePreview() {
   const preview=section('독백의 작은 무대',link('작은 무대 전체 보기 ↗','unit.html'));preview.id='small-stages';

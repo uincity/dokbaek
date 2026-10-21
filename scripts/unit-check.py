@@ -23,7 +23,7 @@ class UnitChecks(unittest.TestCase):
                 self.rows.append([event['source_category'], song['source_title'], song['source_performers'], event['source_venue'], event['date']])
 
     def build(self, rows=None, previous=None, approved=()):
-        return importer.build_events(rows or self.rows, self.songs, self.members, self.events if previous is None else previous, approved)
+        return importer.build_events(rows or self.rows, self.songs, self.members, self.events if previous is None else previous, approved_files()+list(approved))
 
     def test_actual_workbook_matches_checked_in_json(self):
         import openpyxl
@@ -40,6 +40,23 @@ class UnitChecks(unittest.TestCase):
         self.assertEqual(sum(len(e['songs']) for e in events), 5)
         self.assertEqual([len({p['member_id'] for s in e['songs'] for p in s['performers']}) for e in events], [3, 5, 2])
         self.assertEqual([e['status'] for e in events], ['completed', 'completed', 'scheduled'])
+
+    def test_media_stays_bound_to_each_event_and_survives_reimport(self):
+        expected = {
+            'wedding-20251207': ['image/첫 번째 결혼축가1.png', 'image/첫 번째 결혼축가2.png'],
+            'wedding-20251227': ['image/두 번째 결혼축가1.png', 'image/두 번째 결혼축가2.png'],
+            'sunset-20261024': ['2026/포스터/포스터_노을음악회_20261024.jpg'],
+        }
+        for event in self.build(previous=list(reversed(self.events))):
+            self.assertEqual([m['path'] for m in event['media']], expected[event['id']])
+            self.assertTrue(all(m['width'] > 0 and m['height'] > 0 for m in event['media']))
+
+    def test_invalid_media_usage_or_dimensions_rejected(self):
+        for change in [{'usage': 'unreviewed'}, {'width': 0}, {'height': None}, {'width': True}]:
+            events = copy.deepcopy(self.events)
+            events[0]['media'][0].update(change)
+            with self.assertRaises(ValueError):
+                validate_units(events, self.songs, self.members, approved_files())
 
     def test_role_commas_keep_one_person_and_workbook_melodion(self):
         players = importer.parse_performers('베키짱(노래), 로나짱(기타,아코디언),유니뀨짱(기타)', self.members)

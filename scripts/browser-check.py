@@ -65,7 +65,85 @@ def run():
                 page.evaluate("() => { document.activeElement?.blur(); window.scrollTo({top:0,behavior:'instant'}); }")
                 page.evaluate('() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))')
                 page.screenshot(path=str(OUT/name),full_page=True)
+            def check_unit_media():
+                events=json.loads((PUBLIC/'data/unit-performances.json').read_text(encoding='utf-8'))
+                expected={event['id']:event['media'] for event in events}
+                for width in [320,375,390,768,1280]:
+                    page.set_viewport_size({'width':width,'height':900});go('unit.html')
+                    for event_id,media in expected.items():
+                        card=page.locator(f'#{event_id}')
+                        images=card.locator('.unit-media img')
+                        assert images.count()==len(media)
+                        for img,item in zip(images.all(),media):
+                            img.evaluate("i => { i.loading='eager'; return i.decode(); }")
+                            assert img.get_attribute('data-original-src')==item['path']
+                            assert img.get_attribute('alt')==item['label']
+                            assert unquote(urlsplit(img.get_attribute('src')).path)==item['path']
+                            assert img.get_attribute('loading')=='eager'  # forced only for this check
+                            assert img.get_attribute('decoding')=='async'
+                            assert img.evaluate('(i)=>[i.naturalWidth,i.naturalHeight]')==[item['width'],item['height']]
+                            assert [int(img.get_attribute(k)) for k in ['width','height']]==[item['width'],item['height']]
+                            assert img.evaluate('(i)=>getComputedStyle(i).objectFit')=='contain'
+                            box=img.bounding_box()
+                            assert abs(box['height']-box['width']*item['height']/item['width'])<1
+                        buttons=card.locator('.unit-media-button')
+                        if len(media)==2:
+                            first,second=[button.bounding_box() for button in buttons.all()]
+                            if width>=600:
+                                assert second['x']>first['x'] and abs(second['y']-first['y'])<1
+                            else:
+                                assert second['y']>=first['y']+first['height']
+                    assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1')
+                    poster=page.locator('#sunset-20261024 .unit-poster').bounding_box()
+                    info=page.locator('#sunset-20261024 .unit-copy').bounding_box()
+                    if width>=900:assert poster['x']>=info['x']+info['width']
+                    else:assert poster['y']>=info['y']+info['height']
+                    assert page.locator('#sunset-20261024 .pill').inner_text()=='공연 예정'
+                    if width in [375,1280]:capture(f'small-stages-media-{width}.png')
+                record('Five original images: exact event/path/alt, decoded dimensions, uncropped ratios, 320/375/390/768/1280px gallery and poster layouts')
+                page.set_viewport_size({'width':375,'height':900});go('unit.html')
+                button=page.locator('#wedding-20251207 .unit-media-button').first
+                button.focus();page.keyboard.press('Enter')
+                assert page.locator('#media-dialog').evaluate('(d)=>d.open')
+                assert page.locator('#media-title').inner_text()=='첫 번째 결혼축가 현장 스케치 1'
+                page.locator('#media-content img').evaluate('(i)=>i.decode()')
+                page.keyboard.press('Escape')
+                assert not page.locator('#media-dialog').evaluate('(d)=>d.open')
+                assert button.evaluate('(b)=>b===document.activeElement')
+                poster_button=page.locator('#sunset-20261024 .unit-media-button')
+                poster_button.click();page.locator('#close-dialog').click()
+                assert poster_button.evaluate('(b)=>b===document.activeElement')
+                record('Sketch and poster reuse the modal with keyboard/touch opening, Escape/close and focus return')
+                reordered=list(reversed(events))
+                page.route('**/data/unit-performances.json',lambda route:route.fulfill(json=reordered))
+                go('unit.html')
+                for event_id,media in expected.items():
+                    assert page.locator(f'#{event_id} .unit-media img').first.get_attribute('data-original-src')==media[0]['path']
+                page.unroute('**/data/unit-performances.json')
+                empty=[{key:value for key,value in event.items() if key!='media'} for event in events]
+                page.route('**/data/unit-performances.json',lambda route:route.fulfill(json=empty))
+                go('unit.html')
+                assert page.locator('.unit-media, .unit-card .image-placeholder').count()==0
+                page.unroute('**/data/unit-performances.json')
+                broken_path=expected['wedding-20251207'][0]['path']
+                def broken_match(url):return unquote(urlsplit(url).path).endswith('/'+broken_path)
+                page.route(broken_match,lambda route:route.abort())
+                go('unit.html')
+                broken=page.locator('#wedding-20251207 .unit-media-button').first
+                broken.scroll_into_view_if_needed()
+                page.wait_for_function('() => document.querySelector("#wedding-20251207 .unit-media-button").disabled')
+                assert broken.locator('img').count()==0
+                assert broken.locator('.image-placeholder').count()==1
+                assert '불러오지 못했습니다' in broken.inner_text()
+                assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth+1')
+                page.unroute(broken_match)
+                go('index.html')
+                assert page.locator('#small-stages img, #small-stages .unit-media').count()==0
+                assert page.locator('.stat b').all_text_contents()==['4','1','26']
+                record('Reordered events keep their own images; absent media is omitted, failed images show a stable text fallback, home preview remains compact')
+                page.set_viewport_size({'width':1280,'height':900})
             if '--unit-preview' in sys.argv:
+                check_unit_media()
                 for width in [375,1280]:
                     page.set_viewport_size({'width':width,'height':900})
                     go('unit.html')
@@ -76,6 +154,7 @@ def run():
                 record('Small-stage desktop/mobile previews have an unobscured hero and no horizontal overflow')
                 browser.close()
                 return
+            check_unit_media()
             checked_links=set()
             for path in ['index.html','archive.html?year=2025','archive.html?year=2026','unit.html','repertoire.html','members.html','about.html']:
                 go(path)
@@ -112,7 +191,8 @@ def run():
             assert page.locator('#wedding-20251207 .unit-count').inner_text()=='3명 참여 · 2곡'
             assert page.locator('#wedding-20251227 .unit-count').inner_text()=='5명 참여 · 2곡'
             assert page.locator('#sunset-20261024 .unit-count').inner_text()=='2명 참여 · 1곡'
-            assert page.locator('.unit-card img, .unit-card video, .unit-card .image-placeholder').count()==0
+            assert page.locator('.unit-card img').count()==5
+            assert page.locator('.unit-card video, .unit-card .image-placeholder').count()==0
             assert page.locator('.unit-date').first.get_attribute('datetime')=='2026-10-24'
             summary=page.locator('#wedding-20251207 summary')
             summary.focus();page.keyboard.press('Enter')
@@ -489,7 +569,7 @@ def run():
             # Original documents are not served by the preview server or present in the release.
             for path in ['2025/','2026/','private-notes/','2025-archive.html','dokbaek_archive_codex_prompt.md']:
                 assert context.request.get(base+path).status==404
-            record('Only the approved No.5 poster is released from original year folders; directory listings, drafts, instructions and private notes stay unavailable')
+            record('Only the two explicitly requested posters are released from original year folders; directory listings, drafts, instructions and private notes stay unavailable')
             for response_body in [None, '{broken json', '[{"id":"broken"}]']:
                 def fail_unit(route, request, body=response_body):
                     route.fulfill(status=503 if body is None else 200, body=body or 'Unavailable', content_type='application/json')

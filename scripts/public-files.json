@@ -14,6 +14,10 @@
     "assets/js/image-sources.js"
   ],
   "images": [
+    "image/첫 번째 결혼축가1.png",
+    "image/첫 번째 결혼축가2.png",
+    "image/두 번째 결혼축가1.png",
+    "image/두 번째 결혼축가2.png",
     "image/따뜻한 기타 앙상블 리허설.png",
     "image/카페에서 함께한 따뜻한 셀카.png",
     "image/따뜻한 음악실 단체 셀카.png",
@@ -119,6 +123,7 @@
     "image/optimized/94f2533bcde95f77-1055.webp"
   ],
   "media": [
+    "2026/포스터/포스터_노을음악회_20261024.jpg",
     "public-media/2025-no2-poster.jpg",
     "public-media/2025-no2-program.jpg",
     "public-media/2025-no3-poster.jpg",

@@ -67,6 +67,26 @@
           }
         ]
       }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "첫 번째 결혼축가 현장 스케치 1",
+        "path": "image/첫 번째 결혼축가1.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1672,
+        "height": 941
+      },
+      {
+        "type": "image",
+        "label": "첫 번째 결혼축가 현장 스케치 2",
+        "path": "image/첫 번째 결혼축가2.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1672,
+        "height": 941
+      }
     ]
   },
   {
@@ -150,6 +170,26 @@
           }
         ]
       }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "두 번째 결혼축가 현장 스케치 1",
+        "path": "image/두 번째 결혼축가1.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1448,
+        "height": 1086
+      },
+      {
+        "type": "image",
+        "label": "두 번째 결혼축가 현장 스케치 2",
+        "path": "image/두 번째 결혼축가2.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1672,
+        "height": 941
+      }
     ]
   },
   {
@@ -185,6 +225,17 @@
             ]
           }
         ]
+      }
+    ],
+    "media": [
+      {
+        "type": "image",
+        "label": "노을음악회 2026년 10월 24일 공연 포스터",
+        "path": "2026/포스터/포스터_노을음악회_20261024.jpg",
+        "reviewed": true,
+        "usage": "poster",
+        "width": 922,
+        "height": 1382
       }
     ]
   }

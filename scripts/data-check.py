@@ -30,10 +30,10 @@ class PublicDataChecks(unittest.TestCase):
         self.check_invalid(lambda d:d['scripts/public-files.json']['media'].append('2025/private.hwp'))
     def test_original_images_need_explicit_approval(self):
         self.check_invalid(lambda d:d['scripts/public-files.json']['media'].append('2026/포스터/other.png'))
-    def test_only_requested_original_poster_is_approved(self):
+    def test_only_requested_original_posters_are_approved(self):
         paths=validate.approved_files()
         originals=[p for p in paths if p.startswith(('2025/','2026/'))]
-        self.assertEqual(originals,sorted(validate.REVIEWED_POSTERS))
+        self.assertEqual(sorted(originals),sorted(validate.REVIEWED_POSTERS))
         self.assertFalse(any(p.endswith('.xlsx') for p in paths))
     def test_poem_not_counted_as_song(self):
         self.check_invalid(lambda d:next(e for e in d['data/concerts-2025.json'][1]['setlist'] if e['kind']=='event').update(songId='misty'))

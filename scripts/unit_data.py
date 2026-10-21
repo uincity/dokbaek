@@ -54,9 +54,13 @@ def validate_units(events, songs, members, approved_media=()):
                 require(isinstance(roles, list) and roles and all(text(r) for r in roles) and len(roles) == len(set(roles)), f'{label}: missing/duplicate roles')
         require('media' not in event or isinstance(event['media'], list), f'{label}: invalid media array')
         for media in event.get('media', []):
-            require(set(media) == {'type', 'label', 'path', 'reviewed'}, f'{label}: invalid media fields')
+            require({'type', 'label', 'path', 'reviewed'} <= set(media) <= {'type', 'label', 'path', 'reviewed', 'usage', 'width', 'height'}, f'{label}: invalid media fields')
             require(media['type'] in {'image', 'video'} and media['reviewed'] is True and text(media['label']), f'{label}: media needs explicit public approval')
             require(media['path'] in approved_media, f'{label}: media needs public allowlist review')
             suffix = PurePosixPath(media['path']).suffix.lower()
             require(suffix in ({'.mp4', '.webm'} if media['type'] == 'video' else {'.jpg', '.jpeg', '.png', '.webp'}), f'{label}: media type/extension mismatch')
+            if 'usage' in media:
+                require(media['type'] == 'image' and media['usage'] in {'sketch', 'poster'}, f'{label}: invalid image usage')
+            if 'width' in media or 'height' in media:
+                require(all(type(media.get(key)) is int and media[key] > 0 for key in ('width', 'height')), f'{label}: invalid image dimensions')
     return events
