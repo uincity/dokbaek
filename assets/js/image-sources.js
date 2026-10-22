@@ -597,354 +597,192 @@ export default {
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-01.webp": {
-    "width": 1600,
-    "height": 1200,
+  "image/navermap.webp": {
+    "width": 240,
+    "height": 240,
     "variants": [
       [
-        "image/optimized/fc5e2b72cd78f098-160.webp",
+        "image/optimized/5a5e26ab9693df88-160.webp",
         160
       ],
       [
-        "image/optimized/fc5e2b72cd78f098-480.webp",
+        "image/optimized/5a5e26ab9693df88-240.webp",
+        240
+      ]
+    ]
+  },
+  "public-media/2026-10-18-gallery/sketch-01.webp": {
+    "width": 1448,
+    "height": 1086,
+    "variants": [
+      [
+        "image/optimized/72bf3ec9141daf9a-160.webp",
+        160
+      ],
+      [
+        "image/optimized/72bf3ec9141daf9a-480.webp",
         480
       ],
       [
-        "image/optimized/fc5e2b72cd78f098-800.webp",
+        "image/optimized/72bf3ec9141daf9a-800.webp",
         800
       ],
       [
-        "image/optimized/fc5e2b72cd78f098-1200.webp",
+        "image/optimized/72bf3ec9141daf9a-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-02.webp": {
-    "width": 1200,
-    "height": 1600,
+  "public-media/2026-10-18-gallery/sketch-02.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/9dbbb84bfd0b2547-160.webp",
+        "image/optimized/536e868150e0975e-160.webp",
         160
       ],
       [
-        "image/optimized/9dbbb84bfd0b2547-480.webp",
+        "image/optimized/536e868150e0975e-480.webp",
         480
       ],
       [
-        "image/optimized/9dbbb84bfd0b2547-800.webp",
+        "image/optimized/536e868150e0975e-800.webp",
         800
       ],
       [
-        "image/optimized/9dbbb84bfd0b2547-1200.webp",
+        "image/optimized/536e868150e0975e-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-03.webp": {
-    "width": 1600,
-    "height": 1200,
+  "public-media/2026-10-18-gallery/sketch-03.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/308264ce8732fd09-160.webp",
+        "image/optimized/a10ab1fe71533547-160.webp",
         160
       ],
       [
-        "image/optimized/308264ce8732fd09-480.webp",
+        "image/optimized/a10ab1fe71533547-480.webp",
         480
       ],
       [
-        "image/optimized/308264ce8732fd09-800.webp",
+        "image/optimized/a10ab1fe71533547-800.webp",
         800
       ],
       [
-        "image/optimized/308264ce8732fd09-1200.webp",
+        "image/optimized/a10ab1fe71533547-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-04.webp": {
-    "width": 1600,
-    "height": 1200,
+  "public-media/2026-10-18-gallery/sketch-04.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/f4dcffb2cd854797-160.webp",
+        "image/optimized/08b268b70be988bc-160.webp",
         160
       ],
       [
-        "image/optimized/f4dcffb2cd854797-480.webp",
+        "image/optimized/08b268b70be988bc-480.webp",
         480
       ],
       [
-        "image/optimized/f4dcffb2cd854797-800.webp",
+        "image/optimized/08b268b70be988bc-800.webp",
         800
       ],
       [
-        "image/optimized/f4dcffb2cd854797-1200.webp",
+        "image/optimized/08b268b70be988bc-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-05.webp": {
-    "width": 1200,
-    "height": 1600,
+  "public-media/2026-10-18-gallery/sketch-05.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/868b048378de0953-160.webp",
+        "image/optimized/c33ed0e89836e00d-160.webp",
         160
       ],
       [
-        "image/optimized/868b048378de0953-480.webp",
+        "image/optimized/c33ed0e89836e00d-480.webp",
         480
       ],
       [
-        "image/optimized/868b048378de0953-800.webp",
+        "image/optimized/c33ed0e89836e00d-800.webp",
         800
       ],
       [
-        "image/optimized/868b048378de0953-1200.webp",
+        "image/optimized/c33ed0e89836e00d-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-06.webp": {
-    "width": 1600,
-    "height": 1200,
+  "public-media/2026-10-18-gallery/sketch-06.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/f44275d054d96321-160.webp",
+        "image/optimized/489c2c89b5827dd5-160.webp",
         160
       ],
       [
-        "image/optimized/f44275d054d96321-480.webp",
+        "image/optimized/489c2c89b5827dd5-480.webp",
         480
       ],
       [
-        "image/optimized/f44275d054d96321-800.webp",
+        "image/optimized/489c2c89b5827dd5-800.webp",
         800
       ],
       [
-        "image/optimized/f44275d054d96321-1200.webp",
+        "image/optimized/489c2c89b5827dd5-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-07.webp": {
-    "width": 1200,
-    "height": 1600,
+  "public-media/2026-10-18-gallery/sketch-07.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/b96071592dc4e0df-160.webp",
+        "image/optimized/54aff031911acfdb-160.webp",
         160
       ],
       [
-        "image/optimized/b96071592dc4e0df-480.webp",
+        "image/optimized/54aff031911acfdb-480.webp",
         480
       ],
       [
-        "image/optimized/b96071592dc4e0df-800.webp",
+        "image/optimized/54aff031911acfdb-800.webp",
         800
       ],
       [
-        "image/optimized/b96071592dc4e0df-1200.webp",
+        "image/optimized/54aff031911acfdb-1200.webp",
         1200
       ]
     ]
   },
-  "public-media/2026-10-18-gallery/scene-08.webp": {
-    "width": 1600,
-    "height": 1200,
+  "public-media/2026-10-18-gallery/sketch-08.webp": {
+    "width": 1448,
+    "height": 1086,
     "variants": [
       [
-        "image/optimized/85f3ef6e0b174ee8-160.webp",
+        "image/optimized/f8ce1edf6a8f7ae6-160.webp",
         160
       ],
       [
-        "image/optimized/85f3ef6e0b174ee8-480.webp",
+        "image/optimized/f8ce1edf6a8f7ae6-480.webp",
         480
       ],
       [
-        "image/optimized/85f3ef6e0b174ee8-800.webp",
+        "image/optimized/f8ce1edf6a8f7ae6-800.webp",
         800
       ],
       [
-        "image/optimized/85f3ef6e0b174ee8-1200.webp",
-        1200
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-09.webp": {
-    "width": 1600,
-    "height": 1200,
-    "variants": [
-      [
-        "image/optimized/ad6c39fe9e206781-160.webp",
-        160
-      ],
-      [
-        "image/optimized/ad6c39fe9e206781-480.webp",
-        480
-      ],
-      [
-        "image/optimized/ad6c39fe9e206781-800.webp",
-        800
-      ],
-      [
-        "image/optimized/ad6c39fe9e206781-1200.webp",
-        1200
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-10.webp": {
-    "width": 901,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/d6a81bc759f5a382-160.webp",
-        160
-      ],
-      [
-        "image/optimized/d6a81bc759f5a382-480.webp",
-        480
-      ],
-      [
-        "image/optimized/d6a81bc759f5a382-800.webp",
-        800
-      ],
-      [
-        "image/optimized/d6a81bc759f5a382-901.webp",
-        901
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-11.webp": {
-    "width": 1166,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/0df85bbf3fe04a44-160.webp",
-        160
-      ],
-      [
-        "image/optimized/0df85bbf3fe04a44-480.webp",
-        480
-      ],
-      [
-        "image/optimized/0df85bbf3fe04a44-800.webp",
-        800
-      ],
-      [
-        "image/optimized/0df85bbf3fe04a44-1166.webp",
-        1166
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-12.webp": {
-    "width": 1187,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/0d7f99826db5911c-160.webp",
-        160
-      ],
-      [
-        "image/optimized/0d7f99826db5911c-480.webp",
-        480
-      ],
-      [
-        "image/optimized/0d7f99826db5911c-800.webp",
-        800
-      ],
-      [
-        "image/optimized/0d7f99826db5911c-1187.webp",
-        1187
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-13.webp": {
-    "width": 1600,
-    "height": 1200,
-    "variants": [
-      [
-        "image/optimized/dd464a858c61ed8f-160.webp",
-        160
-      ],
-      [
-        "image/optimized/dd464a858c61ed8f-480.webp",
-        480
-      ],
-      [
-        "image/optimized/dd464a858c61ed8f-800.webp",
-        800
-      ],
-      [
-        "image/optimized/dd464a858c61ed8f-1200.webp",
-        1200
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-14.webp": {
-    "width": 1200,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/bf5cff76b97c13f2-160.webp",
-        160
-      ],
-      [
-        "image/optimized/bf5cff76b97c13f2-480.webp",
-        480
-      ],
-      [
-        "image/optimized/bf5cff76b97c13f2-800.webp",
-        800
-      ],
-      [
-        "image/optimized/bf5cff76b97c13f2-1200.webp",
-        1200
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-15.webp": {
-    "width": 901,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/4ce6a31227e7fc69-160.webp",
-        160
-      ],
-      [
-        "image/optimized/4ce6a31227e7fc69-480.webp",
-        480
-      ],
-      [
-        "image/optimized/4ce6a31227e7fc69-800.webp",
-        800
-      ],
-      [
-        "image/optimized/4ce6a31227e7fc69-901.webp",
-        901
-      ]
-    ]
-  },
-  "public-media/2026-10-18-gallery/scene-16.webp": {
-    "width": 1200,
-    "height": 1600,
-    "variants": [
-      [
-        "image/optimized/3a1a0a491f0fea3d-160.webp",
-        160
-      ],
-      [
-        "image/optimized/3a1a0a491f0fea3d-480.webp",
-        480
-      ],
-      [
-        "image/optimized/3a1a0a491f0fea3d-800.webp",
-        800
-      ],
-      [
-        "image/optimized/3a1a0a491f0fea3d-1200.webp",
+        "image/optimized/f8ce1edf6a8f7ae6-1200.webp",
         1200
       ]
     ]

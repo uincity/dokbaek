@@ -1,6 +1,58 @@
 [
   {
     "id": "2026-10-18-gallery",
+    "photoEssay": {
+      "title": "혼자였던 노래가, 우리가 되는 오후",
+      "subtitle": "2026.10.18 | 고덕우갤러리 | 집단적 독백",
+      "introduction": "비가 내리다 그치기를 반복하던 가을 오후. 고덕우갤러리의 작은 공간에 기타 선율과 사람들의 웃음이 채워졌습니다. 《Valse des Loges》, 《Romance No.1》, 《Manhã de Carnaval》 등 다채로운 음악을 나누고, 관객과 함께 노래하며 따뜻한 시간을 보냈습니다.",
+      "chapters": [
+        {
+          "title": "01. 공연을 기다리며",
+          "text": "무대와 객석을 정돈하고 작은 다과를 준비합니다. 설렘 속에서 공연을 맞이할 준비가 하나둘 끝나갑니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-01.webp"
+        },
+        {
+          "title": "02. 무대 뒤의 분주한 시간",
+          "text": "갤러리 주인장과 이야기를 나누고, 리허설과 동선 연습을 이어갑니다. 작은 무대도 준비만큼은 진지합니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-02.webp"
+        },
+        {
+          "title": "03. 공연 전, 우리들의 웃음",
+          "text": "긴장도 잠시, 카메라 앞에 모인 멤버들. 함께 웃는 순간도 공연의 소중한 기억입니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-03.webp"
+        },
+        {
+          "title": "04. 음악으로 만나는 시간",
+          "text": "기타 연주가 시작되고, 관객도 노래로 함께합니다. 무대와 객석의 경계가 조금씩 허물어집니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-04.webp"
+        },
+        {
+          "title": "05. 각자의 선율, 하나의 무대",
+          "text": "저마다 준비한 음악을 들려주고, 연주가 끝난 뒤에는 다시 모여 오늘의 순간을 사진으로 남깁니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-05.webp"
+        },
+        {
+          "title": "06. 우리가 함께 만든 하모니",
+          "text": "다섯 대의 기타와 사회자의 이야기. 연주자의 시선에서 바라본 객석에는 따뜻한 미소가 가득합니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-06.webp"
+        },
+        {
+          "title": "07. 공연이 끝나도 이야기는 계속되고",
+          "text": "관객들의 소감을 듣고 갤러리 주인장과 함께 식사를 나눕니다. 음악이 남긴 여운은 대화로 이어집니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-07.webp"
+        },
+        {
+          "title": "08. 마지막 인사, 오래 남을 온기",
+          "text": "공연이 끝난 뒤에도 인사와 대화는 계속됩니다. 따뜻한 포옹과 함께 하루를 마무리합니다.",
+          "photo": "public-media/2026-10-18-gallery/sketch-08.webp"
+        }
+      ],
+      "closing": {
+        "lead": "비가 오락가락하던 날, 마음만은 참 따뜻했습니다.",
+        "text": "함께 듣고, 웃고, 노래해 주신 모든 분들께 감사드립니다.",
+        "emphasis": "혼자였던 노래가, 정말 우리가 되었던 오후였습니다."
+      }
+    },
     "year": 2026,
     "no": 4,
     "date": "2026-10-18",
@@ -482,177 +534,90 @@
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-01.webp",
-        "label": "??? ?? 01",
-        "alt": "?? ?? ???? ??? ???? ???? ???",
+        "path": "public-media/2026-10-18-gallery/sketch-01.webp",
+        "label": "파스텔 스케치 01",
+        "alt": "간식상과 공연 준비 중인 갤러리 내부을 두 컷으로 담은 파스텔톤 스케치",
         "order": 1,
-        "width": 1600,
-        "height": 1200,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-02.webp",
-        "label": "??? ?? 02",
-        "alt": "?? ? ??? ??? ?? ???? ??? ? ??",
+        "path": "public-media/2026-10-18-gallery/sketch-02.webp",
+        "label": "파스텔 스케치 02",
+        "alt": "공연을 준비하며 이야기를 나누는 멤버들을 두 컷으로 담은 파스텔톤 스케치",
         "order": 2,
-        "width": 1200,
-        "height": 1600,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-03.webp",
-        "label": "??? ?? 03",
-        "alt": "??? ??? ??? ?? ?? ?? ???",
+        "path": "public-media/2026-10-18-gallery/sketch-03.webp",
+        "label": "파스텔 스케치 03",
+        "alt": "공연 포스터와 갤러리 앞 단체 기념 장면을 두 컷으로 담은 파스텔톤 스케치",
         "order": 3,
-        "width": 1600,
-        "height": 1200,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-04.webp",
-        "label": "??? ?? 04",
-        "alt": "?? ??? ??? ?? ??? ??",
+        "path": "public-media/2026-10-18-gallery/sketch-04.webp",
+        "label": "파스텔 스케치 04",
+        "alt": "공연 진행과 기타·하모니카 합주을 두 컷으로 담은 파스텔톤 스케치",
         "order": 4,
-        "width": 1600,
-        "height": 1200,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-05.webp",
-        "label": "??? ?? 05",
-        "alt": "??? ? ???? ?? ??? ?? ?? ??",
+        "path": "public-media/2026-10-18-gallery/sketch-05.webp",
+        "label": "파스텔 스케치 05",
+        "alt": "멤버들의 단체 기념 장면과 기타 합주을 두 컷으로 담은 파스텔톤 스케치",
         "order": 5,
-        "width": 1200,
-        "height": 1600,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-06.webp",
-        "label": "??? ?? 06",
-        "alt": "??? ??? ??? ?? ?? ???",
+        "path": "public-media/2026-10-18-gallery/sketch-06.webp",
+        "placement": "cover",
+        "label": "파스텔 스케치 06",
+        "alt": "기타 합주 무대와 공연을 감상하는 관객들을 두 컷으로 담은 파스텔톤 스케치",
         "order": 6,
-        "width": 1600,
-        "height": 1200,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-07.webp",
-        "label": "??? ?? 07",
-        "alt": "?? ?? ?? ?? ? ????? ?? ???",
+        "path": "public-media/2026-10-18-gallery/sketch-07.webp",
+        "label": "파스텔 스케치 07",
+        "alt": "공연 후 대화와 식사 자리의 단체 기념 장면을 두 컷으로 담은 파스텔톤 스케치",
         "order": 7,
-        "width": 1200,
-        "height": 1600,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       },
       {
         "type": "image",
         "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-08.webp",
-        "label": "??? ?? 08",
-        "alt": "?? ?? ???? ???? ?? ?? ??? ???? ???",
+        "path": "public-media/2026-10-18-gallery/sketch-08.webp",
+        "label": "파스텔 스케치 08",
+        "alt": "공연 후 인사와 포옹을 나누는 장면을 두 컷으로 담은 파스텔톤 스케치",
         "order": 8,
-        "width": 1600,
-        "height": 1200,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-09.webp",
-        "label": "??? ?? 09",
-        "alt": "?? ???? ??? ??? ?? ? ?? ??",
-        "order": 9,
-        "width": 1600,
-        "height": 1200,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-10.webp",
-        "label": "??? ?? 10",
-        "alt": "??? ?? ?? ??? ???? ???",
-        "order": 10,
-        "width": 901,
-        "height": 1600,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-11.webp",
-        "label": "??? ?? 11",
-        "alt": "???? ??? ?? ???? ???? ???? ? ??",
-        "order": 11,
-        "width": 1166,
-        "height": 1600,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-12.webp",
-        "label": "??? ?? 12",
-        "alt": "?? ? ?? ?? ??? ?? ?? ? ??",
-        "order": 12,
-        "width": 1187,
-        "height": 1600,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-13.webp",
-        "label": "??? ?? 13",
-        "alt": "??? ??? ?? ?? ?? ???? ??? ???",
-        "order": 13,
-        "width": 1600,
-        "height": 1200,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-14.webp",
-        "label": "??? ?? 14",
-        "alt": "?? ??? ??? ? ??? ?? ?? ???",
-        "order": 14,
-        "width": 1200,
-        "height": 1600,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-15.webp",
-        "label": "??? ?? 15",
-        "alt": "?? ??? ??? ??? ?? ? ?? ??",
-        "order": 15,
-        "width": 901,
-        "height": 1600,
-        "reviewed": true
-      },
-      {
-        "type": "image",
-        "usage": "performance-photo",
-        "path": "public-media/2026-10-18-gallery/scene-16.webp",
-        "label": "??? ?? 16",
-        "alt": "??? ?? ? ??? ??? ?? ??? ?? ???",
-        "order": 16,
-        "width": 1200,
-        "height": 1600,
+        "width": 1448,
+        "height": 1086,
         "reviewed": true
       }
     ],

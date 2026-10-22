@@ -12,6 +12,13 @@
 .photo-essay-link{margin-top:14px;color:var(--walnut);font-size:.9375rem}
 .concert-essay .hero{padding-bottom:28px}.essay-venue{margin:12px 0 0}
 .essay-story{max-width:740px}.essay-photo-count{color:var(--muted);font-size:.9375rem;margin:20px 0}
+.essay-introduction,.essay-closing{max-width:740px;margin:40px auto;line-height:1.95;word-break:keep-all;overflow-wrap:anywhere}
+.narrative-essay .essay-chapter{max-width:840px;margin:64px auto}
+.essay-chapter .section-head{margin-bottom:16px}
+.essay-chapter h2{font-size:clamp(1.4rem,3.5vw,1.9rem)}
+.essay-chapter-text{max-width:680px;margin-bottom:24px;line-height:1.9;word-break:keep-all;overflow-wrap:anywhere}
+.essay-closing{border-top:1px solid var(--line);padding-top:32px}
+.essay-closing p:last-child{margin-bottom:0}
 .essay-cover-photo,.essay-photo,.photo-viewer-frame{margin:0;min-width:0}
 .photo-button{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;cursor:zoom-in}
 .essay-photo-image{display:block;aspect-ratio:3/2;background:var(--paper)}
@@ -277,7 +284,8 @@ h1,h2{font-family:var(--serif);font-weight:700}
 .setlist{scroll-margin-top:var(--header-offset)}
 .preview-main{display:block;text-decoration:none}
 .preview-main:hover h3{text-decoration:underline}
-.venue-link{display:inline-flex;align-items:center;min-height:44px;color:var(--walnut);overflow-wrap:anywhere}
+.venue-link{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--walnut);overflow-wrap:anywhere}
+.venue-map-logo{width:20px;height:20px;flex-shrink:0;object-fit:contain}
 @media(max-width:767px){
   .upcoming-copy .show-venue{margin:0}
   .upcoming-copy .show-date{margin-bottom:0}

@@ -1,4 +1,4 @@
-import imageSources from './image-sources.js';
+import imageSources from './image-sources.js?v=20261022-gallery-sketch';
 const main = document.querySelector('#main');
 const page = document.body.dataset.page;
 const params = new URLSearchParams(location.search);
@@ -31,6 +31,9 @@ function venueLink(venue) {
   const url=maps[(venue || '').replace(/\s/g,'')];
   if(!url)return el('span',venue || '장소 확인 중');
   const a=external(venue,url);a.className='venue-link';
+  const logo=el('img',null,'venue-map-logo');
+  logo.src='./image/navermap.webp';logo.alt='';logo.width=20;logo.height=20;
+  a.prepend(logo);
   a.setAttribute('aria-label',`${venue} 네이버지도 (새 창)`);return a;
 }
 function pill(text, color='') { return el('span',text,`pill ${color}`); }
@@ -570,11 +573,12 @@ function concertPage() {
   if(!c) {
     main.append(heading('공연을 찾을 수 없습니다.','공연 아카이브','공개된 공연의 주소를 확인해 주세요.'),link('공연 아카이브로 돌아가기','archive.html?year=2026','button'));return;
   }
-  document.title=`${c.title} · 집단적독백`;
+  const photoEssay=c.photoEssay;
+  document.title=`${photoEssay?.title || c.title} · 집단적독백`;
   const essay=el('article',null,'concert-essay');
   const breadcrumb=el('nav',null,'essay-breadcrumb');breadcrumb.setAttribute('aria-label','현재 위치');
   add(breadcrumb,link('공연 아카이브',`archive.html?year=${c.year}`),el('span','›'),link(String(c.year),`archive.html?year=${c.year}`),el('span','›'),el('span',c.no?`No.${c.no}`:c.venue));
-  const hero=heading(c.title,c.no?`NO.${c.no} · 공연 기록`:'공연 기록',dateText(c));
+  const hero=heading(photoEssay?.title || c.title,photoEssay?.subtitle || (c.no?`NO.${c.no} · 공연 기록`:'공연 기록'),photoEssay?'':dateText(c));
   add(hero,add(el('p',null,'essay-venue'),venueLink(c.venue)),c.address?el('p',c.address,'show-address'):null);
   add(essay,breadcrumb,hero);main.append(essay);
   const photos=performancePhotos(c), failed=new Set();
@@ -651,6 +655,24 @@ function concertPage() {
   const cover=photos.find(m=>m.placement==='cover') || photos.find(m=>!m.placement) || photos[0];
   if(cover)essay.append(photoFigure(cover,true));
   essay.append(count);
+  if(photoEssay) {
+    essay.classList.add('narrative-essay');
+    essay.append(el('p',photoEssay.introduction,'essay-introduction'));
+    for(const chapter of photoEssay.chapters) {
+      const scene=section(chapter.title);scene.classList.add('essay-chapter');
+      scene.append(el('p',chapter.text,'essay-chapter-text'));
+      const photo=photos.find(m=>m.path===chapter.photo);
+      if(photo) {
+        const figure=photoFigure(photo);const img=figure.querySelector('img');
+        if(img)img.sizes='(min-width:1000px) 840px, calc(100vw - 40px)';
+        scene.append(figure);
+      }
+      essay.append(scene);
+    }
+    const closing=el('footer',null,'essay-closing');
+    add(closing,add(el('p'),el('strong',photoEssay.closing.lead)),el('p',photoEssay.closing.text),add(el('p'),el('em',photoEssay.closing.emphasis)));
+    essay.append(closing);
+  } else {
   const story=section('그날의 이야기');story.classList.add('essay-story');
   if(c.story)story.append(el('p',c.story,'concert-story'));
   if(c.introduction)story.append(el('p',c.introduction));
@@ -664,9 +686,6 @@ function concertPage() {
     const grid=el('div',null,'essay-photo-grid');selected.forEach(m=>grid.append(photoFigure(m)));
     add(scenes,grid);essay.append(scenes);regions.push(scenes);
   }
-  const program=section('무대에 담은 곡들');program.classList.add('essay-program');
-  const fold=disclosure(`프로그램 ${c.setlist.length}곡 보기`,'essay-program-fold');fold.open=true;
-  fold.append(concertProgram(c));program.append(fold);essay.append(program);
   const rest=photos.filter(m=>m!==cover && !selected.includes(m));
   if(rest.length) {
     const gallery=section('더 많은 현장 사진');gallery.classList.add('essay-gallery');
@@ -693,6 +712,10 @@ function concertPage() {
     });
     add(gallery,grid,status,more);essay.append(gallery);appendBatch();
   }
+  }
+  const program=section('무대에 담은 곡들');program.classList.add('essay-program');
+  const fold=disclosure(`프로그램 ${c.setlist.length}곡 보기`,'essay-program-fold');fold.open=!photoEssay;
+  fold.append(concertProgram(c));program.append(fold);essay.append(program);
   const media=c.mediaVisibility==='reviewed-only'?(c.media||[]).filter(m=>m.reviewed===true && m.type==='image' && m.usage!=='performance-photo' && (!m.visibility || m.visibility==='public')):[];
   if(media.length) {
     const prints=section('공연 인쇄물');const grid=el('div',null,'print-grid');

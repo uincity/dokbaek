@@ -33,6 +33,7 @@ def run():
     source_original=copy.deepcopy(original)
     # Keep synthetic count cases independent of photographs registered by the operator.
     for concert in original:
+        concert.pop('photoEssay',None)
         concert['media']=[m for m in concert['media'] if m.get('usage')!='performance-photo']
     server=shared.PublicServer(('127.0.0.1',0),shared.PublicHandler)
     Thread(target=server.serve_forever,daemon=True).start()

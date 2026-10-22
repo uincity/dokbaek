@@ -11,7 +11,7 @@ PAGES={'index.html','archive.html','concert.html','unit.html','repertoire.html',
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
 SONG_KEYS={'id','title','composer','composerStatus','artistCredit','genre','aliases','note','sourceIds','fieldEvidence'}
-CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','address','story','introduction','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
+CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','address','story','introduction','photoEssay','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
 ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','guestCredits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
 EVIDENCE={'confirmed','planned','program'}
 STATUSES={'confirmed','needs-confirmation'}
@@ -138,6 +138,21 @@ def validate_data(base=ROOT, manifest_base=ROOT):
                 for dimension in ('width','height'):
                     require(dimension not in m or type(m[dimension]) is int and m[dimension]>0,'Invalid photo dimensions')
         require(c['mediaVisibility']!='withheld' or not c['media'],'Withheld media cannot be released')
+        if 'photoEssay' in c:
+            essay=c['photoEssay']
+            keys(essay,{'title','subtitle','introduction','chapters','closing'},'photo essay')
+            for field in ('title','subtitle','introduction'):
+                require(isinstance(essay.get(field),str) and essay[field].strip(),'Photo essay needs text')
+            require(isinstance(essay.get('chapters'),list) and essay['chapters'],'Photo essay needs chapters')
+            photos={m['path'] for m in c['media'] if m.get('usage')=='performance-photo'}
+            for chapter in essay['chapters']:
+                keys(chapter,{'title','text','photo'},'photo essay chapter')
+                for field in ('title','text'):
+                    require(isinstance(chapter.get(field),str) and chapter[field].strip(),'Photo essay chapter needs text')
+                require(chapter.get('photo') in photos,'Photo essay chapter needs an approved concert photo')
+            keys(essay.get('closing'),{'lead','text','emphasis'},'photo essay closing')
+            for field in ('lead','text','emphasis'):
+                require(isinstance(essay['closing'].get(field),str) and essay['closing'][field].strip(),'Photo essay closing needs text')
         if c.get('rehearsalVideo'):
             rehearsal=c['rehearsalVideo']
             keys(rehearsal,{'title','url','thumbnail'},'rehearsal video')

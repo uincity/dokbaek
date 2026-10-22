@@ -44,9 +44,11 @@ python scripts/browser-check.py
 
 ## 공연 사진과 이야기
 
-`concert.html?year=2026&id=2026-10-18-gallery`에서 No.4의 사진 에세이형 기록을 봅니다. 기존 `archive.html?year=2026#2026-10-18-gallery`의 **그날의 사진과 이야기** 링크로도 들어갑니다. 다른 공개 공연에도 같은 상세 화면을 재사용하며, 기존 공연·곡 ID와 아카이브 주소는 유지합니다. No.4에는 사용자가 공개 승인을 확인한 사진 16장을 원본 EXIF 촬영 순서대로 등록했습니다. 사진이 없으면 이미지 틀과 사진 섹션은 표시하지 않습니다.
+`concert.html?year=2026&id=2026-10-18-gallery`에서 No.4의 사진 에세이형 기록을 봅니다. 기존 `archive.html?year=2026#2026-10-18-gallery`의 **그날의 사진과 이야기** 링크로도 들어갑니다. 다른 공개 공연에도 같은 상세 화면을 재사용하며, 기존 공연·곡 ID와 아카이브 주소는 유지합니다. No.4의 기존 사진 16장은 2026-10-22에 사용자가 제공한 파스텔톤 스케치 합성 이미지 8장(각 두 컷)으로 교체했습니다. 이미지가 없으면 이미지 틀과 사진 섹션은 표시하지 않습니다.
 
-이번 원본은 `image/2026-10-18-gallery/`에 보존하며 Git 추적과 배포에서 제외합니다. 실제 게시 파일은 메타데이터를 제거하고 긴 변을 최대 1600px로 줄인 `public-media/2026-10-18-gallery/scene-01.webp`부터 `scene-16.webp`까지입니다. 공개 JSON에는 촬영시각 대신 정렬용 `order`만 기록합니다. 원본 파일과 촬영시각의 대응표는 비공개 `private-notes/2026-10-18-gallery/source-order.json`에 보관합니다. 파일명이나 복사·수정시각이 아니라 EXIF `DateTimeOriginal`을 기준으로 정렬했습니다.
+스케치 원본은 `image/2026-10-18-gallery/2026-10-18-gallery-1.png`부터 `2026-10-18-gallery-8.png`까지이며 Git 추적과 배포에서 제외합니다. 실제 게시 파일은 메타데이터를 제거하고 원래 비율과 긴 변 최대 1600px를 유지한 `public-media/2026-10-18-gallery/sketch-01.webp`부터 `sketch-08.webp`까지입니다. 원본 파일의 숫자 순서대로 표시하며 공개 JSON에는 정렬용 `order`와 이미지 크기를 기록합니다. 기존 실사 이미지와 해당 반응형 사본은 게시 목록에서 제거했습니다.
+
+No.4의 상세 화면은 `photoEssay`의 제목·도입문·8개 장·맺음말로 구성합니다. 대표 이미지는 6번이며 본문은 1~8번 이미지를 각 장의 글과 함께 표시합니다. 대표 이미지와 본문에 같은 이미지가 있어도 확대 창에서는 고유 이미지 8장만 탐색합니다. 프로그램은 에세이 아래에서 펼쳐 볼 수 있습니다. `python scripts/essay-browser-check.py`로 제목·본문·이미지 연결, 모바일 비율, 확대 탐색을 확인합니다(Playwright 및 Chromium 필요).
 
 사진은 다음 순서로 추가하세요. 추천 분량은 8~15장이지만 게시 개수에 상한은 없습니다.
 
@@ -58,7 +60,7 @@ python scripts/browser-check.py
 {
   "type": "image",
   "usage": "performance-photo",
-  "path": "public-media/2026-10-18-gallery/scene-01.webp",
+  "path": "public-media/2026-10-18-gallery/sketch-01.webp",
   "label": "공연장 전경",
   "alt": "무대와 객석이 함께 보이는 공연장 전경",
   "caption": "관리자가 확인한 사진 설명",
