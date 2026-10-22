@@ -85,14 +85,14 @@ function occurrences(songId, list=concerts) {
   return ordered(list).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId===songId).map(e=>({c,e})));
 }
 function memberRepertoireIds(list=concerts) {
-  return new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.credits?.length).map(e=>e.songId)));
+  return new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId && e.credits?.length).map(e=>e.songId)));
 }
 function stats(list, showNotes=true, useMemberRepertoire=false) {
   const complete = list.filter(c=>concertStatus(c)==='completed').length;
   const upcoming = list.filter(c=>concertStatus(c)==='scheduled').length;
   const songCount = useMemberRepertoire
     ? memberRepertoireIds(list).size
-    : new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
+    : new Set(list.flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId && e.evidenceStatus==='confirmed').map(e=>e.songId))).size;
   const box = el('div',null,'stats');
   const songNote=useMemberRepertoire ? '멤버 참여곡 기준' : '계획·이벤트 제외';
   for (const [n,label,note] of [[complete,'기록된 공연','공연 기록 기준'],[upcoming,'예정 공연','완료 기록과 별도'],[songCount,'연주 곡',songNote]]) {
@@ -198,6 +198,28 @@ function preview(c) {
 }
 function unitParticipants(event) {
   return [...new Map(event.songs.flatMap(song=>song.performers).map(p=>[p.member_id,p])).values()];
+}
+// Adapt the single small-stage source to the shared concert/history views.
+function unitConcert(event) {
+  const id=`unit-${event.id}`;
+  const credits=people=>people.flatMap(p=>p.roles.map(role=>({memberId:p.member_id,role})));
+  return {
+    id,unitEventId:event.id,year:Number(event.date.slice(0,4)),no:null,
+    date:event.date,datePrecision:'day',time:null,title:event.title,venue:event.venue,
+    story:event.description || '멤버들이 함께한 작은 무대의 기록입니다.',
+    status:event.status,visibility:'public',mediaVisibility:'reviewed-only',
+    participants:credits(event.songs.flatMap(song=>song.performers)).filter((p,i,list)=>list.findIndex(other=>other.memberId===p.memberId && other.role===p.role)===i),
+    setlist:event.songs.map(song=>({
+      id:`${id}-song-${song.order}`,order:song.order,kind:'song',songId:song.song_id,
+      title:song.title,originalTitle:song.source_title,formats:song.formats || [],
+      evidenceStatus:event.status==='completed'?'confirmed':'planned',isEncore:false,
+      credits:credits(song.performers),creditsStatus:'confirmed',guestCredits:[],
+      videoUrl:null,sourceIds:['unit-performance-list'],additionalEvents:[]
+    })),
+    media:(event.media || []).map(m=>m.type==='image' && m.usage==='sketch'
+      ? {...m,usage:'performance-photo',alt:m.label}:m),
+    moments:[],notes:event.notes?[event.notes]:[],sourceIds:['unit-performance-list']
+  };
 }
 // Small stages use editorial status only, even after the scheduled date passes.
 function unitSchedule(list) {
@@ -319,7 +341,7 @@ function unitHomePreview() {
 }
 function unitPage() {
   const hero=heading('독백의 작은 무대','SMALL STAGES · UNIT SESSIONS','때로는 둘이서, 때로는 함께.');hero.classList.add('unit-hero');
-  hero.append(el('p','정식 공연의 무대 밖에서도 집단적독백의 음악은 계속됩니다. 결혼식의 축복을 전하는 노래부터 누군가의 하루를 위로하는 작은 음악회까지. 멤버들이 다양한 조합으로 만들어가는 특별한 음악의 순간을 기록합니다.','unit-hero-copy'));
+  hero.append(el('p','결혼식의 축복을 전하는 노래부터 누군가의 하루를 위로하는 작은 음악회까지. 멤버들이 다양한 조합으로 만들어가는 음악의 순간을 기록합니다. 작은 무대도 공연 아카이브와 참여 멤버의 공연이력에 함께 남깁니다.','unit-hero-copy'));
   main.append(hero);
   if(unitError){main.append(unitLoadNotice());return;}
   const schedule=unitSchedule(unitPerformances);
@@ -417,6 +439,7 @@ function seoulToday(now=new Date()) {
 }
 function hasConcertDay(c) { return c.datePrecision==='day' && /^\d{4}-\d{2}-\d{2}$/.test(c.date || ''); }
 function concertStatus(c, today=seoulToday()) {
+  if(c.unitEventId)return c.status;
   // Display classification only; elapsed time never confirms a song's performance.
   return c.status==='scheduled' && hasConcertDay(c) && c.date<today ? 'completed' : c.status;
 }
@@ -861,7 +884,7 @@ function memberPage() {
     add(detail,el('h2',`${m.nickname}의 무대`),el('p',roleText(m),'muted'));
     const found=ordered(concerts).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.credits.some(cr=>cr.memberId===m.id)).map(e=>({c,e})));
     if(!found.length)detail.append(el('p','닉네임으로 확인된 참여 기록이 아직 없습니다.','empty-state'));
-    for(const {c,e} of found) { const box=history(c,e);box.prepend(link(e.title || songMap.get(e.songId).title,`repertoire.html?member=${m.id}#${e.songId}`));detail.append(box); }
+    for(const {c,e} of found) { const box=history(c,e);box.prepend(link(e.title || songMap.get(e.songId)?.title || e.originalTitle,e.songId?`repertoire.html?member=${m.id}#${e.songId}`:concertLink(c,e)));detail.append(box); }
     const participantConcerts=concerts.filter(c=>c.participants.some(p=>p.memberId===m.id));
     if(participantConcerts.length)detail.append(add(el('div',null,'card-grid'),...participantConcerts.map(preview)));
     detail.append(link(`${m.nickname} 참여곡 찾아보기 ↗`,`repertoire.html?member=${m.id}`,'button'));
@@ -981,14 +1004,19 @@ const footerInquiry=link(`공연 문의 · ${inquiryEmail}`,inquiryMailto,'foote
 document.querySelector('.site-footer').insertBefore(footerInquiry,document.querySelector('.site-footer>small'));
 try {
   [site,members,songs]=await Promise.all(['data/site.json','data/members.json','data/songs.json'].map(load));
+  site.years.sort((a,b)=>b.year-a.year);
   concerts=(await Promise.all(site.years.map(y=>load(y.file)))).flat().filter(c=>['public','public-summary'].includes(c.visibility));
   memberMap=new Map(members.map(m=>[m.id,m]));songMap=new Map(songs.map(s=>[s.id,s]));sourceMap=new Map(site.sources.map(s=>[s.id,s]));
-  if(['index','unit'].includes(page)) {
-    try {unitPerformances=checkUnitData(await load('data/unit-performances.json'));}
-    catch(error){unitError=error;console.error('작은 무대 데이터 로드 실패:',error);}
+  try {unitPerformances=checkUnitData(await load('data/unit-performances.json'));}
+  catch(error){unitError=error;console.error('작은 무대 데이터 로드 실패:',error);}
+  concerts.push(...unitPerformances.map(unitConcert));
+  for(const c of concerts) {
+    if(!site.years.some(y=>y.year===c.year))site.years.push({year:c.year,title:'공연 기록',phrase:'함께 나눈 음악의 순간',description:`${c.year}년에 함께한 공연과 작은 무대의 기록입니다.`});
   }
+  site.years.sort((a,b)=>b.year-a.year);
   main.replaceChildren();
   ({index:home,archive,concert:concertPage,unit:unitPage,repertoire,members:memberPage,about}[page] || home)();
+  if(unitError && ['archive','concert','repertoire','members'].includes(page))main.prepend(unitLoadNotice());
   const channelIcons={YouTube:'image/youtube.png',Instagram:'image/instagram.png'};
   for(const c of site.channels){
     const channelLink=external(c.label,c.url);

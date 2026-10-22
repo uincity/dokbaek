@@ -36,6 +36,11 @@
   ],
   "sources": [
     {
+      "id": "unit-performance-list",
+      "label": "멤버 제공 작은 무대 공연 목록 · 파일럿공연 시트",
+      "type": "confirmed"
+    },
+    {
       "id": "planning-2025",
       "label": "2025 아카이브 기획안 · 멤버 제공 기록",
       "type": "confirmed-record"

@@ -139,7 +139,7 @@ def run():
                 page.unroute(broken_match)
                 go('index.html')
                 assert page.locator('#small-stages img, #small-stages .unit-media').count()==0
-                assert page.locator('.stat b').all_text_contents()==['4','1','26']
+                assert page.locator('.stat b').all_text_contents()==['6','2','26']
                 record('Reordered events keep their own images; absent media is omitted, failed images show a stable text fallback, home preview remains compact')
                 page.set_viewport_size({'width':1280,'height':900})
             if '--unit-preview' in sys.argv:
@@ -212,18 +212,17 @@ def run():
             assert page.locator('#small-stages').bounding_box()['y']>page.locator('#past-shows').bounding_box()['y']
             record('Small stages: 3 events / 5 songs, exact members and roles, keyboard details, preview ordering and explicit status after 2026')
             go('index.html')
-            assert page.locator('.stat b').all_text_contents()==['4','1','26']
+            assert page.locator('.stat b').all_text_contents()==['6','2','26']
             assert page.locator('.year-card').count()==2
-            assert '15:00' in page.locator('.upcoming-feature').inner_text()
-            poster_path='2026/포스터/포스터_수녀원 음악회(20261108).png'
+            poster_path='2026/포스터/포스터_노을음악회_20261024.jpg'
             assert page.locator('.upcoming-poster img').get_attribute('data-original-src')==poster_path
-            assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='2026-11-08-convent'
-            assert '2026년 11월 8일(일)' in page.locator('.show-date').inner_text()
+            assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='unit-sunset-20261024'
+            assert '2026년 10월 24일(토)' in page.locator('.show-date').inner_text()
             assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#2026-10-18-gallery')
             assert page.locator('#past-shows .concert-preview').first.locator('.pill').inner_text()=='종료 공연'
             assert page.locator('#past-shows .section-head a').get_attribute('href')=='archive.html?year=2026'
-            assert page.locator('.upcoming-copy .button').last.get_attribute('href').endswith('#2026-11-08-convent-program')
-            assert page.locator('.upcoming-program li').count()==11
+            assert page.locator('.upcoming-copy .button').last.get_attribute('href').endswith('#unit-sunset-20261024-program')
+            assert page.locator('.upcoming-program li').count()==1
             assert page.locator('.upcoming-poster').bounding_box()['x']>page.locator('.upcoming-copy').bounding_box()['x']
             assert page.locator('.home-hero .group-art img').get_attribute('data-original-src')=='image/집단적독백밴드 전체사진2.png'
             assert 'Gowun Batang' in page.locator('h1').evaluate('e=>getComputedStyle(e).fontFamily')
@@ -253,7 +252,7 @@ def run():
             capture('home-desktop.png')
             record('Home statistics show recorded concerts, upcoming concerts and 26 member repertoire songs')
             go('archive.html?year=2025')
-            assert page.locator('.concert-timeline .timeline-link').count()==3
+            assert page.locator('.concert-timeline .timeline-link').count()==5
             assert page.locator('.year-calendar').get_attribute('open') is None
             page.locator('.year-calendar>summary').click()
             assert page.locator('.calendar .month').count()==12
@@ -279,8 +278,8 @@ def run():
             go('archive.html?year=2026')
             assert page.locator('[id="2026-10-18-gallery"] .set-item').count()==11
             assert '15:00' in page.locator('[id="2026-10-18-gallery"] .concert-heading').inner_text()
-            assert page.locator('.stat b').all_text_contents()==['1','1','11']
-            assert page.locator('[data-status="scheduled"] .concert-section').count()==1
+            assert page.locator('.stat b').all_text_contents()==['1','2','11']
+            assert page.locator('[data-status="scheduled"] .concert-section').count()==2
             assert page.locator('[data-status="completed"] .concert-section').count()==1
             assert page.locator('[id="2026-11-08-convent"] .set-item').count()==11
             assert page.locator('[id="2026-10-18-gallery"] .pill').filter(has_text='진행 계획').count()==0
@@ -317,9 +316,9 @@ def run():
             go('members.html#member-manager')
             assert page.locator('.member-card').count()==7
             assert '매니저의 무대' in page.locator('#member-detail').inner_text()
-            assert page.locator('#member-detail .history').count()==6
+            assert page.locator('#member-detail .history').count()==7
             assert page.locator('#member-detail .empty-state').count()==0
-            record('Seven original member characters, direct member hash and six manager song participations including the No.5 program')
+            record('Seven original member characters, direct member hash and seven manager song participations including small stages')
             go('members.html#member-berry')
             assert page.locator('#member-detail .history').count()>10
             go('repertoire.html?member=member-berry#beloved')
@@ -340,6 +339,7 @@ def run():
             fixture[0]['setlist'][1]['creditsStatus']='confirmed'
             page.route('**/data/concerts-2025.json',lambda route:route.fulfill(json=fixture))
             page.route('**/data/concerts-2026.json',lambda route:route.fulfill(json=fixture_next))
+            page.route('**/data/unit-performances.json',lambda route:route.fulfill(json=[]))
             # Force a document navigation, rather than staying on the same hash URL.
             go('index.html')
             go('members.html#member-manager')
@@ -353,6 +353,7 @@ def run():
             assert 'members.html#member-manager' in page.url
             page.unroute('**/data/concerts-2025.json')
             page.unroute('**/data/concerts-2026.json')
+            page.unroute('**/data/unit-performances.json')
             record('Confirmed member → song → concert and credit → member flow using a test-only fixture')
             go('archive.html?year=2026')
             first=page.locator('.print-button').first
@@ -437,25 +438,27 @@ def run():
                 page.set_viewport_size({'width':width,'height':900});go('index.html')
                 assert page.locator('.upcoming-poster img').evaluate("i=>getComputedStyle(i).objectFit==='contain'")
                 page.locator('.upcoming-program summary').tap()
-                no5=next(c for c in json.loads((PUBLIC/'data/concerts-2026.json').read_text(encoding='utf-8')) if c['no']==5)
-                expected=[entry['title'] for entry in no5['setlist']]
+                sunset=next(c for c in json.loads((PUBLIC/'data/unit-performances.json').read_text(encoding='utf-8')) if c['id']=='sunset-20261024')
+                expected=[entry['title'] for entry in sunset['songs']]
                 assert page.locator('.upcoming-program li a').all_text_contents()==expected
                 assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1')
                 page.locator('.upcoming-poster').tap()
                 original=page.locator('#media-content img')
                 original.evaluate('i=>i.decode()')
                 assert unquote(original.get_attribute('src'))==poster_path
-                assert original.get_attribute('alt').startswith('수녀원 음악회 · 2026년 11월 8일(일)')
+                assert original.get_attribute('alt').startswith('노을음악회 · 2026년 10월 24일(토)')
                 page.locator('#close-dialog').tap()
                 assert not page.locator('#media-dialog').evaluate('d=>d.open')
                 assert page.locator('.upcoming-poster').evaluate('b=>b===document.activeElement')
                 page.locator('.upcoming-copy .button').last.tap()
-                page.wait_for_function("()=>document.getElementById('2026-11-08-convent-program')!==null")
-                target=page.locator('[id="2026-11-08-convent-program"]')
+                page.wait_for_function("()=>document.getElementById('unit-sunset-20261024-program')!==null")
+                target=page.locator('[id="unit-sunset-20261024-program"]')
                 assert target.bounding_box()['y']>=page.locator('.site-header').bounding_box()['height']-1
-                assert target.locator('.set-item').count()==11
-            record('No.5 program preview/order, full original poster URL/alt, touch open/close/focus return and program deep links at 360/390/768/1280px')
+                assert target.locator('.set-item').count()==1
+            record('Small-stage program preview/order, full original poster URL/alt, touch open/close/focus return and program deep links at 360/390/768/1280px')
             # Display classification follows Seoul dates; song evidence stays unchanged.
+            # Check regular concerts separately; small stages keep their editorial status.
+            page.route('**/data/unit-performances.json',lambda route:route.fulfill(json=[]))
             page.clock.set_fixed_time(datetime(2027,1,1,3,tzinfo=timezone.utc));go('index.html')
             assert page.locator('.upcoming-feature').count()==0
             assert '다음 공연을 준비 중' in page.locator('#upcoming').inner_text()
@@ -471,6 +474,7 @@ def run():
             assert page.locator('.concert-section').first.get_attribute('id')=='2026-11-08-convent'
             assert page.locator('[id="2026-11-08-convent"] .pill').filter(has_text='진행 계획').count()==11
             page.clock.set_fixed_time(datetime(2026,10,20,3,tzinfo=timezone.utc))
+            page.unroute('**/data/unit-performances.json')
             record('360×800 upcoming CTA, outside-click menu close, restored group artwork and serif headings, consistent branding/channels, static sharing metadata and expired schedule fallback')
             # Program-book design: mobile disclosures, alternate repertoire views and sticky anchors.
             for width in [360,390]:
