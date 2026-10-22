@@ -478,6 +478,182 @@
           "program-2026"
         ],
         "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-01.webp",
+        "label": "??? ?? 01",
+        "alt": "?? ?? ???? ??? ???? ???? ???",
+        "order": 1,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-02.webp",
+        "label": "??? ?? 02",
+        "alt": "?? ? ??? ??? ?? ???? ??? ? ??",
+        "order": 2,
+        "width": 1200,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-03.webp",
+        "label": "??? ?? 03",
+        "alt": "??? ??? ??? ?? ?? ?? ???",
+        "order": 3,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-04.webp",
+        "label": "??? ?? 04",
+        "alt": "?? ??? ??? ?? ??? ??",
+        "order": 4,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-05.webp",
+        "label": "??? ?? 05",
+        "alt": "??? ? ???? ?? ??? ?? ?? ??",
+        "order": 5,
+        "width": 1200,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-06.webp",
+        "label": "??? ?? 06",
+        "alt": "??? ??? ??? ?? ?? ???",
+        "order": 6,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-07.webp",
+        "label": "??? ?? 07",
+        "alt": "?? ?? ?? ?? ? ????? ?? ???",
+        "order": 7,
+        "width": 1200,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-08.webp",
+        "label": "??? ?? 08",
+        "alt": "?? ?? ???? ???? ?? ?? ??? ???? ???",
+        "order": 8,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-09.webp",
+        "label": "??? ?? 09",
+        "alt": "?? ???? ??? ??? ?? ? ?? ??",
+        "order": 9,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-10.webp",
+        "label": "??? ?? 10",
+        "alt": "??? ?? ?? ??? ???? ???",
+        "order": 10,
+        "width": 901,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-11.webp",
+        "label": "??? ?? 11",
+        "alt": "???? ??? ?? ???? ???? ???? ? ??",
+        "order": 11,
+        "width": 1166,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-12.webp",
+        "label": "??? ?? 12",
+        "alt": "?? ? ?? ?? ??? ?? ?? ? ??",
+        "order": 12,
+        "width": 1187,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-13.webp",
+        "label": "??? ?? 13",
+        "alt": "??? ??? ?? ?? ?? ???? ??? ???",
+        "order": 13,
+        "width": 1600,
+        "height": 1200,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-14.webp",
+        "label": "??? ?? 14",
+        "alt": "?? ??? ??? ? ??? ?? ?? ???",
+        "order": 14,
+        "width": 1200,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-15.webp",
+        "label": "??? ?? 15",
+        "alt": "?? ??? ??? ??? ?? ? ?? ??",
+        "order": 15,
+        "width": 901,
+        "height": 1600,
+        "reviewed": true
+      },
+      {
+        "type": "image",
+        "usage": "performance-photo",
+        "path": "public-media/2026-10-18-gallery/scene-16.webp",
+        "label": "??? ?? 16",
+        "alt": "??? ?? ? ??? ??? ?? ??? ?? ???",
+        "order": 16,
+        "width": 1200,
+        "height": 1600,
+        "reviewed": true
       }
     ],
     "moments": [],

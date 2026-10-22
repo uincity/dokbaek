@@ -5,6 +5,31 @@
   --serif:'Gowun Batang','Batang','바탕',Georgia,serif;
   --sans:'Pretendard Variable','Apple SD Gothic Neo','Malgun Gothic',sans-serif;--mono:var(--sans);--header-offset:100px;
 }
+/* Concert essays reuse the archive's paper, typography and program components. */
+.concert-essay{max-width:1040px;margin:0 auto;padding-bottom:40px}
+.essay-breadcrumb{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding-top:28px;font-size:.875rem;color:var(--walnut)}
+.essay-breadcrumb a,.photo-essay-link{display:inline-flex;align-items:center;min-height:44px}
+.photo-essay-link{margin-top:14px;color:var(--walnut);font-size:.9375rem}
+.concert-essay .hero{padding-bottom:28px}.essay-venue{margin:12px 0 0}
+.essay-story{max-width:740px}.essay-photo-count{color:var(--muted);font-size:.9375rem;margin:20px 0}
+.essay-cover-photo,.essay-photo,.photo-viewer-frame{margin:0;min-width:0}
+.photo-button{display:block;width:100%;padding:0;border:0;background:transparent;text-align:left;cursor:zoom-in}
+.essay-photo-image{display:block;aspect-ratio:3/2;background:var(--paper)}
+.essay-photo-image img{width:100%;height:100%;object-fit:contain}
+.concert-essay figcaption,.photo-viewer figcaption{padding-top:12px;font-size:.9375rem;color:var(--muted);line-height:1.7;overflow-wrap:anywhere}
+.essay-photo-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:28px 24px;align-items:start}
+.essay-photo.portrait-photo{max-width:100%}
+.essay-program-fold>summary{padding:12px 0;min-height:44px;color:var(--walnut)}
+.gallery-status{margin:20px 0 12px;color:var(--muted);font-size:.875rem}
+.essay-gallery .button[hidden]{display:none}
+body:has(#media-dialog[open]){overflow:hidden}
+dialog.photo-dialog{width:1100px;max-width:95vw;max-height:94dvh}
+.photo-viewer-frame .image-wrap{display:flex;justify-content:center;min-height:120px}
+#media-content .photo-enlarged img{width:100%;height:min(62dvh,760px);object-fit:contain}
+.photo-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}
+.photo-controls button{min-width:76px;min-height:44px;flex-shrink:0}.photo-position{font-variant-numeric:tabular-nums;text-align:center}
+@media(min-width:768px){.essay-scenes .essay-photo-grid:has(>.essay-photo:nth-child(3)){grid-template-columns:1.2fr 1fr}.essay-scenes .essay-photo-grid:has(>.essay-photo:nth-child(3))>.essay-photo:first-child{grid-row:span 2}}
+@media(max-width:599px){.essay-photo-grid{grid-template-columns:minmax(0,1fr);gap:24px}.essay-breadcrumb{padding-top:18px}.photo-controls{gap:8px}.photo-controls button{padding:8px}.photo-dialog .dialog-toolbar{gap:10px}}
 *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:var(--header-offset)}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.7 var(--sans)}
 b,strong{font-weight:600}

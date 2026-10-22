@@ -64,5 +64,26 @@ class PublicDataChecks(unittest.TestCase):
         for fg,bg in [('ink','paper'),('muted','paper'),('walnut','card'),('red','paper')]:
             values=sorted([luminance(colour(fg)),luminance(colour(bg))])
             self.assertGreaterEqual((values[1]+.05)/(values[0]+.05),4.5,(fg,bg))
+    def test_webp_removes_exif_and_xmp_preserving_image_chunks(self):
+        def chunk(kind,data):return kind+len(data).to_bytes(4,'little')+data+(b'\0' if len(data)%2 else b'')
+        header=bytes([0x0c])+b'\0'*9
+        pixels=chunk(b'VP8 ',b'pixel-content')
+        payload=b'WEBP'+chunk(b'VP8X',header)+chunk(b'EXIF',b'private GPS')+pixels+chunk(b'XMP ',b'private camera')
+        data=b'RIFF'+len(payload).to_bytes(4,'little')+payload
+        clean=strip_metadata(data,'.webp')
+        expected=b'WEBP'+chunk(b'VP8X',bytes(10))+pixels
+        self.assertEqual(clean,b'RIFF'+len(expected).to_bytes(4,'little')+expected)
+        with self.assertRaises(ValueError):strip_metadata(data[:-1],'.webp')
+    def test_photo_metadata_and_approval_schema(self):
+        media=self.data['data/concerts-2026.json'][0]['media'][0]
+        media.update(usage='performance-photo',alt='Test scene',caption='Verified context',placement='cover',order=1)
+        # Reuse an already allowlisted path in memory; no fixture files are published.
+        with patch.object(validate,'load',side_effect=lambda base,path:copy.deepcopy(self.data[path])):
+            validate.validate_data()
+        for change in [dict(alt=''),dict(reviewed=False),dict(visibility='private'),dict(placement='unknown'),dict(order=float('inf')),dict(width=0)]:
+            original=copy.deepcopy(media)
+            self.check_invalid(lambda d:d['data/concerts-2026.json'][0]['media'][0].update(change))
+            media.clear();media.update(original)
+        self.check_invalid(lambda d:d['data/concerts-2026.json'][0].update(moments=[{'path':'invalid'}]))
 
 if __name__=='__main__':unittest.main(verbosity=2)

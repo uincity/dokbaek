@@ -62,6 +62,21 @@ function dateText(c) {
   return `${year}년 ${month}월${c.datePrecision === 'day' ? ` ${day}일${weekday}` : ''}${c.time ? ` · ${c.time}` : ''}`;
 }
 function concertLink(c, entry=null) { return `archive.html?year=${c.year}#${entry?.id || c.id}`; }
+function concertDetailLink(c) { return `concert.html?year=${c.year}&id=${encodeURIComponent(c.id)}`; }
+function performancePhotos(c) {
+  if(c.visibility!=='public' || c.mediaVisibility!=='reviewed-only')return [];
+  const seen=new Set();
+  return (c.media || []).map((m,index)=>({m,index})).filter(({m})=>{
+    if(m.usage!=='performance-photo' || m.type!=='image' || m.reviewed!==true ||
+       (m.visibility && m.visibility!=='public') || !safeMedia(m.path) || !m.alt?.trim() || seen.has(m.path))return false;
+    seen.add(m.path);return true;
+  }).sort((a,b)=>(Number.isFinite(a.m.order)?a.m.order:a.index+1)-(Number.isFinite(b.m.order)?b.m.order:b.index+1) || a.index-b.index).map(({m})=>m);
+}
+function photoEssayLink(c) {
+  if(c.status!=='completed' || c.visibility!=='public')return null;
+  const photos=performancePhotos(c);
+  return link(`그날의 사진과 이야기${photos.length?` · 사진 ${photos.length}장`:''} ↗`,concertDetailLink(c),'photo-essay-link');
+}
 function ordered(list) { return [...list].sort((a,b)=>(a.date || '').localeCompare(b.date || '') || a.id.localeCompare(b.id)); }
 function occurrences(songId, list=concerts) {
   return ordered(list).flatMap(c=>c.setlist.filter(e=>e.kind==='song' && e.songId===songId).map(e=>({c,e})));
@@ -138,10 +153,10 @@ function openDialog(title,content,trigger) {
   document.querySelector('#media-content').replaceChildren(content); dialog.showModal();
 }
 document.querySelector('#close-dialog').addEventListener('click',()=>dialog.close());
-dialog.addEventListener('close',()=>{ document.querySelector('#media-content').replaceChildren(); returnFocus?.focus(); });
+dialog.addEventListener('close',()=>{ document.querySelector('#media-content').replaceChildren(); dialog.classList.remove('photo-dialog'); (returnFocus?.isConnected?returnFocus:main)?.focus(); });
 dialog.addEventListener('keydown',event=>{
   if(event.key!=='Tab')return;
-  const focusable=[...dialog.querySelectorAll('button, a[href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])')].filter(node=>node.getClientRects().length);
+  const focusable=[...dialog.querySelectorAll('button, a[href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])')].filter(node=>!node.disabled && node.getClientRects().length);
   const first=focusable[0], last=focusable.at(-1);
   if(!first){event.preventDefault();return;}
   if(event.shiftKey && document.activeElement===first){event.preventDefault();last.focus();}
@@ -472,7 +487,8 @@ function concertSection(c, list, index) {
   const cover=el('div',null,'concert-cover');
   const copy=el('div',null,'concert-cover-copy');
   add(copy,add(el('div',null,'concert-heading'),number,info),el('p',c.story,'concert-story'));
-  const media=c.mediaVisibility==='withheld'?[]:(c.media||[]).filter(m=>m.reviewed && m.type==='image');
+  if(page!=='concert')add(copy,photoEssayLink(c));
+  const media=c.mediaVisibility==='withheld'?[]:(c.media||[]).filter(m=>m.reviewed===true && m.type==='image' && m.usage!=='performance-photo' && (!m.visibility || m.visibility==='public'));
   const poster=media.find(m=>m.label.includes('포스터'));
   if(poster)cover.append(printButton(c,poster,'cover-poster'));else cover.classList.add('without-poster');
   if(media.length) {
@@ -500,6 +516,19 @@ function concertSection(c, list, index) {
     media.forEach(m=>grid.append(printButton(c,m)));materials.append(grid);s.append(materials);
   }
   s.append(el('h3','무대에 담은 곡들'));
+  s.append(concertProgram(c));
+  if(c.moments?.length) {
+    s.append(el('h3','무대에 담은 이야기'));
+    s.append(add(el('div',null,'moments'),...c.moments.map(m=>el('p',m,'moment'))));
+  }
+  if(!performancePhotos(c).length)s.append(el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':c.setlist.some(e=>e.videoUrl)?'곡별 썸네일을 누르면 YouTube에서 공연 영상을 볼 수 있습니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','media-note'));
+  s.append(concertEvidence(c));
+  const nav=el('nav',null,'concert-pagination'); nav.setAttribute('aria-label',`${c.venue} 이전 다음 공연`);
+  if(index>0) nav.append(link(`← ${list[index-1].venue}`,`#${list[index-1].id}`)); else nav.append(el('span'));
+  if(index<list.length-1) nav.append(link(`${list[index+1].venue} →`,`#${list[index+1].id}`));
+  s.append(nav); return s;
+}
+function concertProgram(c) {
   const setlist=el('ol',null,'setlist');setlist.id=`${c.id}-program`;
   for (const entry of [...c.setlist].sort((a,b)=>a.order-b.order)) {
     const li=el('li',null,`set-item ${entry.kind==='event'?'event':''}`); li.id=entry.id;
@@ -526,20 +555,156 @@ function concertSection(c, list, index) {
     }
     add(li,el('span',entry.kind==='event'?'—':entry.isEncore?'EN':String(entry.order).padStart(2,'0'),'set-number'),body); setlist.append(li);
   }
-  s.append(setlist);
-  if(c.moments?.length) {
-    s.append(el('h3','무대에 담은 이야기'));
-    s.append(add(el('div',null,'moments'),...c.moments.map(m=>el('p',m,'moment'))));
-  }
-  s.append(el('p',c.mediaVisibility==='withheld'?'이 공연은 요약 기록만 공개합니다.':c.setlist.some(e=>e.videoUrl)?'곡별 썸네일을 누르면 YouTube에서 공연 영상을 볼 수 있습니다.':'공개가 확인된 현장 사진과 영상은 아직 없습니다.','media-note'));
+  return setlist;
+}
+function concertEvidence(c) {
   const evidence=disclosure('기록의 근거','concert-evidence');
   const evidenceIds=[...new Set([...(c.sourceIds||[]),...c.setlist.flatMap(e=>e.sourceIds||[])])];
   const sourceList=el('ul');evidenceIds.forEach(id=>{const src=sourceMap.get(id);if(src)sourceList.append(el('li',src.label));});
-  add(evidence,sourceList,el('p','인쇄 프로그램과 진행 계획은 실제 곡별 연주 여부와 구분해 기록합니다.','source-note'));s.append(evidence);
-  const nav=el('nav',null,'concert-pagination'); nav.setAttribute('aria-label',`${c.venue} 이전 다음 공연`);
-  if(index>0) nav.append(link(`← ${list[index-1].venue}`,`#${list[index-1].id}`)); else nav.append(el('span'));
-  if(index<list.length-1) nav.append(link(`${list[index+1].venue} →`,`#${list[index+1].id}`));
-  s.append(nav); return s;
+  return add(evidence,sourceList,el('p','인쇄 프로그램과 진행 계획은 실제 곡별 연주 여부와 구분해 기록합니다.','source-note'));
+}
+// This controls rendering batches, never the number of photographs that may be registered.
+const PHOTO_BATCH_SIZE=12;
+function concertPage() {
+  const c=concerts.find(c=>c.id===params.get('id') && String(c.year)===params.get('year'));
+  if(!c) {
+    main.append(heading('공연을 찾을 수 없습니다.','공연 아카이브','공개된 공연의 주소를 확인해 주세요.'),link('공연 아카이브로 돌아가기','archive.html?year=2026','button'));return;
+  }
+  document.title=`${c.title} · 집단적독백`;
+  const essay=el('article',null,'concert-essay');
+  const breadcrumb=el('nav',null,'essay-breadcrumb');breadcrumb.setAttribute('aria-label','현재 위치');
+  add(breadcrumb,link('공연 아카이브',`archive.html?year=${c.year}`),el('span','›'),link(String(c.year),`archive.html?year=${c.year}`),el('span','›'),el('span',c.no?`No.${c.no}`:c.venue));
+  const hero=heading(c.title,c.no?`NO.${c.no} · 공연 기록`:'공연 기록',dateText(c));
+  add(hero,add(el('p',null,'essay-venue'),venueLink(c.venue)),c.address?el('p',c.address,'show-address'):null);
+  add(essay,breadcrumb,hero);main.append(essay);
+  const photos=performancePhotos(c), failed=new Set();
+  const available=()=>photos.filter(m=>!failed.has(m.path));
+  const count=el('p',null,'essay-photo-count');count.setAttribute('role','status');
+  const regions=[];
+  let updateGallery=()=>{};
+  const refresh=()=>{
+    const n=available().length;count.textContent=n?`현장 사진 ${n}장`:'';count.hidden=!n;
+    for(const region of regions)if(!region.querySelector('figure'))region.remove();
+    updateGallery();
+  };
+  const failPhoto=m=>{
+    failed.add(m.path);
+    essay.querySelectorAll('figure[data-photo-path]').forEach(f=>{if(f.dataset.photoPath===m.path)f.remove();});
+    refresh();
+  };
+  const openPhotos=(selected,trigger)=>{
+    let current=selected;
+    const view=el('div',null,'photo-viewer');
+    const frame=el('figure',null,'photo-viewer-frame');
+    const controls=el('div',null,'photo-controls');
+    const prev=el('button','← 이전','button'),next=el('button','다음 →','button');
+    prev.type=next.type='button';
+    const position=el('span',null,'photo-position');position.setAttribute('role','status');
+    add(controls,prev,position,next);add(view,frame,controls);
+    const draw=()=>{
+      const list=available();
+      if(!list.length){dialog.close();return;}
+      if(!list.includes(current))current=list[0];
+      const index=list.indexOf(current), m=current;
+      const art=image(m.path,m.alt,'photo-enlarged',true);
+      const img=art.querySelector('img');
+      if(img){
+        img.sizes='(min-width:1200px) 1100px, 92vw';
+        img.addEventListener('error',()=>{failPhoto(m);draw();},{once:true});
+      }
+      frame.replaceChildren(art,...(m.caption?[el('figcaption',m.caption)]:[]));
+      position.textContent=`${index+1} / ${list.length}`;
+      prev.disabled=next.disabled=list.length===1;
+    };
+    const move=delta=>{
+      const list=available();if(!list.length)return;
+      current=list[(list.indexOf(current)+delta+list.length)%list.length];draw();
+    };
+    prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
+    const keys=event=>{
+      if(event.key==='ArrowLeft' || event.key==='ArrowRight'){event.preventDefault();move(event.key==='ArrowLeft'?-1:1);}
+    };
+    dialog.addEventListener('keydown',keys);
+    dialog.addEventListener('close',()=>dialog.removeEventListener('keydown',keys),{once:true});
+    let touchStart=null;
+    frame.addEventListener('touchstart',event=>{const t=event.touches[0];touchStart=[t.clientX,t.clientY];},{passive:true});
+    frame.addEventListener('touchend',event=>{
+      if(!touchStart)return;const t=event.changedTouches[0],dx=t.clientX-touchStart[0],dy=t.clientY-touchStart[1];
+      if(Math.abs(dx)>60 && Math.abs(dx)>Math.abs(dy)*1.5)move(dx<0?1:-1);touchStart=null;
+    },{passive:true});
+    dialog.classList.add('photo-dialog');openDialog(`${c.venue} · 현장 사진`,view,trigger);draw();
+  };
+  const photoFigure=(m,cover=false)=>{
+    const f=el('figure',null,cover?'essay-cover-photo':'essay-photo');f.dataset.photoPath=m.path;
+    const button=el('button',null,'photo-button');button.type='button';button.setAttribute('aria-label',`${m.alt} · 크게 보기`);
+    const art=image(m.path,m.alt,'essay-photo-image',cover);
+    const img=art.querySelector('img');const info=imageSources[m.path];
+    if(img){
+      img.sizes=cover?'(min-width:1200px) 1040px, calc(100vw - 40px)':'(min-width:1000px) 480px, (min-width:600px) 45vw, calc(100vw - 40px)';
+      const width=info?.width || m.width,height=info?.height || m.height;
+      if(width && height){img.width=width;img.height=height;art.style.aspectRatio=`${width} / ${height}`;if(height>width)f.classList.add('portrait-photo');}
+      img.addEventListener('error',()=>failPhoto(m),{once:true});
+    }
+    add(button,art);button.addEventListener('click',()=>openPhotos(m,button));
+    add(f,button,m.caption?el('figcaption',m.caption):null);return f;
+  };
+  const cover=photos.find(m=>m.placement==='cover') || photos.find(m=>!m.placement) || photos[0];
+  if(cover)essay.append(photoFigure(cover,true));
+  essay.append(count);
+  const story=section('그날의 이야기');story.classList.add('essay-story');
+  if(c.story)story.append(el('p',c.story,'concert-story'));
+  if(c.introduction)story.append(el('p',c.introduction));
+  for(const moment of c.moments || [])story.append(el('p',moment));
+  for(const note of c.notes || [])story.append(el('p',note,'source-note'));
+  essay.append(story);
+  const selected=photos.filter(m=>m!==cover && m.placement==='story').slice(0,4);
+  for(const m of photos)if(selected.length<4 && m!==cover && !m.placement && !selected.includes(m))selected.push(m);
+  if(selected.length) {
+    const scenes=section('그날의 장면');scenes.classList.add('essay-scenes');
+    const grid=el('div',null,'essay-photo-grid');selected.forEach(m=>grid.append(photoFigure(m)));
+    add(scenes,grid);essay.append(scenes);regions.push(scenes);
+  }
+  const program=section('무대에 담은 곡들');program.classList.add('essay-program');
+  const fold=disclosure(`프로그램 ${c.setlist.length}곡 보기`,'essay-program-fold');fold.open=true;
+  fold.append(concertProgram(c));program.append(fold);essay.append(program);
+  const rest=photos.filter(m=>m!==cover && !selected.includes(m));
+  if(rest.length) {
+    const gallery=section('더 많은 현장 사진');gallery.classList.add('essay-gallery');
+    const grid=el('div',null,'essay-photo-grid gallery-grid');
+    const more=el('button','사진 더 보기','button');more.type='button';
+    const status=el('p',null,'gallery-status');status.setAttribute('role','status');
+    let cursor=0;
+    const appendBatch=()=>{
+      const batch=[];
+      while(cursor<rest.length && batch.length<PHOTO_BATCH_SIZE){const m=rest[cursor++];if(!failed.has(m.path))batch.push(m);}
+      batch.forEach(m=>grid.append(photoFigure(m)));updateGallery();
+    };
+    updateGallery=()=>{
+      const n=rest.filter(m=>!failed.has(m.path)).length;
+      const shown=grid.childElementCount;
+      status.textContent=`${shown} / ${n}장 표시`;
+      more.hidden=!rest.slice(cursor).some(m=>!failed.has(m.path));
+      if(!n)gallery.remove();
+    };
+    more.addEventListener('click',()=>{
+      const before=grid.childElementCount;appendBatch();
+      // Keep keyboard focus at the newly revealed photographs even on the final batch.
+      grid.children[before]?.querySelector('button')?.focus();
+    });
+    add(gallery,grid,status,more);essay.append(gallery);appendBatch();
+  }
+  const media=c.mediaVisibility==='reviewed-only'?(c.media||[]).filter(m=>m.reviewed===true && m.type==='image' && m.usage!=='performance-photo' && (!m.visibility || m.visibility==='public')):[];
+  if(media.length) {
+    const prints=section('공연 인쇄물');const grid=el('div',null,'print-grid');
+    media.forEach(m=>grid.append(printButton(c,m)));add(prints,grid);essay.append(prints);
+  }
+  essay.append(concertEvidence(c));
+  const nav=el('nav',null,'concert-pagination');nav.setAttribute('aria-label','공연 기록 이동');
+  nav.append(link(`${c.year}년 아카이브로 돌아가기`,concertLink(c)));
+  const list=ordered(concerts),index=list.indexOf(c);
+  if(index>0)nav.append(link(`← ${list[index-1].venue}`,concertDetailLink(list[index-1])));
+  if(index<list.length-1)nav.append(link(`${list[index+1].venue} →`,concertDetailLink(list[index+1])));
+  essay.append(nav);refresh();
 }
 function guitarDecoration() {
   const ns='http://www.w3.org/2000/svg';
@@ -800,7 +965,7 @@ try {
     catch(error){unitError=error;console.error('작은 무대 데이터 로드 실패:',error);}
   }
   main.replaceChildren();
-  ({index:home,archive,unit:unitPage,repertoire,members:memberPage,about}[page] || home)();
+  ({index:home,archive,concert:concertPage,unit:unitPage,repertoire,members:memberPage,about}[page] || home)();
   const channelIcons={YouTube:'image/youtube.png',Instagram:'image/instagram.png'};
   for(const c of site.channels){
     const channelLink=external(c.label,c.url);

@@ -7,11 +7,11 @@ import json, re, sys, struct
 from unit_data import validate_units
 
 ROOT=Path(__file__).resolve().parents[1]
-PAGES={'index.html','archive.html','unit.html','repertoire.html','members.html','about.html'}
+PAGES={'index.html','archive.html','concert.html','unit.html','repertoire.html','members.html','about.html'}
 SOURCE_KEYS={'id','label','type'}
 MEMBER_KEYS={'id','nickname','avatar','roles','rolesStatus','characterRole','sourceIds'}
 SONG_KEYS={'id','title','composer','composerStatus','artistCredit','genre','aliases','note','sourceIds','fieldEvidence'}
-CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','address','story','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
+CONCERT_KEYS={'id','year','no','date','datePrecision','time','title','venue','address','story','introduction','status','visibility','mediaVisibility','participants','setlist','media','rehearsalVideo','moments','sourceIds','fieldEvidence','notes'}
 ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evidenceStatus','isEncore','credits','guestCredits','creditsStatus','videoUrl','sourceIds','additionalEvents'}
 EVIDENCE={'confirmed','planned','program'}
 STATUSES={'confirmed','needs-confirmation'}
@@ -119,11 +119,24 @@ def validate_data(base=ROOT, manifest_base=ROOT):
         if c['date']:require(c['date'].startswith(str(c['year'])+'-'),'Date year mismatch')
         require(c['time'] is None or re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d',c['time']),'Invalid time')
         if 'address' in c:require(isinstance(c['address'],str) and c['address'].strip(),'Invalid venue address')
+        if 'introduction' in c:require(isinstance(c['introduction'],str),'Invalid concert introduction')
+        require(isinstance(c.get('moments',[]),list) and all(isinstance(m,str) for m in c.get('moments',[])),'Moments must remain text records')
         for participant in c['participants']: credit_check(participant)
         for m in c['media']:
-            keys(m,{'type','label','path','sourceIds','reviewed'},'media');refs(m)
+            keys(m,{'type','label','path','sourceIds','reviewed','usage','alt','caption','placement','order','width','height','visibility'},'media')
+            if m.get('usage')!='performance-photo' or 'sourceIds' in m:refs(m)
             require(m['type']=='image' and m['reviewed'] is True and m['path'] in allowed,'Unreviewed public media')
             require(m['path'].startswith('public-media/') or m['path'] in REVIEWED_POSTERS,'Media must be a reviewed public copy or explicitly approved poster')
+            require(m.get('visibility','public')=='public','Non-public media cannot be released')
+            if m.get('usage')=='performance-photo':
+                require(c['visibility']=='public' and c['mediaVisibility']=='reviewed-only','Performance photos require public concert and media access')
+                require(Path(m['path']).suffix.lower() in {'.jpg','.jpeg','.png','.webp'},'Performance photo must be a raster image')
+                require(isinstance(m.get('alt'),str) and m['alt'].strip(),'Performance photo needs descriptive alt text')
+                require(m.get('placement') in {None,'cover','story','gallery'},'Invalid photo placement')
+                require('caption' not in m or isinstance(m['caption'],str),'Invalid photo caption')
+                require('order' not in m or type(m['order']) in {int,float} and m['order']>0 and m['order']<float('inf'),'Invalid photo order')
+                for dimension in ('width','height'):
+                    require(dimension not in m or type(m[dimension]) is int and m[dimension]>0,'Invalid photo dimensions')
         require(c['mediaVisibility']!='withheld' or not c['media'],'Withheld media cannot be released')
         if c.get('rehearsalVideo'):
             rehearsal=c['rehearsalVideo']

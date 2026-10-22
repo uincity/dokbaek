@@ -42,6 +42,51 @@ python scripts/browser-check.py
 
 이미지는 JPG·PNG·WebP, 영상은 MP4·WebM을 지원합니다. 이미지는 빌드에서 메타데이터를 제거하며, 영상은 게시 전 별도로 메타데이터와 공개 범위를 확인한 사본을 사용합니다. 영상은 자동 재생하지 않습니다. 검증과 빌드를 통과한 `dist`만 기존 GitHub Pages 절차로 배포합니다. 이 구현 작업에서는 원격 push나 배포를 수행하지 않습니다.
 
+## 공연 사진과 이야기
+
+`concert.html?year=2026&id=2026-10-18-gallery`에서 No.4의 사진 에세이형 기록을 봅니다. 기존 `archive.html?year=2026#2026-10-18-gallery`의 **그날의 사진과 이야기** 링크로도 들어갑니다. 다른 공개 공연에도 같은 상세 화면을 재사용하며, 기존 공연·곡 ID와 아카이브 주소는 유지합니다. No.4에는 사용자가 공개 승인을 확인한 사진 16장을 원본 EXIF 촬영 순서대로 등록했습니다. 사진이 없으면 이미지 틀과 사진 섹션은 표시하지 않습니다.
+
+이번 원본은 `image/2026-10-18-gallery/`에 보존하며 Git 추적과 배포에서 제외합니다. 실제 게시 파일은 메타데이터를 제거하고 긴 변을 최대 1600px로 줄인 `public-media/2026-10-18-gallery/scene-01.webp`부터 `scene-16.webp`까지입니다. 공개 JSON에는 촬영시각 대신 정렬용 `order`만 기록합니다. 원본 파일과 촬영시각의 대응표는 비공개 `private-notes/2026-10-18-gallery/source-order.json`에 보관합니다. 파일명이나 복사·수정시각이 아니라 EXIF `DateTimeOriginal`을 기준으로 정렬했습니다.
+
+사진은 다음 순서로 추가하세요. 추천 분량은 8~15장이지만 게시 개수에 상한은 없습니다.
+
+1. 공연 사진을 선별하고, 식별 가능한 멤버·관객의 공개 동의와 사용 범위를 확인합니다. 식별 가능한 스케치에도 같은 기준을 적용합니다.
+2. EXIF의 GPS·기기·촬영시각 등을 제거한 **승인된 최종 사본만** `public-media/2026-10-18-gallery/`에 둡니다. 원본·미승인 자료는 저장소 밖이나 무시되는 `private-notes/`에 보관합니다. 공개 저장소에 커밋하면 Pages에서 제외해도 파일이 공개될 수 있습니다.
+3. `data/concerts-2026.json`의 해당 공연 `media` 배열에 사진을 추가합니다. 기존 포스터·프로그램과 텍스트 `moments`는 그대로 둡니다. 아래는 등록 형식 예시이며 실제 등록 데이터가 아닙니다.
+
+```json
+{
+  "type": "image",
+  "usage": "performance-photo",
+  "path": "public-media/2026-10-18-gallery/scene-01.webp",
+  "label": "공연장 전경",
+  "alt": "무대와 객석이 함께 보이는 공연장 전경",
+  "caption": "관리자가 확인한 사진 설명",
+  "placement": "cover",
+  "order": 1,
+  "reviewed": true
+}
+```
+
+`reviewed: true`는 공개 승인이 확인된 뒤에만 지정합니다. 공연의 `visibility: public`, `mediaVisibility: reviewed-only` 조건도 필요합니다. 사진별 `visibility`는 생략하거나 `public`으로 지정합니다. `alt`는 사진 내용 설명, 선택값 `caption`은 확인된 맥락을 적습니다. 기존 공개 근거가 있으면 `sourceIds`로 연결할 수 있습니다. `order`가 없으면 배열 순서를 기준으로 정렬합니다. `placement`는 `cover`·`story`·`gallery` 중 선택하며 생략하면 대표 1장, 본문 최대 4장, 나머지 갤러리로 자동 배치합니다. 본문에 선택되지 않은 사진도 전부 갤러리에 포함됩니다. 관리자 소개는 선택 필드 `introduction`에 적습니다. 사진별 `width`·`height`도 선택값이며 최적화 인덱스의 실제 크기를 우선 사용합니다.
+
+4. `scripts/public-files.json`의 `media`에 승인 파일의 정확한 경로를 추가합니다. Git에 반영할 때 `.gitignore`에도 공연 폴더와 승인 파일만 개별 예외로 등록합니다. 폴더 전체를 공개 예외로 지정하지 마세요.
+5. `python scripts/optimize-images.py`로 반응형 WebP와 `assets/js/image-sources.js`를 갱신합니다(Pillow 필요). 새 사진만 추가했다면 `python scripts/optimize-images.py --new-only`로 기존 크기별 사본을 재사용할 수 있습니다. 기존 파일을 교체했다면 옵션 없이 실행해 다시 생성합니다. 최적화는 허용 목록의 승인 파일만 읽습니다. 아래 검증 후 `dist`만 로컬 서버로 엽니다.
+
+```powershell
+python scripts/build.py
+python scripts/validate.py
+python scripts/validate.py dist
+python scripts/data-check.py
+node --check assets/js/site.js
+python scripts/photo-browser-check.py
+python scripts/browser-check.py
+```
+
+6. 배치·캡션·용량·개인정보를 검토한 뒤 운영자가 커밋·배포합니다. 빌드는 PNG·JPEG·WebP의 촬영 메타데이터도 제거하지만, Git에 넣는 게시용 사본 자체의 메타데이터를 먼저 확인해야 합니다.
+
+추가 갤러리는 `assets/js/site.js`의 `PHOTO_BATCH_SIZE`(기본 12) 단위로 펼쳐집니다. 이 값은 표시 단위이며 등록 장수 제한이 아닙니다. 확대 창에서는 아직 펼치지 않은 사진도 정렬 순서대로 탐색합니다. 사진 검증은 0/1/3/8/16/35/60장 데이터를 HTTP 응답 메모리 안에서만 만들며 테스트 파일을 `dist`에 넣지 않습니다. 결과와 화면 캡처는 Git에서 제외되는 `test-results/`에 저장합니다.
+
 ## 로컬 실행
 
 화면에 표시하는 이미지는 `image/optimized/`의 WebP 크기별 사본을 사용합니다. 브라우저가 화면 크기와 픽셀 밀도에 맞춰 선택하며, 첫 화면 이미지는 우선 로딩하고 나머지는 지연 로딩합니다. 포스터·프로그램 확대 창에서는 원본을 표시합니다.
@@ -80,7 +125,7 @@ node --check assets/js/site.js
 
 ## 구조와 데이터 추가
 
-- HTML 5개와 `assets/`: 공통 디자인, 안전한 DOM 렌더링, 검색·필터, 확대 모달.
+- HTML 7개와 `assets/`: 공통 디자인, 안전한 DOM 렌더링, 검색·필터, 확대 모달, 공연별 사진 에세이.
 - `data/site.json`: 밴드 소개, 공식 채널, 연도 설정, 공개용 근거 목록.
 - `data/members.json`: 닉네임과 캐릭터. `roles`는 확인된 역할만 기재합니다.
 - `data/songs.json`: 곡의 안정적인 ID, 정규화 제목, 원본 별칭, 확인된 작곡 정보.
@@ -128,7 +173,7 @@ CSV에 기재된 기존 닉네임은 곡별 출연진·공연 참여자·멤버�
 
 홈의 공유 메타는 소스 `index.html`에 정적으로 기록되어 빌드 산출물에도 포함됩니다. 기존 공개 브랜드 로고와 상시 소개를 사용하므로 공연 날짜가 지나도 특정 공연을 계속 홍보하지 않습니다. 공유 크롤러 캐시는 별도 갱신 시간이 필요할 수 있습니다.
 
-활동 사진 공개 기능은 기본 비활성입니다. 향후 추가하려면 촬영 대상자 사전 동의 → 공개 범위·사용 용도 확인 → 비식별 처리와 EXIF 점검 → 명시적 공개 승인 → 허용 목록 등록 → 검증 순서를 거칩니다. 폴더에 파일이 있다는 이유로 자동 공개하지 않습니다.
+활동 사진은 공개 승인이 확인된 항목만 표시합니다. 추가할 때는 촬영 대상자 사전 동의 → 공개 범위·사용 용도 확인 → 비식별 처리와 EXIF 점검 → 명시적 공개 승인 → 허용 목록 등록 → 검증 순서를 거칩니다. 폴더에 파일이 있다는 이유로 자동 공개하지 않습니다.
 
 기존 self-host 폰트(약 2.94 MiB)는 추가하지 않고 재사용합니다. 이전 버전처럼 제목과 짧은 소개에는 고운바탕, 본문·메뉴·곡명에는 Pretendard를 사용합니다. 외부 폰트, 사진 다운로드, 신규 라이브러리, 자동 영상 재생은 추가하지 않습니다. 실제 iOS 기기 및 Lighthouse 점수는 별도 측정이 필요합니다.
 

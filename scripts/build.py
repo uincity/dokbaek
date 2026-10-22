@@ -4,6 +4,22 @@ import json, shutil, struct, uuid
 from validate import ROOT, approved_files, validate_data, validate_dist, require
 
 def strip_metadata(data,suffix):
+    if suffix=='.webp':
+        require(data[:4]==b'RIFF' and data[8:12]==b'WEBP','Invalid WebP')
+        chunks=[];offset=12
+        while offset<len(data):
+            require(offset+8<=len(data),'Truncated WebP header')
+            kind=data[offset:offset+4];size=int.from_bytes(data[offset+4:offset+8],'little')
+            end=offset+8+size+(size%2)
+            require(end<=len(data),'Truncated WebP chunk')
+            chunk=data[offset:end]
+            if kind==b'VP8X':
+                require(size>=10,'Invalid WebP extended header')
+                chunk=chunk[:8]+bytes([chunk[8]&~0x0c])+chunk[9:]
+            if kind not in {b'EXIF',b'XMP '}:chunks.append(chunk)
+            offset=end
+        payload=b'WEBP'+b''.join(chunks)
+        return b'RIFF'+len(payload).to_bytes(4,'little')+payload
     if suffix=='.png':
         require(data.startswith(b'\x89PNG\r\n\x1a\n'),'Invalid PNG')
         out=data[:8];offset=8
@@ -44,7 +60,7 @@ def build():
             if rel.startswith('data/concerts-'):
                 public=[c for c in json.loads(src.read_text(encoding='utf-8')) if c['visibility'] in {'public','public-summary'}]
                 dst.write_text(json.dumps(public,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-            elif src.suffix.lower() in {'.png','.jpg','.jpeg'}:dst.write_bytes(strip_metadata(src.read_bytes(),src.suffix.lower()))
+            elif src.suffix.lower() in {'.png','.jpg','.jpeg','.webp'}:dst.write_bytes(strip_metadata(src.read_bytes(),src.suffix.lower()))
             else:shutil.copyfile(src,dst)
         (staging/'.nojekyll').touch()
         validate_dist(staging)

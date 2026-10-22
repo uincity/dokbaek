@@ -3,6 +3,7 @@ from pathlib import Path
 import hashlib
 import json
 import re
+import sys
 from PIL import Image, ImageOps
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,10 +12,20 @@ manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
 originals = [p for p in manifest['images'] + manifest['media'] if not p.startswith('image/optimized/')]
 output = ROOT / 'image/optimized'
 output.mkdir(exist_ok=True)
-sources = {}
+source_index = ROOT / 'assets/js/image-sources.js'
+new_only = '--new-only' in sys.argv
+# Reuse existing variants when registering additional images. Run without the flag
+# after replacing an existing original, so its variants are regenerated as well.
+sources = json.loads(source_index.read_text(encoding='utf-8').removeprefix('export default ').strip().removesuffix(';')) if new_only and source_index.exists() else {}
 generated = []
 original_bytes = optimized_bytes = 0
 for path in originals:
+    previous = sources.get(path)
+    if new_only and previous and all((ROOT / rel).is_file() for rel, _ in previous['variants']):
+        generated.extend(rel for rel, _ in previous['variants'])
+        original_bytes += (ROOT / path).stat().st_size
+        optimized_bytes += (ROOT / previous['variants'][-1][0]).stat().st_size
+        continue
     with Image.open(ROOT / path) as source:
         picture = ImageOps.exif_transpose(source).convert('RGBA' if 'A' in source.getbands() else 'RGB')
         width, height = picture.size
