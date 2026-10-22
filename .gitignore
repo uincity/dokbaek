@@ -27,6 +27,7 @@
 !/image/dokbake_logo_3.png
 !/image/youtube.png
 !/image/instagram.png
+!/image/navermap.webp
 !/image/따뜻한 음악실 첫 쇼케이스.png
 !/image/집단적독백밴드 전체사진2.png
 !/image/집단적독백밴드 전체사진.png
@@ -53,7 +54,7 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Only the 16 explicitly approved, metadata-free gallery copies.
+# Only the 8 explicitly approved, metadata-free gallery sketch copies.
 !/public-media/2026-10-18-gallery/
 /public-media/2026-10-18-gallery/*
 !/public-media/2026-10-18-gallery/sketch-01.webp
