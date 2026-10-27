@@ -165,28 +165,6 @@ export default {
       ]
     ]
   },
-  "image/집단적독백밴드 전체사진2.png": {
-    "width": 2172,
-    "height": 724,
-    "variants": [
-      [
-        "image/optimized/0a01a003b811efd7-160.webp",
-        160
-      ],
-      [
-        "image/optimized/0a01a003b811efd7-480.webp",
-        480
-      ],
-      [
-        "image/optimized/0a01a003b811efd7-800.webp",
-        800
-      ],
-      [
-        "image/optimized/0a01a003b811efd7-1200.webp",
-        1200
-      ]
-    ]
-  },
   "image/매니저(열심남).png": {
     "width": 1254,
     "height": 1254,
@@ -828,6 +806,28 @@ export default {
       [
         "image/optimized/20b026b30deab502-1055.webp",
         1055
+      ]
+    ]
+  },
+  "image/집단적독백밴드 전체사진3.png": {
+    "width": 2172,
+    "height": 724,
+    "variants": [
+      [
+        "image/optimized/0abf93cbf77f9285-160.webp",
+        160
+      ],
+      [
+        "image/optimized/0abf93cbf77f9285-480.webp",
+        480
+      ],
+      [
+        "image/optimized/0abf93cbf77f9285-800.webp",
+        800
+      ],
+      [
+        "image/optimized/0abf93cbf77f9285-1200.webp",
+        1200
       ]
     ]
   }

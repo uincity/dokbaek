@@ -224,7 +224,7 @@ def run():
             assert page.locator('.upcoming-copy .button').last.get_attribute('href').endswith('#2026-11-08-convent-program')
             assert page.locator('.upcoming-program li').count()==11
             assert page.locator('.upcoming-poster').bounding_box()['x']>page.locator('.upcoming-copy').bounding_box()['x']
-            assert page.locator('.home-hero .group-art img').get_attribute('data-original-src')=='image/집단적독백밴드 전체사진2.png'
+            assert page.locator('.home-hero .group-art img').get_attribute('data-original-src')=='image/집단적독백밴드 전체사진3.png'
             assert 'Gowun Batang' in page.locator('h1').evaluate('e=>getComputedStyle(e).fontFamily')
             assert page.locator('#upcoming').bounding_box()['y'] < page.locator('.music-highlights').bounding_box()['y']
             assert page.locator('meta[property="og:image"]').get_attribute('content').startswith('https://uincity.github.io/dokbaek/')
