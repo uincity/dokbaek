@@ -787,28 +787,6 @@ export default {
       ]
     ]
   },
-  "2026/포스터/포스터_수녀원 음악회(20261108)_2.png": {
-    "width": 1055,
-    "height": 1491,
-    "variants": [
-      [
-        "image/optimized/20b026b30deab502-160.webp",
-        160
-      ],
-      [
-        "image/optimized/20b026b30deab502-480.webp",
-        480
-      ],
-      [
-        "image/optimized/20b026b30deab502-800.webp",
-        800
-      ],
-      [
-        "image/optimized/20b026b30deab502-1055.webp",
-        1055
-      ]
-    ]
-  },
   "image/집단적독백밴드 전체사진3.png": {
     "width": 2172,
     "height": 724,
@@ -828,6 +806,28 @@ export default {
       [
         "image/optimized/0abf93cbf77f9285-1200.webp",
         1200
+      ]
+    ]
+  },
+  "2026/포스터/포스터_수녀원 음악회(20261108)_5.png": {
+    "width": 1122,
+    "height": 1402,
+    "variants": [
+      [
+        "image/optimized/e98d7c253b41fad2-160.webp",
+        160
+      ],
+      [
+        "image/optimized/e98d7c253b41fad2-480.webp",
+        480
+      ],
+      [
+        "image/optimized/e98d7c253b41fad2-800.webp",
+        800
+      ],
+      [
+        "image/optimized/e98d7c253b41fad2-1122.webp",
+        1122
       ]
     ]
   }

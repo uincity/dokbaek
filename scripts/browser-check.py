@@ -214,7 +214,7 @@ def run():
             go('index.html')
             assert page.locator('.stat b').all_text_contents()==['7','1','26']
             assert page.locator('.year-card').count()==2
-            poster_path='2026/포스터/포스터_수녀원 음악회(20261108)_2.png'
+            poster_path='2026/포스터/포스터_수녀원 음악회(20261108)_5.png'
             assert page.locator('.upcoming-poster img').get_attribute('data-original-src')==poster_path
             assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='2026-11-08-convent'
             assert '2026년 11월 8일(일)' in page.locator('.show-date').inner_text()

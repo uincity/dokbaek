@@ -101,8 +101,13 @@
       "type": "member-record"
     },
     {
+      "id": "member-no5-program-update-20261027",
+      "label": "멤버 제공 작은음악회 프로그램 변경 및 곡설명",
+      "type": "member-record"
+    },
+    {
       "id": "poster-2026-convent",
-      "label": "2026 집단적독백 작은음악회 포스터",
+      "label": "2026 집단적독백과 함께하는 음악회 포스터",
       "type": "poster"
     },
     {

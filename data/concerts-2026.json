@@ -694,7 +694,7 @@
     "date": "2026-11-08",
     "datePrecision": "day",
     "time": "15:00",
-    "title": "집단적독백 작은음악회",
+    "title": "집단적독백과 함께하는 음악회",
     "venue": "예수성심전교수녀회",
     "address": "부산 금정구 금샘로18번길 79-16",
     "story": "기타 선율에 마음을 담아 수녀님들과 음악으로 교감하는 소규모 나눔 공연입니다. 플루트와 기타, 함께 부르는 노래로 따뜻한 음악의 시간을 나눕니다.",
@@ -781,8 +781,36 @@
         "additionalEvents": []
       },
       {
-        "id": "2026-11-08-convent-item-03",
+        "id": "2026-11-08-convent-item-12",
         "order": 3,
+        "songId": "a-thousand-winds",
+        "kind": "song",
+        "title": "천 개의 바람이 되어",
+        "originalTitle": "천 개의 바람이 되어",
+        "formats": [],
+        "evidenceStatus": "planned",
+        "isEncore": false,
+        "credits": [],
+        "guestCredits": [
+          {
+            "name": "수녀님1",
+            "role": "플루트"
+          },
+          {
+            "name": "수녀님2",
+            "role": "기타"
+          }
+        ],
+        "creditsStatus": "confirmed",
+        "videoUrl": null,
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ],
+        "additionalEvents": []
+      },
+      {
+        "id": "2026-11-08-convent-item-03",
+        "order": 4,
         "songId": "romance-no1",
         "kind": "song",
         "title": "Romance No.1",
@@ -810,7 +838,7 @@
       },
       {
         "id": "2026-11-08-convent-item-04",
-        "order": 4,
+        "order": 5,
         "songId": "ijeoya",
         "kind": "song",
         "title": "잊어야 한다는 마음으로",
@@ -838,37 +866,11 @@
       },
       {
         "id": "2026-11-08-convent-item-05",
-        "order": 5,
+        "order": 6,
         "songId": "hua-kai-gu-ren-lai",
         "kind": "song",
         "title": "화개고인래(花開故人來) — 중국 기악곡",
         "originalTitle": "화개고인래(花開故人來) — 중국 기악곡",
-        "formats": [
-          "플루트"
-        ],
-        "evidenceStatus": "planned",
-        "isEncore": false,
-        "credits": [],
-        "guestCredits": [
-          {
-            "name": "수녀님1",
-            "role": "플루트"
-          }
-        ],
-        "creditsStatus": "confirmed",
-        "videoUrl": null,
-        "sourceIds": [
-          "member-no5-program"
-        ],
-        "additionalEvents": []
-      },
-      {
-        "id": "2026-11-08-convent-item-06",
-        "order": 6,
-        "songId": "ave-maria-gounod",
-        "kind": "song",
-        "title": "아베 마리아(Ave Maria)",
-        "originalTitle": "아베 마리아(Ave Maria)",
         "formats": [
           "플루트"
         ],
@@ -1082,7 +1084,7 @@
       {
         "type": "image",
         "label": "포스터",
-        "path": "2026/포스터/포스터_수녀원 음악회(20261108)_2.png",
+        "path": "2026/포스터/포스터_수녀원 음악회(20261108)_5.png",
         "sourceIds": [
           "poster-2026-convent"
         ],
@@ -1093,7 +1095,8 @@
     "sourceIds": [
       "concert-update-20261020",
       "member-no5-program",
-      "poster-2026-convent"
+      "poster-2026-convent",
+      "member-no5-program-update-20261027"
     ],
     "fieldEvidence": {
       "date": {

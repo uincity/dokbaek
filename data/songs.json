@@ -1247,6 +1247,51 @@
     }
   },
   {
+    "id": "a-thousand-winds",
+    "title": "천 개의 바람이 되어",
+    "composer": "아라이 만",
+    "composerStatus": "confirmed",
+    "aliases": [],
+    "artistCredit": "아라이 만(임형주)",
+    "genre": "Popera / Crossover",
+    "note": "영미권의 추모시에 곡을 붙인 작품. 세상을 떠난 사랑하는 사람이 바람과 햇살이 되어 우리 곁에 머문다는 메시지를 담고 있으며, 이별의 슬픔을 따뜻한 위로와 희망으로 승화시킨 서정적인 곡.",
+    "sourceIds": [
+      "member-no5-program-update-20261027"
+    ],
+    "fieldEvidence": {
+      "title": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ]
+      },
+      "composer": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ]
+      },
+      "artistCredit": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ]
+      },
+      "genre": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ]
+      },
+      "note": {
+        "status": "confirmed",
+        "sourceIds": [
+          "member-no5-program-update-20261027"
+        ]
+      }
+    }
+  },
+  {
     "id": "kkot",
     "title": "생활성가 「꽃」",
     "composer": null,

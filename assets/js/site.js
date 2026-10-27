@@ -38,7 +38,7 @@ function venueLink(venue) {
 }
 function pill(text, color='') { return el('span',text,`pill ${color}`); }
 function safeMedia(path) {
-  const reviewedPosters=new Set(['2026/포스터/포스터_수녀원 음악회(20261108)_2.png','2026/포스터/포스터_노을음악회_20261024.jpg']);
+  const reviewedPosters=new Set(['2026/포스터/포스터_수녀원 음악회(20261108)_5.png','2026/포스터/포스터_노을음악회_20261024.jpg']);
   return typeof path === 'string' && (/^(image|public-media)\//.test(path) || reviewedPosters.has(path)) && !path.split('/').includes('..') && !/[\\?#]/.test(path);
 }
 function image(path, alt, className='', eager=false, fullResolution=false) {

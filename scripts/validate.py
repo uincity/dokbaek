@@ -16,7 +16,7 @@ ENTRY_KEYS={'id','order','songId','kind','originalTitle','title','formats','evid
 EVIDENCE={'confirmed','planned','program'}
 STATUSES={'confirmed','needs-confirmation'}
 # Only these explicitly requested original-year posters may be published.
-REVIEWED_POSTERS={'2026/포스터/포스터_수녀원 음악회(20261108)_2.png','2026/포스터/포스터_노을음악회_20261024.jpg'}
+REVIEWED_POSTERS={'2026/포스터/포스터_수녀원 음악회(20261108)_5.png','2026/포스터/포스터_노을음악회_20261024.jpg'}
 
 def require(condition,message):
     if not condition: raise ValueError(message)
