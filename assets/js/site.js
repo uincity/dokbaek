@@ -431,8 +431,9 @@ function home() {
   music.append(highlights);main.append(music);
   const together=section('함께 만드는 시간');together.classList.add('together-section');
   add(together,el('p','연습하고 이야기하고, 다시 기타를 잡습니다. 함께 소리를 맞추고 무대를 준비하는 시간도 우리가 음악을 즐기는 방법입니다.'),link('집단적독백 이야기 ↗','about.html','button'));main.append(together);
-  const recent=section('지난 공연',link('아카이브 보기 ↗',`archive.html?year=${schedule.past[0]?.year || site.years[0].year}`));recent.id='past-shows';
-  recent.append(add(el('div',null,'card-grid'),...schedule.past.slice(0,2).map(preview)));main.append(recent);
+  const recentConcerts=schedule.past.filter(c=>!c.unitEventId);
+  const recent=section('지난 공연',link('아카이브 보기 ↗',`archive.html?year=${recentConcerts[0]?.year || site.years[0].year}`));recent.id='past-shows';
+  recent.append(add(el('div',null,'card-grid'),...recentConcerts.slice(0,2).map(preview)));main.append(recent);
   add(main,unitHomePreview());
   const years=section('한 해씩, 한 장씩'); const grid=el('div',null,'year-grid');
   for (const y of site.years) {

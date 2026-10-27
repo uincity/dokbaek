@@ -218,7 +218,7 @@ def run():
             assert page.locator('.upcoming-poster img').get_attribute('data-original-src')==poster_path
             assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='2026-11-08-convent'
             assert '2026년 11월 8일(일)' in page.locator('.show-date').inner_text()
-            assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#unit-sunset-20261024')
+            assert page.locator('#past-shows .concert-preview').first.locator('.preview-main').get_attribute('href').endswith('#2026-10-18-gallery')
             assert page.locator('#past-shows .concert-preview').first.locator('.pill').inner_text()=='종료 공연'
             assert page.locator('#past-shows .section-head a').get_attribute('href')=='archive.html?year=2026'
             assert page.locator('.upcoming-copy .button').last.get_attribute('href').endswith('#2026-11-08-convent-program')
