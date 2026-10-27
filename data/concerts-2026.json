@@ -694,7 +694,7 @@
     "date": "2026-11-08",
     "datePrecision": "day",
     "time": "15:00",
-    "title": "수녀원 음악회",
+    "title": "집단적독백 작은음악회",
     "venue": "예수성심전교수녀회",
     "address": "부산 금정구 금샘로18번길 79-16",
     "story": "기타 선율에 마음을 담아 수녀님들과 음악으로 교감하는 소규모 나눔 공연입니다. 플루트와 기타, 함께 부르는 노래로 따뜻한 음악의 시간을 나눕니다.",
@@ -820,7 +820,7 @@
         "isEncore": false,
         "credits": [
           {
-            "memberId": "member-becky",
+            "memberId": "member-rona",
             "role": "기타"
           },
           {
@@ -1045,6 +1045,10 @@
         "isEncore": false,
         "credits": [
           {
+            "memberId": "member-becky",
+            "role": "기타"
+          },
+          {
             "memberId": "member-berry",
             "role": "기타"
           },
@@ -1078,7 +1082,7 @@
       {
         "type": "image",
         "label": "포스터",
-        "path": "2026/포스터/포스터_수녀원 음악회(20261108).png",
+        "path": "2026/포스터/포스터_수녀원 음악회(20261108)_2.png",
         "sourceIds": [
           "poster-2026-convent"
         ],

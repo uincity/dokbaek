@@ -200,7 +200,8 @@
     "date": "2026-10-24",
     "venue": "온종합병원 ONN닥터TV홀",
     "source_venue": "온종합병원(ONN닥터TV홀)",
-    "status": "scheduled",
+    "status": "completed",
+    "description": "온종합병원에 입원한 환우와 환자 가족들을 위한 음악회로, ONN닥터TV와 온병원(온그룹의료재단)이 환우와 지역 주민들을 위해 정기적으로 개최하는 힐링 프로그램입니다.",
     "songs": [
       {
         "order": 1,
@@ -228,6 +229,24 @@
       }
     ],
     "media": [
+      {
+        "type": "image",
+        "label": "노을음악회 현장 스케치 1 · 기타와 하모니카 연주",
+        "path": "image/노을음악회1.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1672,
+        "height": 941
+      },
+      {
+        "type": "image",
+        "label": "노을음악회 현장 스케치 2 · 무대 위 단체 기념사진",
+        "path": "image/노을음악회2.png",
+        "reviewed": true,
+        "usage": "sketch",
+        "width": 1448,
+        "height": 1086
+      },
       {
         "type": "image",
         "label": "노을음악회 2026년 10월 24일 공연 포스터",

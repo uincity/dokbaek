@@ -45,7 +45,7 @@ class UnitChecks(unittest.TestCase):
         expected = {
             'wedding-20251207': ['image/첫 번째 결혼축가1.png', 'image/첫 번째 결혼축가2.png'],
             'wedding-20251227': ['image/두 번째 결혼축가1.png', 'image/두 번째 결혼축가2.png'],
-            'sunset-20261024': ['2026/포스터/포스터_노을음악회_20261024.jpg'],
+            'sunset-20261024': ['image/노을음악회1.png', 'image/노을음악회2.png', '2026/포스터/포스터_노을음악회_20261024.jpg'],
         }
         for event in self.build(previous=list(reversed(self.events))):
             self.assertEqual([m['path'] for m in event['media']], expected[event['id']])

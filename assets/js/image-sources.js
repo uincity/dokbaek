@@ -465,28 +465,6 @@ export default {
       ]
     ]
   },
-  "2026/포스터/포스터_수녀원 음악회(20261108).png": {
-    "width": 1055,
-    "height": 1491,
-    "variants": [
-      [
-        "image/optimized/94f2533bcde95f77-160.webp",
-        160
-      ],
-      [
-        "image/optimized/94f2533bcde95f77-480.webp",
-        480
-      ],
-      [
-        "image/optimized/94f2533bcde95f77-800.webp",
-        800
-      ],
-      [
-        "image/optimized/94f2533bcde95f77-1055.webp",
-        1055
-      ]
-    ]
-  },
   "image/첫 번째 결혼축가1.png": {
     "width": 1672,
     "height": 941,
@@ -784,6 +762,72 @@ export default {
       [
         "image/optimized/f8ce1edf6a8f7ae6-1200.webp",
         1200
+      ]
+    ]
+  },
+  "image/노을음악회1.png": {
+    "width": 1672,
+    "height": 941,
+    "variants": [
+      [
+        "image/optimized/18fcc5b26cc2b0fa-160.webp",
+        160
+      ],
+      [
+        "image/optimized/18fcc5b26cc2b0fa-480.webp",
+        480
+      ],
+      [
+        "image/optimized/18fcc5b26cc2b0fa-800.webp",
+        800
+      ],
+      [
+        "image/optimized/18fcc5b26cc2b0fa-1200.webp",
+        1200
+      ]
+    ]
+  },
+  "image/노을음악회2.png": {
+    "width": 1448,
+    "height": 1086,
+    "variants": [
+      [
+        "image/optimized/2d08b50b96a8395b-160.webp",
+        160
+      ],
+      [
+        "image/optimized/2d08b50b96a8395b-480.webp",
+        480
+      ],
+      [
+        "image/optimized/2d08b50b96a8395b-800.webp",
+        800
+      ],
+      [
+        "image/optimized/2d08b50b96a8395b-1200.webp",
+        1200
+      ]
+    ]
+  },
+  "2026/포스터/포스터_수녀원 음악회(20261108)_2.png": {
+    "width": 1055,
+    "height": 1491,
+    "variants": [
+      [
+        "image/optimized/20b026b30deab502-160.webp",
+        160
+      ],
+      [
+        "image/optimized/20b026b30deab502-480.webp",
+        480
+      ],
+      [
+        "image/optimized/20b026b30deab502-800.webp",
+        800
+      ],
+      [
+        "image/optimized/20b026b30deab502-1055.webp",
+        1055
       ]
     ]
   }

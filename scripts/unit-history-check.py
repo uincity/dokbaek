@@ -21,7 +21,7 @@ def run():
         with sync_playwright() as p:
             browser=p.chromium.launch(headless=True)
             page=browser.new_page()
-            page.clock.set_fixed_time(datetime(2026,10,20,3,tzinfo=timezone.utc))
+            page.clock.set_fixed_time(datetime(2026,10,27,3,tzinfo=timezone.utc))
             errors=[]
             page.on('pageerror',lambda error:errors.append(str(error)))
             def go(path):
@@ -30,8 +30,14 @@ def run():
             for width in (390,1280):
                 page.set_viewport_size({'width':width,'height':900})
                 go('index.html')
-                assert page.locator('.stat b').all_text_contents()==['6','2','26']
-                assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='unit-sunset-20261024'
+                assert page.locator('.stat b').all_text_contents()==['7','1','26']
+                assert page.locator('.upcoming-feature').get_attribute('data-concert-id')=='2026-11-08-convent'
+                go('unit.html')
+                sunset=page.locator('#unit-past #sunset-20261024')
+                assert sunset.locator('.pill').inner_text()=='공연 완료'
+                assert sunset.locator('.unit-description').inner_text()==units[-1]['description']
+                assert sunset.locator('.unit-media-mixed>.unit-media:not(.unit-poster) img').count()==2
+                assert sunset.locator('.unit-poster img').count()==1
                 for year in (2025,2026):
                     go(f'archive.html?year={year}')
                     for event in units:
@@ -62,7 +68,7 @@ def run():
                     img.evaluate("async i=>{i.loading='eager';await i.decode();}")
             page.clock.set_fixed_time(datetime(2027,1,1,3,tzinfo=timezone.utc))
             go('archive.html?year=2026')
-            assert page.locator('[data-status="scheduled"] #unit-sunset-20261024').count()==1
+            assert page.locator('[data-status="completed"] #unit-sunset-20261024').count()==1
             # Unregistered songs remain visible in the performer's history.
             fixture=copy.deepcopy(units)
             fixture[0]['songs'][0].update(song_id=None,title='Standalone unit song')

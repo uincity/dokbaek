@@ -38,7 +38,7 @@ function venueLink(venue) {
 }
 function pill(text, color='') { return el('span',text,`pill ${color}`); }
 function safeMedia(path) {
-  const reviewedPosters=new Set(['2026/포스터/포스터_수녀원 음악회(20261108).png','2026/포스터/포스터_노을음악회_20261024.jpg']);
+  const reviewedPosters=new Set(['2026/포스터/포스터_수녀원 음악회(20261108)_2.png','2026/포스터/포스터_노을음악회_20261024.jpg']);
   return typeof path === 'string' && (/^(image|public-media)\//.test(path) || reviewedPosters.has(path)) && !path.split('/').includes('..') && !/[\\?#]/.test(path);
 }
 function image(path, alt, className='', eager=false, fullResolution=false) {
@@ -264,6 +264,15 @@ function unitMedia(event) {
   if(!approved.length)return null;
   const poster=approved.length===1 && approved[0].usage==='poster';
   const box=el('div',null,`unit-media${poster?' unit-poster':''}`);
+  const posters=approved.filter(media=>media.usage==='poster');
+  const sketches=approved.filter(media=>media.usage!=='poster');
+  if(posters.length && sketches.some(media=>media.usage==='sketch')) {
+    box.classList.add('unit-media-mixed');
+    const sketchGallery=unitMedia({...event,media:sketches});
+    const posterGallery=unitMedia({...event,media:posters});
+    posterGallery.prepend(el('h4','공연 포스터','unit-media-heading'));
+    return add(box,sketchGallery,posterGallery);
+  }
   if(approved.some(media=>media.usage==='sketch'))box.append(el('h4','현장 스케치','unit-media-heading'));
   const gallery=el('div',null,'unit-media-grid');
   for(const media of approved) {
